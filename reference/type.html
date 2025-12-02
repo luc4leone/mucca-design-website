@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typography</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/variables.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/typography.css" />
+    <link rel="stylesheet" href="../components/link/link.css" />
+    <link rel="stylesheet" href="../components/breadcrumb/breadcrumb.css" />
+    <style>
+      .code-block {
+        background-color: var(--grey-300);
+        padding: 16px;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin-top: 16px;
+        margin-bottom: 40px;
+        display: inline-block;
+      }
+
+      .code-block code {
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.6;
+        color: var(--grey-900);
+      }
+
+      .component-section {
+        margin-bottom: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumb">
+      <a href="../designsystem.html" class="link">home</a>
+      <span class="breadcrumb__separator">&lt;</span>
+      <span class="breadcrumb__current">type</span>
+    </nav>
+
+    <div class="component-section">
+      <h1 class="heading heading--1">Heading 1</h1>
+      <pre class="code-block"><code>.heading {
+  color: var(--grey-700);
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 12px;
+}
+
+.heading--1 {
+  font-size: 30px;
+}</code></pre>
+    </div>
+
+    <div class="component-section">
+      <h2 class="heading heading--2">Heading 2</h2>
+      <pre class="code-block"><code>.heading--2 {
+  font-size: 24px;
+}</code></pre>
+    </div>
+
+    <div class="component-section">
+      <h3 class="heading heading--3">Heading 3</h3>
+      <pre class="code-block"><code>.heading--3 {
+  font-size: 19px;
+}</code></pre>
+    </div>
+
+    <div class="component-section">
+      <p class="paragraph paragraph--1">Paragraph 1</p>
+      <pre class="code-block"><code>.paragraph {
+  color: var(--grey-700);
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.paragraph--1 {
+  font-size: 16px;
+}</code></pre>
+    </div>
+
+    <div class="component-section">
+      <p class="paragraph paragraph--2">Paragraph 2</p>
+      <pre class="code-block"><code>.paragraph--2 {
+  font-size: 16px;
+  color: var(--grey-600);
+}</code></pre>
+    </div>
+
+    <div class="component-section">
+      <p class="paragraph paragraph--1 paragraph--light">Paragraph Light</p>
+      <pre class="code-block"><code>.paragraph--light {
+  font-weight: 400;
+}</code></pre>
+    </div>
+
+    <script>
+      // Auto-hide navigation quando embedded in iframe
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("embedded") === "true") {
+        const style = document.createElement("style");
+        style.textContent = `
+          .breadcrumb {
+            display: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    </script>
+  </body>
+</html>
+

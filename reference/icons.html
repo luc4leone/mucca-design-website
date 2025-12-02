@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Icons</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="../styles/variables.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/typography.css" />
+    <link rel="stylesheet" href="../components/link/link.css" />
+    <link rel="stylesheet" href="../components/breadcrumb/breadcrumb.css" />
+    <style>
+      .icon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 24px;
+      }
+
+      .icon-card {
+        border: 1px solid var(--grey-400);
+        border-radius: 4px;
+        padding: 24px;
+        background-color: var(--white);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .icon-display {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--grey-100);
+        border-radius: 4px;
+      }
+
+      .icon-display .material-symbols-outlined {
+        font-size: 48px;
+        color: var(--grey-700);
+        font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+
+      .icon-info {
+        text-align: center;
+        width: 100%;
+      }
+
+      .icon-name {
+        font-family: "Atkinson Hyperlegible Next", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--grey-900);
+        margin: 0 0 12px 0;
+      }
+
+      .code-snippet {
+        background-color: var(--grey-200);
+        padding: 12px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 12px;
+        color: var(--grey-900);
+        overflow-x: auto;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .icon-usage {
+        font-family: "Atkinson Hyperlegible Next", sans-serif;
+        font-size: 14px;
+        color: var(--grey-600);
+        margin: 8px 0 0 0;
+        text-align: left;
+        width: 100%;
+      }
+
+      .usage-label {
+        font-weight: 600;
+        color: var(--grey-700);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumb">
+      <a href="../designsystem.html" class="link">home</a>
+      <span class="breadcrumb__separator">&lt;</span>
+      <span class="breadcrumb__current">icons</span>
+    </nav>
+
+    <h1 class="heading heading--1">Icons</h1>
+
+    <p class="paragraph paragraph--1">
+      Icone utilizzate nel progetto (Material Symbols Outlined)
+    </p>
+
+    <div class="icon-grid">
+      <div class="icon-card">
+        <div class="icon-display">
+          <span class="material-symbols-outlined">arrow_drop_down</span>
+        </div>
+        <div class="icon-info">
+          <p class="icon-name">arrow_drop_down</p>
+          <pre class="code-snippet"><code>&lt;span class="material-symbols-outlined"&gt;
+arrow_drop_down
+&lt;/span&gt;</code></pre>
+          <p class="icon-usage">
+            <span class="usage-label">Usata in:</span> Link with icon
+          </p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon-display">
+          <span class="material-symbols-outlined">filter_alt</span>
+        </div>
+        <div class="icon-info">
+          <p class="icon-name">filter_alt</p>
+          <pre class="code-snippet"><code>&lt;span class="material-symbols-outlined"&gt;
+filter_alt
+&lt;/span&gt;</code></pre>
+          <p class="icon-usage">
+            <span class="usage-label">Usata in:</span> Search bar button
+          </p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon-display">
+          <span class="material-symbols-outlined">folder</span>
+        </div>
+        <div class="icon-info">
+          <p class="icon-name">folder</p>
+          <pre class="code-snippet"><code>&lt;span class="material-symbols-outlined"&gt;
+folder
+&lt;/span&gt;</code></pre>
+          <p class="icon-usage">
+            <span class="usage-label">Usata in:</span> Link with icon
+          </p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon-display">
+          <span class="material-symbols-outlined">notifications</span>
+        </div>
+        <div class="icon-info">
+          <p class="icon-name">notifications</p>
+          <pre class="code-snippet"><code>&lt;span class="material-symbols-outlined"&gt;
+notifications
+&lt;/span&gt;</code></pre>
+          <p class="icon-usage">
+            <span class="usage-label">Usata in:</span> Notifications
+          </p>
+        </div>
+      </div>
+
+      <div class="icon-card">
+        <div class="icon-display">
+          <span class="material-symbols-outlined">account_circle</span>
+        </div>
+        <div class="icon-info">
+          <p class="icon-name">account_circle</p>
+          <pre class="code-snippet"><code>&lt;span class="material-symbols-outlined"&gt;
+account_circle
+&lt;/span&gt;</code></pre>
+          <p class="icon-usage">
+            <span class="usage-label">Usata in:</span> User profile/account
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Auto-hide navigation quando embedded in iframe
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("embedded") === "true") {
+        const style = document.createElement("style");
+        style.textContent = `
+          .breadcrumb {
+            display: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    </script>
+  </body>
+</html>
+

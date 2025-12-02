@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/typography.css" />
+    <link rel="stylesheet" href="components/link/link.css" />
+    <style>
+      /* Reset body padding per layout full-width */
+      body {
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background-color: var(--grey-100);
+        padding: var(--spacing-xl);
+        overflow-y: auto;
+        border-right: 1px solid var(--grey-300);
+      }
+
+      /* Sidebar headings */
+      .sidebar-heading {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--grey-700);
+        font-family: "Atkinson Hyperlegible Next", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0 0 var(--spacing-m) 0;
+      }
+
+      .sidebar-heading:not(:first-child) {
+        margin-top: var(--spacing-xxxl);
+      }
+
+      /* Page list */
+      .page-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .page-list__item {
+        margin-bottom: var(--spacing-m);
+      }
+
+      .page-list__link {
+        color: var(--blue-900);
+        font-family: "Atkinson Hyperlegible Next", sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .page-list__link:hover {
+        color: var(--blue-950);
+      }
+
+      /* Content area */
+      .content {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Iframe */
+      .content-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+
+      /* Placeholder quando nessun contenuto è caricato */
+      .content-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--grey-600);
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <p class="sidebar-heading">Reference</p>
+      <ul class="page-list">
+        <li class="page-list__item">
+          <a href="reference/colors.html" class="page-list__link" data-target="iframe">colors</a>
+        </li>
+        <li class="page-list__item">
+          <a href="reference/icons.html" class="page-list__link" data-target="iframe">icons</a>
+        </li>
+        <li class="page-list__item">
+          <a href="reference/type.html" class="page-list__link" data-target="iframe">type</a>
+        </li>
+      </ul>
+
+      <p class="sidebar-heading">Components</p>
+      <ul class="page-list">
+        <li class="page-list__item">
+          <a href="components/badge/demo.html" class="page-list__link" data-target="iframe">badge</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/button/demo.html" class="page-list__link" data-target="iframe">button</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/checkbox/demo.html" class="page-list__link" data-target="iframe">checkbox</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/dropdown/demo.html" class="page-list__link" data-target="iframe">dropdown</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/filter-bar/demo.html" class="page-list__link" data-target="iframe">filter-bar</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/header/demo.html" class="page-list__link" data-target="iframe">header</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/input/demo.html" class="page-list__link" data-target="iframe">input</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/link/demo.html" class="page-list__link" data-target="iframe">link</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/logo/demo.html" class="page-list__link" data-target="iframe">logo</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/logo-with-clock/demo.html" class="page-list__link" data-target="iframe">logo-with-clock</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/nuovo-oggetto/demo.html" class="page-list__link" data-target="iframe">nuovo-oggetto</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/search-bar/demo.html" class="page-list__link" data-target="iframe">search-bar</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/tabs/demo.html" class="page-list__link" data-target="iframe">tabs</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/textarea/demo.html" class="page-list__link" data-target="iframe">textarea</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/tree-node/demo.html" class="page-list__link" data-target="iframe">tree-node</a>
+        </li>
+        <li class="page-list__item">
+          <a href="components/utilities/demo.html" class="page-list__link" data-target="iframe">utilities</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Content area con iframe -->
+    <main class="content">
+      <div class="content-placeholder">
+        Seleziona un elemento dalla sidebar per visualizzarlo
+      </div>
+      <iframe
+        id="content-frame"
+        class="content-frame"
+        style="display: none"
+      ></iframe>
+    </main>
+
+    <script>
+      // Gestione click sui link per caricare nell'iframe
+      document.addEventListener("DOMContentLoaded", function () {
+        const iframe = document.getElementById("content-frame");
+        const placeholder = document.querySelector(".content-placeholder");
+        const sidebarLinks = document.querySelectorAll(
+          '.page-list__link[data-target="iframe"]'
+        );
+
+        sidebarLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            const url = this.getAttribute("href");
+
+            // Cmd/Ctrl+Click = apri in nuovo tab (standalone, senza embedded)
+            if (e.metaKey || e.ctrlKey) {
+              window.open(url, "_blank");
+              return;
+            }
+
+            e.preventDefault();
+
+            // Mostra iframe, nascondi placeholder
+            placeholder.style.display = "none";
+            iframe.style.display = "block";
+
+            // Carica contenuto nell'iframe con parametro embedded=true
+            const embeddedUrl =
+              url + (url.includes("?") ? "&" : "?") + "embedded=true";
+            iframe.src = embeddedUrl;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

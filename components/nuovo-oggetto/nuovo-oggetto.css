@@ -1,0 +1,41 @@
+/**
+ * Nuovo Oggetto Component
+ *
+ * Componente per creare nuovo oggetto con 4 link con icone
+ * e label decorativa sopra.
+ */
+
+.nuovo-oggetto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs); /* 4px tra label e links */
+}
+
+/* Header con label e linee decorative */
+.nuovo-oggetto__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s); /* 8px tra linea e label */
+}
+
+.nuovo-oggetto__line {
+  width: 30px;
+  height: 1px;
+  background-color: var(--grey-500);
+}
+
+.nuovo-oggetto__label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--grey-700);
+  text-transform: lowercase;
+}
+
+/* Container dei link */
+.nuovo-oggetto__links {
+  display: flex;
+  align-items: center; /* Allineamento verticale al centro */
+  gap: var(--spacing-l); /* 16px tra i link */
+}
+

@@ -1,0 +1,25 @@
+/* Filter Bar Component
+ *
+ * Componente composto che include:
+ * - Tabs (small) e Link filtri nella top row
+ * - Search Bar al centro
+ * - Link banca dati nella bottom row
+ */
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  width: 100%;
+}
+
+.filter-bar__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-bar__bottom {
+  display: flex;
+}
+

@@ -1,0 +1,148 @@
+.link {
+  color: var(--blue-900);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--blue-950);
+}
+
+.link--small {
+  font-size: var(--font-size-sm);
+}
+
+.link--small .link__icon,
+.link--small .link__chevron {
+  font-size: var(--font-size-base); /* 16px - step superiore a 14px */
+}
+
+.link--large {
+  font-size: var(--font-size-lg);
+}
+
+.link--large .link__icon,
+.link--large .link__chevron {
+  font-size: var(--font-size-xl); /* 24px - step superiore a 19px */
+}
+
+.link--underline {
+  text-decoration: underline;
+}
+
+/* Quando c'è un'icona, rimuovi underline dal link */
+.link--icon-left.link--underline,
+.link--chevron-right.link--underline {
+  text-decoration: none;
+}
+
+/* E applica underline solo al testo wrapper */
+.link--icon-left.link--underline .link__text,
+.link--chevron-right.link--underline .link__text {
+  text-decoration: underline;
+}
+
+.link__icon,
+.link__chevron {
+  display: inline-block;
+}
+
+.link--icon-left {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  white-space: nowrap; /* Evita wrap del testo */
+}
+
+.link--chevron-right {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  white-space: nowrap; /* Evita wrap del testo */
+}
+
+.link__icon {
+  font-size: var(--font-size-lg); /* 19px - proporzionale a testo 16px */
+  color: var(--grey-700);
+}
+
+.link__chevron {
+  font-size: var(--font-size-lg); /* 19px - proporzionale a testo 16px */
+  color: var(--grey-700);
+}
+
+.link:hover .link__icon,
+.link:hover .link__chevron {
+  color: var(--grey-900);
+}
+
+/* Split Link Variant */
+.link--split {
+  display: inline-flex;
+  position: relative;
+}
+
+.link__split-label {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-s) var(--spacing-l);
+  background-color: var(--grey-200);
+  color: var(--blue-900);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link__split-label:hover {
+  color: var(--blue-950);
+}
+
+.link__split-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-s) var(--spacing-m);
+  background-color: var(--grey-300);
+  border: none;
+  cursor: pointer;
+  color: var(--grey-700);
+}
+
+.link__split-chevron:hover {
+  color: var(--grey-900);
+}
+
+.link__split-chevron .material-symbols-outlined {
+  font-size: var(--font-size-lg); /* 19px - proporzionale a testo 16px */
+}
+
+.link__split-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  flex-direction: column;
+  background-color: var(--grey-200);
+  padding: var(--spacing-s);
+  gap: var(--spacing-s);
+  min-width: 100%;
+  z-index: var(--z-dropdown);
+}
+
+.link__split-dropdown.is-open {
+  display: flex;
+}
+
+.link__split-dropdown .link {
+  padding: var(--spacing-s) var(--spacing-m);
+  white-space: nowrap;
+}
+
+.link__split-dropdown .link:hover {
+  background-color: var(--grey-300);
+}
+

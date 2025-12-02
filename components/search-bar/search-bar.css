@@ -1,0 +1,30 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-bar .input {
+  width: auto;
+  margin: 0;
+  flex: 1;
+}
+
+.search-bar .button {
+  margin: 0;
+  margin-left: -2px; /* Sovrappone il bordo sinistro del button al bordo destro dell'input */
+  margin-bottom: 0; /* Rimuove il margin-bottom di default del button */
+  box-sizing: border-box; /* Assicura che border sia incluso nell'altezza */
+  flex-shrink: 0;
+}
+
+/* Quando l'input è in focus, anche il button deve avere il bordo blu */
+.search-bar .input:focus + .button {
+  border-color: var(--blue-700);
+}
+
+/* Colore icona grey-700 invece di grey-900 */
+.search-bar .button__icon {
+  color: var(--grey-700);
+}
+

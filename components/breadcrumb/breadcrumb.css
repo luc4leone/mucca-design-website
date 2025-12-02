@@ -1,0 +1,32 @@
+.breadcrumb-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.breadcrumb-wrapper .breadcrumb {
+  margin-bottom: 0;
+}
+
+.breadcrumb__separator {
+  color: var(--grey-600);
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  font-size: 16px;
+}
+
+.breadcrumb__current {
+  color: var(--grey-700);
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+}
+

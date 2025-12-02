@@ -1,0 +1,443 @@
+/* Utility Classes
+ * 
+ * Classi helper single-purpose per layout e spacing.
+ * Usa queste invece di stili inline quando possibile.
+ */
+
+/* ========================================
+   DISPLAY UTILITIES
+   ======================================== */
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ========================================
+   FLEX UTILITIES
+   ======================================== */
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-baseline {
+  display: flex;
+  align-items: baseline;
+}
+
+.flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+/* ========================================
+   GAP UTILITIES (for flex/grid)
+   ======================================== */
+.gap-xs {
+  gap: var(--spacing-xs);
+}
+
+.gap-s {
+  gap: var(--spacing-s);
+}
+
+.gap-m {
+  gap: var(--spacing-m);
+}
+
+.gap-l {
+  gap: var(--spacing-l);
+}
+
+.gap-xl {
+  gap: var(--spacing-xl);
+}
+
+.gap-xxl {
+  gap: var(--spacing-xxl);
+}
+
+.gap-xxxl {
+  gap: var(--spacing-xxxl);
+}
+
+/* ========================================
+   MARGIN UTILITIES
+   ======================================== */
+
+/* Margin Bottom */
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-xs {
+  margin-bottom: var(--spacing-xs);
+}
+
+.mb-s {
+  margin-bottom: var(--spacing-s);
+}
+
+.mb-m {
+  margin-bottom: var(--spacing-m);
+}
+
+.mb-l {
+  margin-bottom: var(--spacing-l);
+}
+
+.mb-xl {
+  margin-bottom: var(--spacing-xl);
+}
+
+.mb-xxl {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.mb-xxxl {
+  margin-bottom: var(--spacing-xxxl);
+}
+
+/* Margin Top */
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-xs {
+  margin-top: var(--spacing-xs);
+}
+
+.mt-s {
+  margin-top: var(--spacing-s);
+}
+
+.mt-m {
+  margin-top: var(--spacing-m);
+}
+
+.mt-l {
+  margin-top: var(--spacing-l);
+}
+
+.mt-xl {
+  margin-top: var(--spacing-xl);
+}
+
+.mt-xxl {
+  margin-top: var(--spacing-xxl);
+}
+
+.mt-xxxl {
+  margin-top: var(--spacing-xxxl);
+}
+
+/* Margin Left */
+.ml-0 {
+  margin-left: 0;
+}
+
+.ml-xs {
+  margin-left: var(--spacing-xs);
+}
+
+.ml-s {
+  margin-left: var(--spacing-s);
+}
+
+.ml-m {
+  margin-left: var(--spacing-m);
+}
+
+.ml-l {
+  margin-left: var(--spacing-l);
+}
+
+.ml-xl {
+  margin-left: var(--spacing-xl);
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+/* Margin Right */
+.mr-0 {
+  margin-right: 0;
+}
+
+.mr-xs {
+  margin-right: var(--spacing-xs);
+}
+
+.mr-s {
+  margin-right: var(--spacing-s);
+}
+
+.mr-m {
+  margin-right: var(--spacing-m);
+}
+
+.mr-l {
+  margin-right: var(--spacing-l);
+}
+
+.mr-xl {
+  margin-right: var(--spacing-xl);
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+/* ========================================
+   PADDING UTILITIES
+   ======================================== */
+
+/* Padding All */
+.p-0 {
+  padding: 0;
+}
+
+.p-xs {
+  padding: var(--spacing-xs);
+}
+
+.p-s {
+  padding: var(--spacing-s);
+}
+
+.p-m {
+  padding: var(--spacing-m);
+}
+
+.p-l {
+  padding: var(--spacing-l);
+}
+
+.p-xl {
+  padding: var(--spacing-xl);
+}
+
+.p-xxl {
+  padding: var(--spacing-xxl);
+}
+
+.p-xxxl {
+  padding: var(--spacing-xxxl);
+}
+
+/* Padding Bottom */
+.pb-0 {
+  padding-bottom: 0;
+}
+
+.pb-xs {
+  padding-bottom: var(--spacing-xs);
+}
+
+.pb-s {
+  padding-bottom: var(--spacing-s);
+}
+
+.pb-m {
+  padding-bottom: var(--spacing-m);
+}
+
+.pb-l {
+  padding-bottom: var(--spacing-l);
+}
+
+.pb-xl {
+  padding-bottom: var(--spacing-xl);
+}
+
+/* Padding Top */
+.pt-0 {
+  padding-top: 0;
+}
+
+.pt-xs {
+  padding-top: var(--spacing-xs);
+}
+
+.pt-s {
+  padding-top: var(--spacing-s);
+}
+
+.pt-m {
+  padding-top: var(--spacing-m);
+}
+
+.pt-l {
+  padding-top: var(--spacing-l);
+}
+
+.pt-xl {
+  padding-top: var(--spacing-xl);
+}
+
+/* ========================================
+   WIDTH UTILITIES
+   ======================================== */
+.w-full {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+/* ========================================
+   TEXT UTILITIES
+   ======================================== */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+/* ========================================
+   POSITION UTILITIES
+   ======================================== */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+/* ========================================
+   VISIBILITY UTILITIES
+   ======================================== */
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/* ========================================
+   CURSOR UTILITIES
+   ======================================== */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/* ========================================
+   OVERFLOW UTILITIES
+   ======================================== */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}

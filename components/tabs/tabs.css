@@ -1,0 +1,29 @@
+.tabs {
+  display: flex;
+  gap: var(--spacing-xxl);
+}
+
+.tab {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-base);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--grey-500);
+  margin-bottom: 0;
+}
+
+.tab--active {
+  color: var(--grey-700);
+}
+
+.tab--large {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.tab--small {
+  font-size: var(--font-size-sm);
+}
+

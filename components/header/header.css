@@ -1,0 +1,29 @@
+/**
+ * Header Component
+ *
+ * Componente header principale con 4 sotto-componenti:
+ * - logo-with-clock
+ * - filter-bar
+ * - nuovo-oggetto
+ * - utilities (allineato a destra)
+ */
+
+.header {
+  display: flex;
+  align-items: center; /* Allineamento verticale al centro */
+  justify-content: space-between; /* utilities a destra */
+  width: 100%;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xxl); /* 24px tra le prime 3 componenti */
+}
+
+/* Larghezza fissa per input della filter-bar nel contesto header */
+.header .filter-bar .search-bar .input {
+  width: 340px; /* Input largo per definire larghezza sidebar */
+  flex: 0 0 auto; /* Disabilita flex-grow per usare width fisso */
+}
+

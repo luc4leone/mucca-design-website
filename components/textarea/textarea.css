@@ -1,0 +1,25 @@
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 2px solid var(--grey-700);
+  border-radius: 0;
+  background-color: var(--white);
+  padding: 12px;
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  font-size: 16px;
+  color: var(--grey-700);
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--blue-900);
+}
+
+.textarea::placeholder {
+  color: var(--grey-600);
+  font-style: italic;
+  font-size: 16px;
+}
+

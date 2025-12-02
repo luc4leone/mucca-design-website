@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabs</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles/variables.css" />
+    <link rel="stylesheet" href="../../styles/base.css" />
+    <link rel="stylesheet" href="./tabs.css" />
+    <link rel="stylesheet" href="../link/link.css" />
+    <link rel="stylesheet" href="../breadcrumb/breadcrumb.css" />
+    <link rel="stylesheet" href="../../styles/typography.css" />
+    <style>
+      .section-spacing {
+        margin-bottom: 40px;
+      }
+
+      .section-spacing .paragraph {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumb">
+      <a href="../../designsystem.html" class="link">home</a>
+      <span class="breadcrumb__separator">&lt;</span>
+      <span class="breadcrumb__current">tabs</span>
+    </nav>
+
+    <div class="section-spacing">
+      <p class="paragraph paragraph--1">Default</p>
+      <div class="tabs">
+        <span class="tab tab--active">Tab 1</span>
+        <span class="tab">Tab 2</span>
+      </div>
+    </div>
+
+    <div class="section-spacing">
+      <p class="paragraph paragraph--1">Small</p>
+      <div class="tabs">
+        <span class="tab tab--small tab--active">Tab 1</span>
+        <span class="tab tab--small">Tab 2</span>
+      </div>
+    </div>
+
+    <div class="section-spacing">
+      <p class="paragraph paragraph--1">Large (per titoli di sezione)</p>
+      <div class="tabs">
+        <span class="tab tab--large tab--active">Tab 1</span>
+        <span class="tab tab--large">Tab 2</span>
+      </div>
+    </div>
+
+    <script>
+      // Auto-hide navigation quando embedded in iframe
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("embedded") === "true") {
+        const style = document.createElement("style");
+        style.textContent = `
+          .breadcrumb {
+            display: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    </script>
+  </body>
+</html>

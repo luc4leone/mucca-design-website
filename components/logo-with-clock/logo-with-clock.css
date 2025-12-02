@@ -1,0 +1,14 @@
+.logo-with-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs); /* 4px */
+}
+
+.logo-with-clock__time {
+  font-family: var(--font-family-base);
+  font-weight: 500;
+  font-size: var(--font-size-xs); /* 12px */
+  color: var(--grey-700);
+}
+

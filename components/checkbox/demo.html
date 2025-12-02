@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkbox</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles/variables.css" />
+    <link rel="stylesheet" href="../../styles/base.css" />
+    <link rel="stylesheet" href="./checkbox.css" />
+    <link rel="stylesheet" href="../link/link.css" />
+    <link rel="stylesheet" href="../breadcrumb/breadcrumb.css" />
+    <link rel="stylesheet" href="../../styles/typography.css" />
+    <style>
+      .checkbox-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-l);
+      }
+
+      .checkbox .paragraph {
+        margin: 0;
+      }
+
+      .text-16 {
+        font-size: 16px;
+      }
+
+      .text-19 {
+        font-size: 19px;
+      }
+
+      .text-24 {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumb">
+      <a href="../../designsystem.html" class="link">home</a>
+      <span class="breadcrumb__separator">&lt;</span>
+      <span class="breadcrumb__current">checkbox</span>
+    </nav>
+
+    <div class="checkbox-list">
+      <!-- Checkbox Small (14px) -->
+      <label class="checkbox checkbox--small">
+        <input type="checkbox" class="checkbox__input" />
+        <span class="checkbox__label text-16">checkbox small (14px)</span>
+      </label>
+
+      <!-- Checkbox Base (16px) -->
+      <label class="checkbox">
+        <input type="checkbox" class="checkbox__input" />
+        <span class="checkbox__label text-19">checkbox base (16px)</span>
+      </label>
+
+      <!-- Checkbox Large (19px) -->
+      <label class="checkbox checkbox--large">
+        <input type="checkbox" class="checkbox__input" />
+        <span class="checkbox__label text-24">checkbox large (19px)</span>
+      </label>
+    </div>
+
+    <script>
+      // Auto-hide navigation quando embedded in iframe
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("embedded") === "true") {
+        const style = document.createElement("style");
+        style.textContent = `
+          .breadcrumb {
+            display: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    </script>
+  </body>
+</html>

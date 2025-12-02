@@ -1,0 +1,70 @@
+/**
+ * Tree Node Component
+ * 
+ * Componente per strutture ad albero espandibili/collassabili.
+ * Usa il link con chevron come toggle.
+ */
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+.tree-node {
+  /* Nessun margin esterno - gestito dal contesto */
+}
+
+.tree-node__toggle {
+  /* Eredita da link link--chevron-right */
+  cursor: pointer;
+}
+
+.tree-node__content {
+  display: none;
+  padding-left: var(--spacing-l); /* 16px - indentazione livelli */
+  padding-top: var(--spacing-s); /* 8px - spazio sopra il contenuto */
+}
+
+/* Spacing tra paragraph dentro il content */
+.tree-node__content > .paragraph {
+  margin-bottom: 0;
+}
+
+.tree-node__content > .paragraph + .paragraph {
+  margin-top: var(--spacing-s); /* 8px tra paragraph */
+}
+
+/* ========================================
+   Expanded State
+   ======================================== */
+
+.tree-node--expanded > .tree-node__content {
+  display: block;
+}
+
+/* Rotazione chevron quando espanso (180° = punta in alto) */
+.tree-node--expanded > .tree-node__toggle .link__chevron {
+  transform: rotate(180deg);
+}
+
+/* ========================================
+   Chevron Transition
+   ======================================== */
+
+.tree-node__toggle .link__chevron {
+  transition: transform var(--transition-fast);
+}
+
+/* ========================================
+   Nested Tree Nodes
+   ======================================== */
+
+/* I tree-node annidati ereditano lo stesso spacing */
+.tree-node__content .tree-node {
+  margin-top: var(--spacing-s); /* 8px - spazio tra nodi fratelli */
+}
+
+/* Primo nodo annidato non ha margin-top */
+.tree-node__content > .tree-node:first-child {
+  margin-top: 0;
+}
+
