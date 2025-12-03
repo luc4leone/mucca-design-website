@@ -23,8 +23,10 @@
   /* ========================================
      COLORS - Blue (Interactive)
      ======================================== */
-  --blue-950: #0241a7;
-  --blue-900: #0255d9;
+  /* --blue-950: #0241a7;
+  --blue-900: #0255d9; */
+  --blue-950: #00c;
+  --blue-900: #00f;
 
   /* ========================================
      COLORS - Semantic
@@ -45,7 +47,8 @@
   /* ========================================
      TYPOGRAPHY
      ======================================== */
-  --font-family-base: "Atkinson Hyperlegible Next", sans-serif;
+  --font-family-sans: "Assistant", sans-serif;
+  --font-family-serif: "PT Serif", serif;
 
   /* Font sizes */
   --font-size-xs: 12px;

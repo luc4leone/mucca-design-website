@@ -6,7 +6,7 @@
 .tab {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-sans);
   cursor: pointer;
   text-decoration: none;
   color: var(--grey-500);
@@ -26,4 +26,3 @@
 .tab--small {
   font-size: var(--font-size-sm);
 }
-

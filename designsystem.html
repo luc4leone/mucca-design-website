@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles/variables.css" />
@@ -36,7 +38,7 @@
         font-size: 16px;
         font-weight: 500;
         color: var(--grey-700);
-        font-family: "Atkinson Hyperlegible Next", sans-serif;
+        font-family: var(--font-family-sans);
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin: 0 0 var(--spacing-m) 0;
@@ -59,11 +61,12 @@
 
       .page-list__link {
         color: var(--blue-900);
-        font-family: "Atkinson Hyperlegible Next", sans-serif;
+        font-family: var(--font-family-sans);
         font-weight: 500;
-        font-size: 16px;
+        font-size: var(--font-size-sm);
         text-decoration: none;
         display: block;
+        text-transform: uppercase;
       }
 
       .page-list__link:hover {
@@ -98,68 +101,137 @@
   <body>
     <!-- Sidebar -->
     <aside class="sidebar">
+      <ul class="page-list">
+        <li class="page-list__item">
+          <a href="index.html" class="page-list__link">home</a>
+        </li>
+      </ul>
+
       <p class="sidebar-heading">Reference</p>
       <ul class="page-list">
         <li class="page-list__item">
-          <a href="reference/colors.html" class="page-list__link" data-target="iframe">colors</a>
+          <a
+            href="reference/colors.html"
+            class="page-list__link"
+            data-target="iframe"
+            >colors</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="reference/icons.html" class="page-list__link" data-target="iframe">icons</a>
+          <a
+            href="reference/icons.html"
+            class="page-list__link"
+            data-target="iframe"
+            >icons</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="reference/type.html" class="page-list__link" data-target="iframe">type</a>
+          <a
+            href="reference/type.html"
+            class="page-list__link"
+            data-target="iframe"
+            >type</a
+          >
         </li>
       </ul>
 
       <p class="sidebar-heading">Components</p>
       <ul class="page-list">
         <li class="page-list__item">
-          <a href="components/badge/demo.html" class="page-list__link" data-target="iframe">badge</a>
+          <a
+            href="components/badge/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >badge</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/button/demo.html" class="page-list__link" data-target="iframe">button</a>
+          <a
+            href="components/button/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >button</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/checkbox/demo.html" class="page-list__link" data-target="iframe">checkbox</a>
+          <a
+            href="components/checkbox/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >checkbox</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/dropdown/demo.html" class="page-list__link" data-target="iframe">dropdown</a>
+          <a
+            href="components/dropdown/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >dropdown</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/filter-bar/demo.html" class="page-list__link" data-target="iframe">filter-bar</a>
+          <a
+            href="components/header/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >header</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/header/demo.html" class="page-list__link" data-target="iframe">header</a>
+          <a
+            href="components/input/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >input</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/input/demo.html" class="page-list__link" data-target="iframe">input</a>
+          <a
+            href="components/link/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >link</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/link/demo.html" class="page-list__link" data-target="iframe">link</a>
+          <a
+            href="components/logo/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >logo</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/logo/demo.html" class="page-list__link" data-target="iframe">logo</a>
+          <a
+            href="components/search-bar/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >search-bar</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/logo-with-clock/demo.html" class="page-list__link" data-target="iframe">logo-with-clock</a>
+          <a
+            href="components/tabs/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >tabs</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/nuovo-oggetto/demo.html" class="page-list__link" data-target="iframe">nuovo-oggetto</a>
+          <a
+            href="components/textarea/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >textarea</a
+          >
         </li>
         <li class="page-list__item">
-          <a href="components/search-bar/demo.html" class="page-list__link" data-target="iframe">search-bar</a>
-        </li>
-        <li class="page-list__item">
-          <a href="components/tabs/demo.html" class="page-list__link" data-target="iframe">tabs</a>
-        </li>
-        <li class="page-list__item">
-          <a href="components/textarea/demo.html" class="page-list__link" data-target="iframe">textarea</a>
-        </li>
-        <li class="page-list__item">
-          <a href="components/tree-node/demo.html" class="page-list__link" data-target="iframe">tree-node</a>
-        </li>
-        <li class="page-list__item">
-          <a href="components/utilities/demo.html" class="page-list__link" data-target="iframe">utilities</a>
+          <a
+            href="components/tree-node/demo.html"
+            class="page-list__link"
+            data-target="iframe"
+            >tree-node</a
+          >
         </li>
       </ul>
     </aside>

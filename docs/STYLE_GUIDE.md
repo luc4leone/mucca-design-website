@@ -40,20 +40,30 @@ Usa sempre e solo questi valori per margin, padding, gap:
 
 ## Typography
 
-### Font Family
+### Font Families
 
-Tutto il progetto usa: `"Atkinson Hyperlegible Next", sans-serif`
+| Variabile | Font | Uso |
+|-----------|------|-----|
+| `--font-family-sans` | "Assistant", sans-serif | Headings, links, UI |
+| `--font-family-serif` | "PT Serif", serif | Paragraphs, body text |
 
 ### Heading Styles
 
-- **Heading 1**: 30px, weight 700, color grey-700
-- **Heading 2**: 24px, weight 700, color grey-700
-- **Heading 3**: 19px, weight 700, color grey-700
+- **Font**: `--font-family-sans`
+- **Heading 1**: 30px, weight 700, color grey-900
+- **Heading 2**: 24px, weight 700, color grey-900
+- **Heading 3**: 19px, weight 700, color grey-900
 
 ### Paragraph Styles
 
-- **Paragraph 1**: 16px, weight 500, color grey-700
+- **Font**: `--font-family-serif`
+- **Paragraph 1**: 16px, weight 500, color grey-900
 - **Paragraph 2**: 16px, color grey-600 (versione secondaria)
+
+### Link Styles
+
+- **Font**: `--font-family-sans`
+- **Color**: blue-900, hover blue-950
 
 ## Icon System
 

@@ -6,7 +6,7 @@
   padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
-  font-family: "Atkinson Hyperlegible Next", sans-serif;
+  font-family: var(--font-family-sans);
   display: block;
 }
 

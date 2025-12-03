@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Header</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -17,15 +19,7 @@
     <link rel="stylesheet" href="../../styles/typography.css" />
     <link rel="stylesheet" href="../link/link.css" />
     <link rel="stylesheet" href="../breadcrumb/breadcrumb.css" />
-    <link rel="stylesheet" href="../button/button.css" />
-    <link rel="stylesheet" href="../input/input.css" />
-    <link rel="stylesheet" href="../tabs/tabs.css" />
-    <link rel="stylesheet" href="../search-bar/search-bar.css" />
-    <link rel="stylesheet" href="../filter-bar/filter-bar.css" />
     <link rel="stylesheet" href="../logo/logo.css" />
-    <link rel="stylesheet" href="../logo-with-clock/logo-with-clock.css" />
-    <link rel="stylesheet" href="../nuovo-oggetto/nuovo-oggetto.css" />
-    <link rel="stylesheet" href="../utilities/utilities.css" />
     <link rel="stylesheet" href="./header.css" />
   </head>
   <body>
@@ -36,103 +30,7 @@
     </nav>
 
     <header class="header">
-      <!-- Left side: logo, filter-bar, nuovo-oggetto -->
-      <div class="header__left">
-        <!-- Logo with clock -->
-        <div class="logo-with-clock">
-          <span class="logo">M__</span>
-          <span class="logo-with-clock__time">12:37</span>
-        </div>
-
-        <!-- Filter bar -->
-        <div class="filter-bar">
-          <div class="filter-bar__top">
-            <div class="tabs">
-              <span class="tab tab--small tab--active">giornalisti</span>
-              <span class="tab tab--small">testate</span>
-            </div>
-            <a href="#" class="link link--small link--icon-left">
-              <span class="link__icon material-symbols-outlined"
-                >filter_list</span
-              >
-              filtri
-            </a>
-          </div>
-
-          <div class="search-bar">
-            <input type="text" class="input" placeholder="cerca" />
-            <button
-              class="button button--fixed-height button--hover-darken button--icon-only"
-            >
-              <span class="button__icon material-symbols-outlined"
-                >filter_alt</span
-              >
-            </button>
-          </div>
-
-          <div class="filter-bar__bottom">
-            <a href="#" class="link link--small link--icon-left">
-              <span class="link__icon material-symbols-outlined"
-                >database</span
-              >
-              banca dati
-            </a>
-          </div>
-        </div>
-
-        <!-- Nuovo oggetto -->
-        <div class="nuovo-oggetto">
-          <div class="nuovo-oggetto__header">
-            <div class="nuovo-oggetto__line"></div>
-            <span class="nuovo-oggetto__label">nuovo</span>
-            <div class="nuovo-oggetto__line"></div>
-          </div>
-
-          <div class="nuovo-oggetto__links">
-            <a href="#" class="link link--icon-left">
-              <span class="link__icon material-symbols-outlined"
-                >folder</span
-              >
-              progetto
-            </a>
-            <a href="#" class="link link--icon-left">
-              <span class="link__icon material-symbols-outlined">send</span>
-              spedizione
-            </a>
-            <a href="#" class="link link--icon-left">
-              <span class="link__icon material-symbols-outlined"
-                >campaign</span
-              >
-              comunicato
-            </a>
-            <a href="#" class="link link--icon-left">
-              <span class="link__icon material-symbols-outlined"
-                >check_small</span
-              >
-              to do
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right side: utilities -->
-      <div class="utilities">
-        <a href="#" class="link link--icon-left">
-          <span class="link__icon material-symbols-outlined"
-            >notifications</span
-          >
-          notifiche
-        </a>
-        <a href="#" class="link link--icon-left link--chevron-right">
-          <span class="link__icon material-symbols-outlined"
-            >account_circle</span
-          >
-          account
-          <span class="link__chevron material-symbols-outlined"
-            >arrow_drop_down</span
-          >
-        </a>
-      </div>
+      <span class="logo">M__</span>
     </header>
 
     <script>

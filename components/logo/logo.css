@@ -1,8 +1,7 @@
 .logo {
-  font-family: var(--font-family-base);
+  font-family: var(--font-family-sans);
   font-weight: 900;
   font-size: var(--font-size-xl); /* 24px */
   color: var(--grey-700);
   display: inline-block;
 }
-
