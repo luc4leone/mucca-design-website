@@ -169,6 +169,100 @@
         display: inline-flex;
         margin-top: var(--spacing-xxl);
       }
+
+      /* Modal */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: var(--z-modal);
+        padding: 5%;
+      }
+
+      .modal-overlay.is-open {
+        display: flex;
+      }
+
+      .modal {
+        background-color: var(--white);
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        position: relative;
+        padding: var(--spacing-xxl);
+      }
+
+      .modal__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--spacing-xxl);
+      }
+
+      .modal__title {
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--grey-900);
+        margin: 0;
+      }
+
+      .modal__close {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: var(--spacing-s);
+        color: var(--grey-600);
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .modal__close:hover {
+        color: var(--grey-900);
+      }
+
+      .modal__content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xxl);
+      }
+
+      .modal__section-title {
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-bold);
+        color: var(--grey-900);
+        margin: 0 0 var(--spacing-m) 0;
+      }
+
+      .modal__section-text {
+        font-family: var(--font-family-serif);
+        font-size: var(--font-size-base);
+        color: var(--grey-900);
+        line-height: var(--line-height-relaxed);
+        margin: 0;
+      }
+
+      .modal__list {
+        list-style: disc;
+        padding-left: var(--spacing-xl);
+        margin: var(--spacing-m) 0 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-s);
+      }
+
+      .modal__list-item {
+        font-family: var(--font-family-serif);
+        font-size: var(--font-size-base);
+        color: var(--grey-900);
+        line-height: var(--line-height-relaxed);
+      }
     </style>
   </head>
   <body>
@@ -326,10 +420,68 @@
         </li>
       </ul>
 
-      <a href="#" class="link link--chevron-right section__link">
+      <a
+        href="#"
+        class="link link--chevron-right section__link"
+        data-modal="modal-metodo"
+      >
         Il metodo nei dettagli
       </a>
     </section>
+
+    <!-- Modal: Il metodo nei dettagli -->
+    <div class="modal-overlay" id="modal-metodo">
+      <div class="modal">
+        <header class="modal__header">
+          <h2 class="modal__title">Il metodo nei dettagli</h2>
+          <button class="modal__close" aria-label="Chiudi">&times;</button>
+        </header>
+
+        <div class="modal__content">
+          <div class="modal__section">
+            <h3 class="modal__section-title">Perché funziona</h3>
+            <p class="modal__section-text">
+              Agli studenti piace il mio modo pratico di insegnare, sempre
+              ancorato alla mia esperienza lavorativa. Non parlo mai di cose che
+              non ho sperimentato in prima persona. Il vero successo lo vedo
+              quando affrontano nuove sfide con sicurezza e autonomia.
+            </p>
+          </div>
+
+          <div class="modal__section">
+            <h3 class="modal__section-title">Il modello "bottega"</h3>
+            <p class="modal__section-text">
+              L'allievo osserva, poi prova. Io guardo e correggo. È il modo più
+              antico ed efficace di trasferire un mestiere.
+            </p>
+          </div>
+
+          <div class="modal__section">
+            <h3 class="modal__section-title">Designer Mindset</h3>
+            <p class="modal__section-text">
+              L'insegnante migliore non trasferisce solo nozioni — trasferisce
+              un modo di pensare. È questo che ti resterà quando le mode
+              passeranno e gli strumenti cambieranno.
+            </p>
+          </div>
+
+          <div class="modal__section">
+            <h3 class="modal__section-title">I miei principi</h3>
+            <ul class="modal__list">
+              <li class="modal__list-item">
+                L'interesse dello studente viene prima del resto
+              </li>
+              <li class="modal__list-item">
+                I principi di design vengono prima delle mode
+              </li>
+              <li class="modal__list-item">
+                Ogni studente merita attenzione individuale
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
     <script>
@@ -359,5 +511,49 @@
       annotationUnderline.show();
     </script>
     <script src="components/link/link.js"></script>
+    <script>
+      // Modal functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const modalTriggers = document.querySelectorAll("[data-modal]");
+
+        modalTriggers.forEach(function (trigger) {
+          const modalId = trigger.getAttribute("data-modal");
+          const modal = document.getElementById(modalId);
+
+          if (!modal) return;
+
+          const closeBtn = modal.querySelector(".modal__close");
+
+          // Open modal
+          trigger.addEventListener("click", function (e) {
+            e.preventDefault();
+            modal.classList.add("is-open");
+            document.body.style.overflow = "hidden";
+          });
+
+          // Close on button click
+          closeBtn.addEventListener("click", function () {
+            modal.classList.remove("is-open");
+            document.body.style.overflow = "";
+          });
+
+          // Close on overlay click
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+              modal.classList.remove("is-open");
+              document.body.style.overflow = "";
+            }
+          });
+
+          // Close on Escape key
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && modal.classList.contains("is-open")) {
+              modal.classList.remove("is-open");
+              document.body.style.overflow = "";
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>
