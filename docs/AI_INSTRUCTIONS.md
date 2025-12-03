@@ -8,6 +8,7 @@ Questo file contiene le regole e checklist da seguire quando lavori su questo pr
 
 1. **`AI_INSTRUCTIONS.md`** (questo file) - Processi, workflow, checklist
 2. **`STYLE_GUIDE.md`** - Spacing, colors, typography, icons, convenzioni CSS
+3. **`ROUGH_NOTATION.md`** - Documentazione libreria per annotazioni hand-drawn
 
 ## Struttura Progetto
 
@@ -181,6 +182,53 @@ Dopo una modifica:
 **Soluzione**: [cosa è stato fatto]
 **Verifica**: [cosa controllare]
 ```
+
+## Rough Notation
+
+Libreria per creare annotazioni hand-drawn (underline, circle, box, highlight, etc.).
+
+### Setup
+
+```html
+<script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+```
+
+### Uso Base
+
+```javascript
+// Wrappa il testo da annotare in uno span con id
+// <span id="mio-elemento">testo</span>
+
+const elemento = document.querySelector('#mio-elemento');
+const annotation = RoughNotation.annotate(elemento, {
+  type: 'circle',    // underline, box, circle, highlight, strike-through, crossed-off, bracket
+  animate: false,    // true per animazione
+  color: 'currentColor'
+});
+annotation.show();
+```
+
+### Tipi disponibili
+
+- `underline` - sottolineatura sketchy
+- `box` - box attorno all'elemento
+- `circle` - cerchio attorno all'elemento
+- `highlight` - effetto evidenziatore
+- `strike-through` - linea orizzontale che attraversa
+- `crossed-off` - X sull'elemento
+- `bracket` - parentesi (configurabile: left, right, top, bottom)
+
+### Opzioni comuni
+
+| Opzione | Default | Descrizione |
+|---------|---------|-------------|
+| `animate` | `true` | Abilita/disabilita animazione |
+| `animationDuration` | `800` | Durata animazione in ms |
+| `color` | `currentColor` | Colore del tratto |
+| `strokeWidth` | `1` | Spessore del tratto |
+| `padding` | `5` | Padding in px (o array [top, right, bottom, left]) |
+
+Per documentazione completa: `docs/ROUGH_NOTATION.md`
 
 ## Escalation
 

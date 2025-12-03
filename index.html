@@ -13,13 +13,127 @@
     <link rel="stylesheet" href="styles/variables.css" />
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/typography.css" />
-    <script
-      src="https://kit.fontawesome.com/1c1a013fb7.js"
-      crossorigin="anonymous"
-    ></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px 16px;
+        background-color: var(--white);
+      }
+
+      .section {
+        max-width: 375px;
+        margin: 0 auto;
+      }
+
+      .section__title {
+        font-family: var(--font-family-sans);
+        font-size: 30px;
+        font-weight: 900;
+        color: var(--grey-900);
+        margin: 0 0 var(--spacing-xxl) 0;
+        line-height: 1;
+      }
+
+      .section__text {
+        font-family: var(--font-family-serif);
+        font-size: 17px;
+        font-weight: var(--font-weight-normal);
+        color: var(--grey-900);
+        line-height: var(--line-height-relaxed);
+        letter-spacing: 0.1px;
+        margin: 0 0 var(--spacing-xxl) 0;
+      }
+
+      .section__text p {
+        margin: 0 0 var(--spacing-l) 0;
+      }
+
+      .section__text p:last-child {
+        margin-bottom: 0;
+      }
+
+      .video-placeholder {
+        background-color: var(--grey-200);
+        border: 2px dashed var(--grey-400);
+        padding: var(--spacing-xxl);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-m);
+        min-height: 200px;
+      }
+
+      .video-placeholder__icon {
+        font-size: 48px;
+        color: var(--grey-500);
+      }
+
+      .video-placeholder__label {
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--grey-600);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .video-placeholder__description {
+        font-family: var(--font-family-serif);
+        font-size: var(--font-size-sm);
+        color: var(--grey-600);
+        text-align: center;
+        line-height: var(--line-height-normal);
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
-    <h1>Home Page</h1>
-    <i class="fa-solid fa-house" style="color: #bc24b0"></i>
+    <section class="section">
+      <h2 class="section__title">
+        Che <span id="esperienza">esperienza</span> ti aspetta
+      </h2>
+
+      <div class="section__text">
+        <p>Andrea sta sketchando una funzionalità. È concentrata.</p>
+        <p>
+          La osservo, intervengo se necessario. Poche parole di solito bastano.
+          Per farla riflettere, per indirizzarla.
+        </p>
+        <p>
+          <span id="citazione"
+            >"e se non chiedi all'utente conferma di voler cancellare i suoi
+            dati?" le chiedo.</span
+          >
+        </p>
+      </div>
+
+      <div class="video-placeholder">
+        <span class="video-placeholder__icon">▶</span>
+        <span class="video-placeholder__label">Video</span>
+        <p class="video-placeholder__description">
+          Quando Andrea e Roberto hanno fatto l'esercizio Media Contacts:
+          "Disegna – Condividi – Lista".
+        </p>
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+    <script>
+      const esperienza = document.querySelector("#esperienza");
+      const annotationCircle = RoughNotation.annotate(esperienza, {
+        type: "circle",
+        animate: false,
+      });
+      annotationCircle.show();
+
+      const citazione = document.querySelector("#citazione");
+      const annotationBracket = RoughNotation.annotate(citazione, {
+        type: "bracket",
+        animate: false,
+        brackets: ["left", "right"],
+      });
+      annotationBracket.show();
+    </script>
   </body>
 </html>
