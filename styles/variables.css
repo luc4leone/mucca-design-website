@@ -51,10 +51,10 @@
   --font-family-serif: "PT Serif", serif;
 
   /* Font sizes */
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-base: 16px;
-  --font-size-lg: 19px;
+  --font-size-xs: 13px;
+  --font-size-sm: 15px;
+  --font-size-base: 18px;
+  --font-size-lg: 21px;
   --font-size-xl: 24px;
   --font-size-2xl: 30px;
 
@@ -62,8 +62,10 @@
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
+  --font-weight-black: 900;
 
   /* Line heights */
+  --line-height-none: 1;
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
