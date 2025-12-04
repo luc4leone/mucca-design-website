@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typography</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/variables.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/typography.css" />
+    <link rel="stylesheet" href="../components/link/link.css" />
+    <link rel="stylesheet" href="../components/breadcrumb/breadcrumb.css" />
+    <style>
+      .demo-section {
+        margin-bottom: var(--spacing-xxxl);
+        padding-bottom: var(--spacing-xxxl);
+        border-bottom: 1px solid var(--grey-300);
+      }
+
+      .demo-section:last-child {
+        border-bottom: none;
+      }
+
+      .demo-label {
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-xs);
+        color: var(--grey-500);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: var(--spacing-s);
+      }
+
+      .demo-item {
+        margin-bottom: var(--spacing-xl);
+      }
+
+      .demo-item:last-child {
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="breadcrumb">
+      <a href="../designsystem.html" class="link">home</a>
+      <span class="breadcrumb__separator">&lt;</span>
+      <span class="breadcrumb__current">typography</span>
+    </nav>
+
+    <!-- TITLES -->
+    <section class="demo-section">
+      <p class="demo-label">.title</p>
+      <div class="demo-item">
+        <p class="demo-label">default (30px, bold)</p>
+        <h2 class="title">Titolo principale di sezione</h2>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.title.title--md (24px, bold)</p>
+        <h3 class="title title--md">Titolo medio</h3>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.title.title--sm (21px, bold)</p>
+        <h4 class="title title--sm">Sottotitolo</h4>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.title.title--sm.title--uppercase (19px)</p>
+        <h4 class="title title--sm title--uppercase">Categoria</h4>
+      </div>
+    </section>
+
+    <!-- TEXT -->
+    <section class="demo-section">
+      <p class="demo-label">.text</p>
+      <div class="demo-item">
+        <p class="demo-label">default (18px)</p>
+        <p class="text">
+          Questo è un paragrafo di testo principale. Usa il font Inter con
+          line-height rilassata per una lettura confortevole. È pensato per
+          contenuti narrativi e descrittivi.
+        </p>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.text.text--sm (15px)</p>
+        <p class="text text--sm">
+          Testo più piccolo per note secondarie, descrizioni aggiuntive o
+          contenuti meno prominenti.
+        </p>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.text.text--xs (13px)</p>
+        <p class="text text--xs">
+          Testo extra small per disclaimer, metadata, timestamp.
+        </p>
+      </div>
+    </section>
+
+    <!-- CAPTION -->
+    <section class="demo-section">
+      <p class="demo-label">.caption</p>
+      <div class="demo-item">
+        <p class="demo-label">15px, italic, grey-600</p>
+        <p class="caption">— Didascalia, attribuzione o nota a piè di pagina</p>
+      </div>
+    </section>
+
+    <!-- LABEL -->
+    <section class="demo-section">
+      <p class="demo-label">.label</p>
+      <div class="demo-item">
+        <p class="demo-label">15px, uppercase, grey-600</p>
+        <span class="label">Etichetta categoria</span>
+      </div>
+    </section>
+
+    <!-- MODIFIERS -->
+    <section class="demo-section">
+      <p class="demo-label">Modifiers</p>
+      <div class="demo-item">
+        <p class="demo-label">.text.text--muted</p>
+        <p class="text text--muted">Testo con colore attenuato (grey-600)</p>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.text.text--bold</p>
+        <p class="text text--bold">Testo in grassetto</p>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.text.text--medium</p>
+        <p class="text text--medium">Testo con peso medium</p>
+      </div>
+
+      <div class="demo-item">
+        <p class="demo-label">.text.text--italic</p>
+        <p class="text text--italic">Testo in corsivo</p>
+      </div>
+    </section>
+
+    <!-- MARGIN UTILITIES -->
+    <section class="demo-section">
+      <p class="demo-label">Margin Bottom Utilities</p>
+      <div class="demo-item">
+        <p class="demo-label">.mb-s, .mb-m, .mb-l, .mb-xl, .mb-xxl</p>
+        <p class="text mb-xxl">Questo paragrafo ha margin-bottom XXL (24px)</p>
+        <p class="text mb-l">Questo paragrafo ha margin-bottom L (16px)</p>
+        <p class="text">Questo paragrafo non ha margin-bottom</p>
+      </div>
+    </section>
+
+    <script>
+      // Auto-hide navigation quando embedded in iframe
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("embedded") === "true") {
+        const style = document.createElement("style");
+        style.textContent = `
+          .breadcrumb {
+            display: none !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    </script>
+  </body>
+</html>
+

@@ -8,6 +8,7 @@
   font-family: var(--font-family-sans);
   font-size: 16px;
   color: var(--grey-700);
+  letter-spacing: 0.2px;
   box-sizing: border-box;
   resize: vertical;
 }

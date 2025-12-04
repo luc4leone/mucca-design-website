@@ -4,6 +4,7 @@
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-base);
   text-decoration: none;
+  letter-spacing: 0.2px;
 }
 
 .link:hover {
@@ -94,6 +95,7 @@
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-base);
   text-decoration: none;
+  letter-spacing: 0.2px;
   white-space: nowrap;
 }
 

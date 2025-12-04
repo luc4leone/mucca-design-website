@@ -1,7 +1,8 @@
 .logo {
   font-family: var(--font-family-sans);
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-xl); /* 24px */
   color: var(--grey-700);
+  letter-spacing: 0.2px;
   display: inline-block;
 }

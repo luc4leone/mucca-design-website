@@ -21,6 +21,7 @@
   color: var(--grey-600);
   font-family: var(--font-family-sans);
   font-size: 16px;
+  letter-spacing: 0.2px;
 }
 
 .breadcrumb__current {
@@ -28,5 +29,6 @@
   font-family: var(--font-family-sans);
   font-weight: 500;
   font-size: 16px;
+  letter-spacing: 0.2px;
 }
 

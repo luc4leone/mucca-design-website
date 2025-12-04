@@ -44,21 +44,41 @@ Usa sempre e solo questi valori per margin, padding, gap:
 
 | Variabile | Font | Uso |
 |-----------|------|-----|
-| `--font-family-sans` | "Assistant", sans-serif | Headings, links, UI |
-| `--font-family-serif` | "PT Serif", serif | Paragraphs, body text |
+| `--font-family-sans` | "Scorekard", sans-serif | Titles, links, UI |
+| `--font-family-serif` | "Inter", sans-serif | Text, body content |
 
-### Heading Styles
+### Typography Classes (typography.css)
 
-- **Font**: `--font-family-sans`
-- **Heading 1**: 30px, weight 700, color grey-900
-- **Heading 2**: 24px, weight 700, color grey-900
-- **Heading 3**: 19px, weight 700, color grey-900
+Usa queste classi per applicare stili tipografici coerenti:
 
-### Paragraph Styles
+#### Titles (font-sans)
 
-- **Font**: `--font-family-serif`
-- **Paragraph 1**: 16px, weight 500, color grey-900
-- **Paragraph 2**: 16px, color grey-600 (versione secondaria)
+| Classe | Size | Weight | Uso |
+|--------|------|--------|-----|
+| `.title` | 30px | 900 (black) | Titoli di sezione (h2) |
+| `.title.title--md` | 24px | 700 (bold) | Titoli modal, h3 |
+| `.title.title--sm` | 21px | 700 (bold) | Sottotitoli, h4 |
+
+#### Text (font-serif)
+
+| Classe | Size | Uso |
+|--------|------|-----|
+| `.text` | 18px | Corpo testo principale |
+| `.text.text--sm` | 15px | Testi secondari, note |
+| `.text.text--xs` | 13px | Disclaimer, metadata |
+
+#### Altri
+
+| Classe | Uso |
+|--------|-----|
+| `.caption` | Didascalie (15px, italic, grey-600) |
+| `.label` | Etichette UI (15px, uppercase, grey-600) |
+
+#### Modifiers
+
+- `.text--muted` - Colore grigio-600
+- `.text--bold` - Font-weight bold
+- `.text--italic` - Italic
 
 ### Link Styles
 

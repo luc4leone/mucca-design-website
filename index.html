@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles/variables.css" />
@@ -36,26 +36,15 @@
       }
 
       .section__title {
-        font-family: var(--font-family-sans);
-        font-size: var(--font-size-2xl);
-        font-weight: var(--font-weight-black);
-        color: var(--grey-900);
-        margin: 0 0 var(--spacing-xxl) 0;
-        line-height: var(--line-height-none);
+        margin-bottom: var(--spacing-xxl);
       }
 
       .section__text {
-        font-family: var(--font-family-serif);
-        font-size: var(--font-size-base);
-        font-weight: var(--font-weight-normal);
-        color: var(--grey-900);
-        line-height: var(--line-height-relaxed);
-        letter-spacing: 0.1px;
-        margin: 0 0 var(--spacing-xxl) 0;
+        margin-bottom: var(--spacing-xxl);
       }
 
       .section__text p {
-        margin: 0 0 var(--spacing-l) 0;
+        margin-bottom: var(--spacing-l);
       }
 
       .section__text p:last-child {
@@ -124,11 +113,6 @@
       }
 
       .example-list__item {
-        font-family: var(--font-family-serif);
-        font-size: var(--font-size-base);
-        color: var(--grey-900);
-        line-height: var(--line-height-relaxed);
-        letter-spacing: 0.1px;
         display: flex;
         gap: var(--spacing-s);
       }
@@ -142,10 +126,6 @@
       }
 
       .section__caption {
-        font-family: var(--font-family-serif);
-        font-size: var(--font-size-sm);
-        font-style: italic;
-        color: var(--grey-600);
         margin-top: var(--spacing-l);
       }
 
@@ -158,12 +138,7 @@
         gap: var(--spacing-l);
       }
 
-      .approach-list__item {
-        font-family: var(--font-family-serif);
-        font-size: var(--font-size-base);
-        color: var(--grey-900);
-        line-height: var(--line-height-relaxed);
-      }
+      /* .approach-list__item usa .text */
 
       .section__link {
         display: inline-flex;
@@ -204,13 +179,7 @@
         margin-bottom: var(--spacing-xxl);
       }
 
-      .modal__title {
-        font-family: var(--font-family-sans);
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--grey-900);
-        margin: 0;
-      }
+      /* .modal__title usa .title.title--md */
 
       .modal__close {
         background: none;
@@ -233,20 +202,10 @@
       }
 
       .modal__section-title {
-        font-family: var(--font-family-sans);
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-bold);
-        color: var(--grey-900);
-        margin: 0 0 var(--spacing-m) 0;
+        margin-bottom: var(--spacing-m);
       }
 
-      .modal__section-text {
-        font-family: var(--font-family-serif);
-        font-size: var(--font-size-base);
-        color: var(--grey-900);
-        line-height: var(--line-height-relaxed);
-        margin: 0;
-      }
+      /* .modal__section-text usa .text */
 
       .modal__list {
         list-style: disc;
@@ -257,21 +216,16 @@
         gap: var(--spacing-s);
       }
 
-      .modal__list-item {
-        font-family: var(--font-family-serif);
-        font-size: var(--font-size-base);
-        color: var(--grey-900);
-        line-height: var(--line-height-relaxed);
-      }
+      /* .modal__list-item usa .text */
     </style>
   </head>
   <body>
     <section class="section">
-      <h2 class="section__title">
+      <h2 class="section__title title">
         Che <span id="esperienza">esperienza</span> ti aspetta?
       </h2>
 
-      <div class="section__text">
+      <div class="section__text text">
         <p>Andrea sta sketchando una funzionalità. È concentrata.</p>
         <p>
           La osservo, intervengo se necessario. Poche parole di solito bastano.
@@ -309,7 +263,7 @@
       </a>
 
       <ul class="example-list" id="example-list">
-        <li class="example-list__item">
+        <li class="example-list__item text">
           <span class="example-list__emoji">👉🏻</span>
           <span
             ><strong>Lezione 1, minuto 15</strong>: stai già disegnando la tua
@@ -318,7 +272,7 @@
             affronterei.</span
           >
         </li>
-        <li class="example-list__item">
+        <li class="example-list__item text">
           <span class="example-list__emoji">👉🏻</span>
           <span
             ><strong>Su Discord, scrivo in privato a Marco</strong>: "Osserva
@@ -328,7 +282,7 @@
             nell'interfaccia."</span
           >
         </li>
-        <li class="example-list__item">
+        <li class="example-list__item text">
           <span class="example-list__emoji">👉🏻</span>
           <span
             ><strong>Durante un Ricevimento Studenti</strong>: "Quali problemi
@@ -336,7 +290,7 @@
             di Amazon? Ridisegnamola in modo da eliminare il problema".</span
           >
         </li>
-        <li class="example-list__item">
+        <li class="example-list__item text">
           <span class="example-list__emoji">👉🏻</span>
           <span
             ><strong>Anna apre una issue su Github</strong>: "Ciao Luca, vorrei
@@ -350,9 +304,11 @@
     </section>
 
     <section class="section">
-      <h2 class="section__title">Ciao, mi chiamo Luca Leone 👋</h2>
+      <h2 class="section__title title">
+        Ciao, mi chiamo <span id="luca-leone">Luca Leone</span> 👋
+      </h2>
 
-      <div class="section__text">
+      <div class="section__text text">
         <p>
           Ho iniziato nel 2012 disegnando un e-commerce che vendeva numeri
           verdi. Mi occupavo di digital marketing durante il giorno. La sera
@@ -368,16 +324,18 @@
         </p>
         <p>
           Nel 2024 ho avuto l'opportunità di insegnare UX/UI Design per Boolean.
-          Nonostante i dubbi iniziali, dubbi sulla mia capacità di spiegare ciò
-          che so, l'esperienza si è rivelata straordinaria.
+          Nonostante i dubbi iniziali, (<em
+            >sarò in grado di insegnare ciò che so?</em
+          >
+          🤔), l'esperienza si è rivelata straordinaria.
         </p>
       </div>
     </section>
 
     <section class="section">
-      <h2 class="section__title">
+      <h3 class="section__title title">
         "Luca Leone dovrebbe avere un corso tutto suo"
-      </h2>
+      </h3>
 
       <ul class="blockquote-list">
         <li>
@@ -399,22 +357,24 @@
         </li>
       </ul>
 
-      <p class="section__caption">— Recensioni anonime, corso Boolean 2024</p>
+      <p class="section__caption caption">
+        — Recensioni anonime, corso Boolean 2024
+      </p>
     </section>
 
     <section class="section">
-      <h2 class="section__title">Il mio approccio</h2>
+      <h2 class="section__title title">Il mio approccio</h2>
 
       <ul class="approach-list">
-        <li class="approach-list__item">
+        <li class="approach-list__item text">
           <strong>Feedback personalizzato</strong> — call 1:1 con me,
           ricevimento studenti, chat
         </li>
-        <li class="approach-list__item">
+        <li class="approach-list__item text">
           <strong>Si impara disegnando</strong> — niente slide; teoria 20%,
           pratica 80%; il cuore sono esempi, esercizi e progetti reali
         </li>
-        <li class="approach-list__item">
+        <li class="approach-list__item text">
           <strong>L'obiettivo è renderti autonomo</strong> — a fine corso non
           avrai bisogno di altri corsi / tutorial
         </li>
@@ -433,14 +393,16 @@
     <div class="modal-overlay" id="modal-metodo">
       <div class="modal">
         <header class="modal__header">
-          <h2 class="modal__title">Il metodo nei dettagli</h2>
+          <h2 class="modal__title title title--md">Il metodo nei dettagli</h2>
           <button class="modal__close" aria-label="Chiudi">&times;</button>
         </header>
 
         <div class="modal__content">
           <div class="modal__section">
-            <h3 class="modal__section-title">Perché funziona</h3>
-            <p class="modal__section-text">
+            <h3 class="modal__section-title title title--sm">
+              Perché funziona
+            </h3>
+            <p class="modal__section-text text">
               Agli studenti piace il mio modo pratico di insegnare, sempre
               ancorato alla mia esperienza lavorativa. Non parlo mai di cose che
               non ho sperimentato in prima persona. Il vero successo lo vedo
@@ -449,16 +411,20 @@
           </div>
 
           <div class="modal__section">
-            <h3 class="modal__section-title">Il modello "bottega"</h3>
-            <p class="modal__section-text">
+            <h3 class="modal__section-title title title--sm">
+              Il modello "bottega"
+            </h3>
+            <p class="modal__section-text text">
               L'allievo osserva, poi prova. Io guardo e correggo. È il modo più
               antico ed efficace di trasferire un mestiere.
             </p>
           </div>
 
           <div class="modal__section">
-            <h3 class="modal__section-title">Designer Mindset</h3>
-            <p class="modal__section-text">
+            <h3 class="modal__section-title title title--sm">
+              Designer Mindset
+            </h3>
+            <p class="modal__section-text text">
               L'insegnante migliore non trasferisce solo nozioni — trasferisce
               un modo di pensare. È questo che ti resterà quando le mode
               passeranno e gli strumenti cambieranno.
@@ -466,15 +432,17 @@
           </div>
 
           <div class="modal__section">
-            <h3 class="modal__section-title">I miei principi</h3>
+            <h3 class="modal__section-title title title--sm">
+              I miei principi
+            </h3>
             <ul class="modal__list">
-              <li class="modal__list-item">
+              <li class="modal__list-item text">
                 L'interesse dello studente viene prima del resto
               </li>
-              <li class="modal__list-item">
+              <li class="modal__list-item text">
                 I principi di design vengono prima delle mode
               </li>
-              <li class="modal__list-item">
+              <li class="modal__list-item text">
                 Ogni studente merita attenzione individuale
               </li>
             </ul>
@@ -485,26 +453,33 @@
 
     <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
     <script>
+      // Get CSS variable value
+      const pink300 = getComputedStyle(document.documentElement)
+        .getPropertyValue("--pink-300")
+        .trim();
+
       const esperienza = document.querySelector("#esperienza");
       const annotationCircle = RoughNotation.annotate(esperienza, {
         type: "box",
         animate: false,
-        color: "#f9a8d4",
+        color: pink300,
+        strokeWidth: 4,
       });
       annotationCircle.show();
 
-      const citazione = document.querySelector("#citazione");
-      const annotationBracket = RoughNotation.annotate(citazione, {
-        type: "bracket",
+      const lucaLeone = document.querySelector("#luca-leone");
+      const annotationLucaLeone = RoughNotation.annotate(lucaLeone, {
+        type: "underline",
         animate: false,
-        // color: "#f9a8d4",
-        brackets: ["left", "right"],
+        color: pink300,
+        strokeWidth: 4,
       });
-      annotationBracket.show();
+      annotationLucaLeone.show();
 
       const semplicita = document.querySelector("#semplicita");
       const annotationUnderline = RoughNotation.annotate(semplicita, {
-        type: "underline",
+        type: "highlight",
+        color: "#fde047",
         animate: false,
         multiline: true,
       });

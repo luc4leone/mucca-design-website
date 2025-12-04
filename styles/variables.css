@@ -5,6 +5,36 @@
  * Usa sempre queste variabili, mai valori hardcoded.
  */
 
+/* ========================================
+   FONT FACES
+   ======================================== */
+@font-face {
+  font-family: "Scorekard";
+  src: url("../Scorekard/Scorekard-Regular.woff2") format("woff2"),
+    url("../Scorekard/Scorekard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Scorekard";
+  src: url("../Scorekard/Scorekard-Semibold.woff2") format("woff2"),
+    url("../Scorekard/Scorekard-Semibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Scorekard";
+  src: url("../Scorekard/Scorekard-Bold.woff2") format("woff2"),
+    url("../Scorekard/Scorekard-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* ========================================
      COLORS - Grey Scale
@@ -29,6 +59,11 @@
   --blue-900: #00f;
 
   /* ========================================
+     COLORS - Pink (Accent)
+     ======================================== */
+  --pink-300: #f9a8d4;
+
+  /* ========================================
      COLORS - Semantic
      ======================================== */
   --white: #fcfcfd;
@@ -47,8 +82,8 @@
   /* ========================================
      TYPOGRAPHY
      ======================================== */
-  --font-family-sans: "Assistant", sans-serif;
-  --font-family-serif: "PT Serif", serif;
+  --font-family-sans: "Scorekard", sans-serif;
+  --font-family-serif: "Inter", sans-serif;
 
   /* Font sizes */
   --font-size-xs: 13px;
@@ -60,9 +95,8 @@
 
   /* Font weights */
   --font-weight-normal: 400;
-  --font-weight-medium: 500;
+  --font-weight-medium: 600;
   --font-weight-bold: 700;
-  --font-weight-black: 900;
 
   /* Line heights */
   --line-height-none: 1;

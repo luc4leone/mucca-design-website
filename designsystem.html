@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles/variables.css" />
@@ -35,12 +35,6 @@
 
       /* Sidebar headings */
       .sidebar-heading {
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--grey-700);
-        font-family: var(--font-family-sans);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
         margin: 0 0 var(--spacing-m) 0;
       }
 
@@ -60,17 +54,8 @@
       }
 
       .page-list__link {
-        color: var(--blue-900);
-        font-family: var(--font-family-sans);
-        font-weight: 500;
-        font-size: var(--font-size-sm);
-        text-decoration: none;
         display: block;
-        text-transform: uppercase;
-      }
-
-      .page-list__link:hover {
-        color: var(--blue-950);
+        /* font-size: var(--font-size-sm); */
       }
 
       /* Content area */
@@ -103,16 +88,16 @@
     <aside class="sidebar">
       <ul class="page-list">
         <li class="page-list__item">
-          <a href="index.html" class="page-list__link">home</a>
+          <a href="index.html" class="page-list__link link">home</a>
         </li>
       </ul>
 
-      <p class="sidebar-heading">Reference</p>
+      <p class="sidebar-heading title title--sm title--uppercase">Reference</p>
       <ul class="page-list">
         <li class="page-list__item">
           <a
             href="reference/colors.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >colors</a
           >
@@ -120,27 +105,27 @@
         <li class="page-list__item">
           <a
             href="reference/icons.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >icons</a
           >
         </li>
         <li class="page-list__item">
           <a
-            href="reference/type.html"
-            class="page-list__link"
+            href="reference/typography.html"
+            class="page-list__link link"
             data-target="iframe"
-            >type</a
+            >typography</a
           >
         </li>
       </ul>
 
-      <p class="sidebar-heading">Components</p>
+      <p class="sidebar-heading title title--sm title--uppercase">Components</p>
       <ul class="page-list">
         <li class="page-list__item">
           <a
             href="components/badge/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >badge</a
           >
@@ -148,7 +133,7 @@
         <li class="page-list__item">
           <a
             href="components/blockquote/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >blockquote</a
           >
@@ -156,7 +141,7 @@
         <li class="page-list__item">
           <a
             href="components/button/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >button</a
           >
@@ -164,7 +149,7 @@
         <li class="page-list__item">
           <a
             href="components/checkbox/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >checkbox</a
           >
@@ -172,7 +157,7 @@
         <li class="page-list__item">
           <a
             href="components/dropdown/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >dropdown</a
           >
@@ -180,7 +165,7 @@
         <li class="page-list__item">
           <a
             href="components/header/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >header</a
           >
@@ -188,7 +173,7 @@
         <li class="page-list__item">
           <a
             href="components/input/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >input</a
           >
@@ -196,7 +181,7 @@
         <li class="page-list__item">
           <a
             href="components/link/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >link</a
           >
@@ -204,7 +189,7 @@
         <li class="page-list__item">
           <a
             href="components/logo/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >logo</a
           >
@@ -212,7 +197,7 @@
         <li class="page-list__item">
           <a
             href="components/search-bar/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >search-bar</a
           >
@@ -220,7 +205,7 @@
         <li class="page-list__item">
           <a
             href="components/tabs/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >tabs</a
           >
@@ -228,7 +213,7 @@
         <li class="page-list__item">
           <a
             href="components/textarea/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >textarea</a
           >
@@ -236,7 +221,7 @@
         <li class="page-list__item">
           <a
             href="components/tree-node/demo.html"
-            class="page-list__link"
+            class="page-list__link link"
             data-target="iframe"
             >tree-node</a
           >
@@ -256,6 +241,7 @@
       ></iframe>
     </main>
 
+    <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
     <script>
       // Gestione click sui link per caricare nell'iframe
       document.addEventListener("DOMContentLoaded", function () {
@@ -264,6 +250,8 @@
         const sidebarLinks = document.querySelectorAll(
           '.page-list__link[data-target="iframe"]'
         );
+
+        let currentAnnotation = null;
 
         sidebarLinks.forEach((link) => {
           link.addEventListener("click", function (e) {
@@ -276,6 +264,23 @@
             }
 
             e.preventDefault();
+
+            // Rimuovi annotation precedente
+            if (currentAnnotation) {
+              currentAnnotation.hide();
+              currentAnnotation.remove();
+            }
+
+            // Aggiungi box notation al link selezionato
+            currentAnnotation = RoughNotation.annotate(this, {
+              type: "box",
+              color: getComputedStyle(document.documentElement)
+                .getPropertyValue("--pink-300")
+                .trim(),
+              strokeWidth: 2,
+              animate: false,
+            });
+            currentAnnotation.show();
 
             // Mostra iframe, nascondi placeholder
             placeholder.style.display = "none";
