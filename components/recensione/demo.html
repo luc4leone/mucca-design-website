@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recensione</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles/variables.css" />
+    <link rel="stylesheet" href="../../styles/base.css" />
+    <link rel="stylesheet" href="../../styles/typography.css" />
+    <link rel="stylesheet" href="./recensione.css" />
+    <link rel="stylesheet" href="../link/link.css" />
+    <link rel="stylesheet" href="../breadcrumb/breadcrumb.css" />
+  </head>
+  <body>
+    <nav class="breadcrumb">
+      <a href="../../designsystem.html" class="link">home</a>
+      <span class="breadcrumb__separator">&lt;</span>
+      <span class="breadcrumb__current">recensione</span>
+    </nav>
+
+    <div class="recensione">
+      <p class="recensione__quote">
+        Il corso di Luca è davvero un percorso completo. Nel corso degli anni ho
+        seguito tanti corsi e uno degli aspetti che ho sempre cercato è la parte
+        pratica. Molti corsi migliorano nel tempo ma al termine di ognuno mi
+        sono sempre chiesto: "Come si comportano quelli che producono questi
+        corsi nella vita reale? L'approccio che mostrano è applicabile quando
+        lavorano con le aziende? Ecco, il corso di Luca risponde esattamente a
+        questa domanda. Non solo spiega in modo chiaro e approfondito, ma ti
+        mostra anche come si comporta realmente con i suoi clienti. Luca
+        condivide il suo metodo senza fronzoli e ti spiega passo dopo passo il
+        suo approccio. Ad esempio: "Per scegliere una palette, faccio questo,
+        questo e quest'altro, stop." Un altro aspetto che rende questo corso
+        diverso dagli altri che ho seguito è l'efficacia del tempo. Se una
+        lezione dura 60 minuti, sono 60 minuti di insegnamenti concreti e utili,
+        inclusi momenti di discussione pratica in aula. Fantastico! Finalmente,
+        ho trovato un vero per-corso.
+      </p>
+      <p class="recensione__author">
+        Roberto Martino – Classe 1 Corso UX/UI Design Boolean e Mini Corso di
+        Grafica Gennaio 2025 di Luca Leone
+      </p>
+    </div>
+
+    <script>
+      // Auto-hide navigation quando embedded
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("embedded") === "true") {
+        document.querySelector(".breadcrumb").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

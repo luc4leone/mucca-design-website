@@ -1,0 +1,44 @@
+/**
+ * Recensione Component
+ * 
+ * Visualizza testimonianze/recensioni di studenti.
+ * Struttura: testo recensione + autore
+ */
+
+/* ========================================
+   RECENSIONE - Componente Base
+   ======================================== */
+
+.recensione {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-m);
+}
+
+/* ========================================
+   RECENSIONE__QUOTE - Testo recensione
+   ======================================== */
+
+.recensione__quote {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-base); /* 18px */
+  font-weight: var(--font-weight-normal);
+  color: var(--grey-50);
+  line-height: var(--line-height-relaxed); /* 1.6 */
+  background-color: var(--grey-900);
+  padding: var(--spacing-xxl); /* 24px */
+  margin: 0;
+}
+
+/* ========================================
+   RECENSIONE__AUTHOR - Info studente
+   ======================================== */
+
+.recensione__author {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-sm); /* 15px */
+  font-weight: var(--font-weight-normal);
+  color: var(--grey-800);
+  line-height: var(--line-height-normal); /* 1.5 */
+  margin: 0;
+}
