@@ -24,9 +24,12 @@
   },
   "homepage": "https://github.com/luc4leone/mucca-design-website#readme",
   "dependencies": {
+    "@stripe/stripe-js": "^8.6.0",
+    "@supabase/supabase-js": "^2.88.0",
     "next": "^16.0.10",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "stripe": "^20.1.0"
   },
   "devDependencies": {
     "@types/node": "^25.0.3",
