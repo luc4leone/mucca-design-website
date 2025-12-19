@@ -11,7 +11,7 @@ type Lesson = {
   order_index: number;
 };
 
-export default function DashboardPage() {
+export default function DashboardLessonsPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -25,7 +25,6 @@ export default function DashboardPage() {
 
   const [status, setStatus] = useState<string>('Caricamento...');
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [authedEmail, setAuthedEmail] = useState<string | null>(null);
 
   useEffect(() => {
     if (!supabase) {
@@ -34,21 +33,6 @@ export default function DashboardPage() {
     }
 
     (async () => {
-      setStatus('Verifica accesso...');
-
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError) {
-        setStatus(`Errore sessione: ${sessionError.message}`);
-        return;
-      }
-
-      if (!sessionData.session) {
-        window.location.href = '/welcome';
-        return;
-      }
-
-      setAuthedEmail(sessionData.session.user.email ?? null);
-
       setStatus('Carico le lezioni...');
       const { data: lessonsData, error: lessonsError } = await supabase
         .from('lessons')
@@ -67,18 +51,10 @@ export default function DashboardPage() {
   }, [supabase]);
 
   return (
-    <div
-      style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: '0 20px',
-      }}
-    >
-      {authedEmail ? (
-        <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>
-          Benvenuto, {authedEmail}
-        </div>
-      ) : null}
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px' }}>
+      <div className="title" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+        Lezioni
+      </div>
 
       {status ? <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>{status}</div> : null}
 
@@ -101,10 +77,7 @@ export default function DashboardPage() {
         </div>
       ) : null}
 
-      {!status && lessons.length === 0 ? (
-        <div className="text">Nessuna lezione disponibile.</div>
-      ) : null}
-
+      {!status && lessons.length === 0 ? <div className="text">Nessuna lezione disponibile.</div> : null}
     </div>
   );
 }
