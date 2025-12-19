@@ -27,6 +27,8 @@ export default function DashboardPage() {
 
   const [status, setStatus] = useState<string>('Caricamento...');
   const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [authedEmail, setAuthedEmail] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     if (!supabase) {
@@ -44,10 +46,11 @@ export default function DashboardPage() {
       }
 
       if (!sessionData.session) {
-        window.location.href = '/login';
+        window.location.href = '/welcome';
         return;
       }
 
+      setAuthedEmail(sessionData.session.user.email ?? null);
       const userId = sessionData.session.user.id;
 
       setStatus('Verifica abbonamento...');
@@ -84,6 +87,17 @@ export default function DashboardPage() {
     })();
   }, [supabase]);
 
+  async function logout() {
+    if (!supabase) return;
+    setBusy(true);
+    try {
+      await supabase.auth.signOut();
+      window.location.href = '/welcome';
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <div
       style={{
@@ -94,6 +108,13 @@ export default function DashboardPage() {
     >
       <div className="title" style={{ marginBottom: 'var(--spacing-xxl)' }}>
         Dashboard
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap', marginBottom: 'var(--spacing-l)' }}>
+        <div className="text">{authedEmail ? `Loggato come: ${authedEmail}` : ''}</div>
+        <button className="button" type="button" onClick={logout} disabled={busy}>
+          Logout
+        </button>
       </div>
 
       {status ? <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>{status}</div> : null}

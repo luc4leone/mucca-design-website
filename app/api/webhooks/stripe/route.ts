@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { randomUUID } from 'crypto';
 import { stripe } from '@/lib/stripe';
 
 export const runtime = 'nodejs';
@@ -77,16 +78,18 @@ async function getOrCreateUserIdByEmail(
     return existing;
   }
 
-  const redirectTo = process.env.NEXT_PUBLIC_URL ? `${process.env.NEXT_PUBLIC_URL}/login` : undefined;
-  const { data, error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-    redirectTo,
+  const randomPassword = `ml_${randomUUID()}_${randomUUID()}`;
+  const { data, error } = await supabaseAdmin.auth.admin.createUser({
+    email,
+    password: randomPassword,
+    email_confirm: true,
   });
 
   if (error || !data.user) {
-    throw error ?? new Error('Failed to invite user');
+    throw error ?? new Error('Failed to create user');
   }
 
-  console.log('[stripe-webhook] supabase user invited', { email, userId: data.user.id });
+  console.log('[stripe-webhook] supabase user created', { email, userId: data.user.id });
   return data.user.id;
 }
 

@@ -18,10 +18,11 @@ export default function LoginPage() {
   }, [supabaseUrl, supabaseAnonKey]);
 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
   const [status, setStatus] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [authedEmail, setAuthedEmail] = useState<string | null>(null);
 
   useEffect(() => {
     if (!supabase) return;
@@ -45,41 +46,30 @@ export default function LoginPage() {
         if (error) {
           setStatus(`Errore sessione: ${error.message}`);
         } else {
-          setStatus('Accesso completato. Se è il tuo primo accesso, imposta una password qui sotto.');
+          setStatus('Accesso completato. Ti reindirizzo alla dashboard...');
+          window.location.replace('/dashboard');
         }
         setBusy(false);
       })();
     }
   }, [supabase]);
 
-  async function signInWithPassword() {
-    if (!supabase) {
-      setStatus('Supabase non inizializzato (controlla le env NEXT_PUBLIC_SUPABASE_...).');
-      return;
-    }
-    if (!email || !password) {
-      setStatus('Inserisci email e password.');
-      return;
-    }
+  useEffect(() => {
+    if (!supabase) return;
 
-    setBusy(true);
-    setStatus('Sto effettuando il login...');
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (error) {
-        setStatus(`Errore login: ${error.message}`);
-      } else {
-        setStatus('Login effettuato.');
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data.session;
+      if (!session) {
+        setIsAuthed(false);
+        setAuthedEmail(null);
+        return;
       }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setStatus(`Errore login: ${message}`);
-    } finally {
-      setBusy(false);
-    }
-  }
+
+      setIsAuthed(true);
+      setAuthedEmail(session.user.email ?? null);
+    })();
+  }, [supabase]);
 
   async function sendMagicLink() {
     if (!supabase) {
@@ -91,13 +81,22 @@ export default function LoginPage() {
       return;
     }
 
+    const trimmed = email.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+    if (!emailOk) {
+      setStatus('Inserisci una email valida.');
+      return;
+    }
+
     setBusy(true);
     setStatus('Sto inviando il magic link...');
 
     try {
-      const redirectTo = process.env.NEXT_PUBLIC_URL ? `${process.env.NEXT_PUBLIC_URL}/login` : undefined;
+      const redirectTo = process.env.NEXT_PUBLIC_URL
+        ? `${process.env.NEXT_PUBLIC_URL}/auth/callback`
+        : undefined;
       const { error } = await supabase.auth.signInWithOtp({
-        email,
+        email: trimmed,
         options: {
           emailRedirectTo: redirectTo,
         },
@@ -116,36 +115,16 @@ export default function LoginPage() {
     }
   }
 
-  async function setPasswordFromInvite() {
-    if (!supabase) {
-      setStatus('Supabase non inizializzato (controlla le env NEXT_PUBLIC_SUPABASE_...).');
-      return;
-    }
-    if (!newPassword) {
-      setStatus('Inserisci una nuova password.');
-      return;
-    }
-
+  async function logout() {
+    if (!supabase) return;
     setBusy(true);
-    setStatus('Sto impostando la password...');
+    setStatus('Logout...');
 
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) {
-        setStatus('Prima devi aprire il link ricevuto via email (invito) oppure fare login.');
-        return;
-      }
-
-      const { error } = await supabase.auth.updateUser({ password: newPassword });
-
-      if (error) {
-        setStatus(`Errore impostazione password: ${error.message}`);
-      } else {
-        setStatus('Password impostata. Ora puoi usare email+password per accedere.');
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setStatus(`Errore impostazione password: ${message}`);
+      await supabase.auth.signOut();
+      setIsAuthed(false);
+      setAuthedEmail(null);
+      setStatus('Sei uscito.');
     } finally {
       setBusy(false);
     }
@@ -184,6 +163,12 @@ export default function LoginPage() {
         Login
       </div>
 
+      {isAuthed ? (
+        <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>
+          Sei già autenticato{authedEmail ? ` come ${authedEmail}` : ''}.
+        </div>
+      ) : null}
+
       <div style={{ display: 'grid', gap: '12px', textAlign: 'left', marginBottom: 'var(--spacing-l)' }}>
         <label className="text">
           Email
@@ -195,59 +180,24 @@ export default function LoginPage() {
             placeholder="tuo@email.com"
           />
         </label>
-
-        <label className="text">
-          Password
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            style={{ width: '100%', padding: '10px', marginTop: '6px' }}
-            placeholder="••••••••"
-          />
-        </label>
       </div>
 
       <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <button
-          className="button"
-          type="button"
-          onClick={signInWithPassword}
-          disabled={busy}
-        >
-          Accedi
-        </button>
         <button className="button" type="button" onClick={sendMagicLink} disabled={busy}>
           Invia Magic Link
         </button>
-      </div>
 
-      <div className="text" style={{ marginTop: 'var(--spacing-xxl)', marginBottom: 'var(--spacing-l)' }}>
-        Primo accesso da invito? Imposta una password.
-      </div>
+        {isAuthed ? (
+          <a className="button" href="/dashboard">
+            Vai in Dashboard
+          </a>
+        ) : null}
 
-      <div style={{ display: 'grid', gap: '12px', textAlign: 'left' }}>
-        <label className="text">
-          Nuova password
-          <input
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            type="password"
-            style={{ width: '100%', padding: '10px', marginTop: '6px' }}
-            placeholder="Scegli una password"
-          />
-        </label>
-      </div>
-
-      <div style={{ marginTop: '12px' }}>
-        <button
-          className="button"
-          type="button"
-          onClick={setPasswordFromInvite}
-          disabled={busy}
-        >
-          Imposta Password
-        </button>
+        {isAuthed ? (
+          <button className="button" type="button" onClick={logout} disabled={busy}>
+            Logout
+          </button>
+        ) : null}
       </div>
 
       {status ? (
