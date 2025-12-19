@@ -78,7 +78,7 @@ async function getOrCreateUserIdByEmail(
     return existing;
   }
 
-  const randomPassword = `ml_${randomUUID()}_${randomUUID()}`;
+  const randomPassword = `ml_${randomUUID()}`;
   const { data, error } = await supabaseAdmin.auth.admin.createUser({
     email,
     password: randomPassword,

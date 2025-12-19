@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 
 export const runtime = 'nodejs';
@@ -17,29 +17,6 @@ function getSupabaseAdmin() {
       persistSession: false,
     },
   });
-}
-
-async function findUserIdByEmail(supabaseAdmin: SupabaseClient<any>, email: string) {
-  const perPage = 200;
-  let page = 1;
-
-  for (;;) {
-    const { data, error } = await supabaseAdmin.auth.admin.listUsers({ page, perPage });
-    if (error) {
-      throw error;
-    }
-
-    const match = data.users.find((u) => u.email?.toLowerCase() === email.toLowerCase());
-    if (match?.id) {
-      return match.id;
-    }
-
-    if (data.users.length < perPage) {
-      return null;
-    }
-
-    page += 1;
-  }
 }
 
 export async function POST(request: Request) {
@@ -60,7 +37,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: 'Invalid email' }, { status: 400 });
   }
 
-  let supabaseAdmin: SupabaseClient<any>;
+  let supabaseAdmin: ReturnType<typeof getSupabaseAdmin>;
   try {
     supabaseAdmin = getSupabaseAdmin();
   } catch (err) {
@@ -69,12 +46,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const existingUserId = await findUserIdByEmail(supabaseAdmin, email);
-    if (existingUserId) {
-      return NextResponse.json({ ok: true, userId: existingUserId, existed: true });
-    }
-
-    const randomPassword = `ml_${randomUUID()}_${randomUUID()}`;
+    const randomPassword = `ml_${randomUUID()}`;
     const { data, error } = await supabaseAdmin.auth.admin.createUser({
       email,
       password: randomPassword,
@@ -82,8 +54,28 @@ export async function POST(request: Request) {
     });
 
     if (error || !data.user) {
+      const anyErr = error as unknown as { message?: string; code?: string; status?: number };
+      const code = anyErr?.code;
+      const status = anyErr?.status;
+
+      console.error('[ensure-user] createUser error', {
+        email,
+        code,
+        status,
+        message: anyErr?.message,
+      });
+
+      if (code === 'email_exists') {
+        return NextResponse.json({ ok: true, existed: true });
+      }
+
       return NextResponse.json(
-        { ok: false, error: error?.message ?? 'Failed to create user' },
+        {
+          ok: false,
+          error: anyErr?.message ?? 'Failed to create user',
+          code,
+          status,
+        },
         { status: 500 }
       );
     }
@@ -91,6 +83,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, userId: data.user.id, existed: false });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
+    console.error('[ensure-user] unexpected error', err);
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

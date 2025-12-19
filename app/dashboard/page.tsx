@@ -30,6 +30,8 @@ export default function DashboardPage() {
   const [authedEmail, setAuthedEmail] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  const allowedStatuses = useMemo(() => new Set(['active', 'trialing']), []);
+
   useEffect(() => {
     if (!supabase) {
       setStatus('Configurazione mancante: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY');
@@ -37,6 +39,8 @@ export default function DashboardPage() {
     }
 
     (async () => {
+      const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
       setStatus('Verifica accesso...');
 
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
@@ -54,18 +58,32 @@ export default function DashboardPage() {
       const userId = sessionData.session.user.id;
 
       setStatus('Verifica abbonamento...');
-      const { data: subscription, error: subscriptionError } = await supabase
-        .from('subscriptions')
-        .select('status')
-        .eq('user_id', userId)
-        .maybeSingle();
 
-      if (subscriptionError) {
-        setStatus(`Errore abbonamento: ${subscriptionError.message}`);
-        return;
+      let subscriptionStatus: string | null = null;
+      for (let attempt = 0; attempt < 5; attempt += 1) {
+        const { data: subscription, error: subscriptionError } = await supabase
+          .from('subscriptions')
+          .select('status')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+        if (subscriptionError) {
+          setStatus(`Errore abbonamento: ${subscriptionError.message}`);
+          return;
+        }
+
+        subscriptionStatus = subscription?.status ?? null;
+        if (subscriptionStatus && allowedStatuses.has(subscriptionStatus)) {
+          break;
+        }
+
+        if (attempt < 4) {
+          setStatus('Verifica abbonamento...');
+          await sleep(1000);
+        }
       }
 
-      if (!subscription || subscription.status !== 'active') {
+      if (!subscriptionStatus || !allowedStatuses.has(subscriptionStatus)) {
         window.location.href = '/subscription-expired';
         return;
       }

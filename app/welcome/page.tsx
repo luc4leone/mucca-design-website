@@ -46,9 +46,21 @@ export default function WelcomePage() {
         body: JSON.stringify({ email: trimmed }),
       });
 
-      const ensureJson = (await ensureRes.json()) as { ok: boolean; error?: string };
-      if (!ensureRes.ok || !ensureJson.ok) {
-        setStatus(`Errore: ${ensureJson.error ?? 'Impossibile creare/verificare utente'}`);
+      const ensureText = await ensureRes.text();
+      let ensureJson: any = null;
+      try {
+        ensureJson = ensureText ? JSON.parse(ensureText) : null;
+      } catch {
+        ensureJson = null;
+      }
+
+      if (!ensureRes.ok || !ensureJson?.ok) {
+        const details =
+          ensureJson && (ensureJson.code || ensureJson.status)
+            ? ` (code: ${ensureJson.code ?? '-'}, status: ${ensureJson.status ?? '-'})`
+            : '';
+        const msg = ensureJson?.error ?? ensureText ?? 'Impossibile creare/verificare utente';
+        setStatus(`Errore (${ensureRes.status}): ${msg}${details}`);
         return;
       }
 
