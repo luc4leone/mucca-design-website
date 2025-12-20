@@ -3,11 +3,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { useEffect, useMemo, useState } from 'react';
 
-type ProgressStats = {
-  total_lessons: number;
-  completed_lessons: number;
-  percentage: number;
-};
+import { useProgress } from '../../hooks/useProgress';
 
 type Lesson = {
   id: string;
@@ -37,8 +33,7 @@ export default function DashboardPage() {
   const [status, setStatus] = useState<string>('Caricamento...');
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [authedEmail, setAuthedEmail] = useState<string | null>(null);
-  const [progress, setProgress] = useState<ProgressStats | null>(null);
-  const [progressError, setProgressError] = useState<string | null>(null);
+  const { progress, progressError, loadProgress } = useProgress();
   const [completionByLessonId, setCompletionByLessonId] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -51,27 +46,6 @@ export default function DashboardPage() {
 
     let cancelled = false;
     let channel: ReturnType<typeof supabaseClient.channel> | null = null;
-
-    async function loadProgressStats(userId: string) {
-      setProgressError(null);
-      const { data: stats, error: statsError } = await supabaseClient
-        .rpc('get_user_progress_stats', { p_user_id: userId })
-        .single();
-
-      if (cancelled) return;
-
-      if (statsError) {
-        setProgress(null);
-        setProgressError(statsError.message);
-      } else {
-        const anyStats = stats as unknown as ProgressStats;
-        setProgress({
-          total_lessons: anyStats.total_lessons ?? 0,
-          completed_lessons: anyStats.completed_lessons ?? 0,
-          percentage: Number(anyStats.percentage ?? 0),
-        });
-      }
-    }
 
     async function loadCompletion(userId: string, lessonIds: string[]) {
       if (!lessonIds.length) {
@@ -118,7 +92,7 @@ export default function DashboardPage() {
       setAuthedEmail(sessionData.session.user.email ?? null);
       const userId = sessionData.session.user.id;
 
-      await loadProgressStats(userId);
+      await loadProgress(supabaseClient, userId);
 
       setStatus('Carico le lezioni...');
       const { data: lessonsData, error: lessonsError } = await supabaseClient
@@ -148,7 +122,7 @@ export default function DashboardPage() {
             filter: `user_id=eq.${userId}`,
           },
           async () => {
-            await loadProgressStats(userId);
+            await loadProgress(supabaseClient, userId);
             await loadCompletion(userId, ids);
           }
         )

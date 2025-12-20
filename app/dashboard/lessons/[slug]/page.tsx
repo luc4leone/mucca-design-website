@@ -40,6 +40,8 @@ export default function DashboardLessonDetailPage() {
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [progress, setProgress] = useState<ProgressRow | null>(null);
+  const [prevSlug, setPrevSlug] = useState<string | null>(null);
+  const [nextSlug, setNextSlug] = useState<string | null>(null);
 
   useEffect(() => {
     if (!slug) {
@@ -87,6 +89,20 @@ export default function DashboardLessonDetailPage() {
       }
 
       setLesson(lessonData as Lesson);
+
+      const { data: navLessons, error: navError } = await supabase
+        .from('lessons')
+        .select('slug,order_index')
+        .eq('is_published', true)
+        .order('order_index', { ascending: true });
+
+      if (!navError) {
+        const list = (navLessons as Array<{ slug: string; order_index: number }>) ?? [];
+        const idx = list.findIndex((l) => l.slug === slug);
+
+        setPrevSlug(idx > 0 ? list[idx - 1]?.slug ?? null : null);
+        setNextSlug(idx >= 0 && idx < list.length - 1 ? list[idx + 1]?.slug ?? null : null);
+      }
 
       const { data: progressData, error: progressError } = await supabase
         .from('user_progress')
@@ -137,13 +153,46 @@ export default function DashboardLessonDetailPage() {
 
   const completed = Boolean(progress?.completed);
 
+  const miniNav = (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '12px',
+        flexWrap: 'wrap',
+        marginBottom: 'var(--spacing-l)',
+      }}
+    >
+      {prevSlug ? (
+        <a className="text" href={`/dashboard/lessons/${prevSlug}`} style={{ textDecoration: 'underline' }}>
+          ← Lezione precedente
+        </a>
+      ) : (
+        <div className="text" style={{ opacity: 0.4 }}>
+          ← Lezione precedente
+        </div>
+      )}
+
+      <a className="text" href="/dashboard" style={{ textDecoration: 'underline' }}>
+        Tutte le lezioni
+      </a>
+
+      {nextSlug ? (
+        <a className="text" href={`/dashboard/lessons/${nextSlug}`} style={{ textDecoration: 'underline' }}>
+          Lezione successiva →
+        </a>
+      ) : (
+        <div className="text" style={{ opacity: 0.4 }}>
+          Lezione successiva →
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
-      <div style={{ marginBottom: 'var(--spacing-l)' }}>
-        <a className="text" href="/dashboard" style={{ textDecoration: 'underline' }}>
-          ← Torna alla dashboard
-        </a>
-      </div>
+      {miniNav}
 
       {status ? <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>{status}</div> : null}
 
@@ -160,9 +209,11 @@ export default function DashboardLessonDetailPage() {
           ) : null}
 
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: 'var(--spacing-xxl)' }}>
-            <button className="button" type="button" onClick={markCompleted} disabled={busy || completed}>
-              {completed ? 'Completata' : 'Segna come completata'}
-            </button>
+            {!completed ? (
+              <button className="button" type="button" onClick={markCompleted} disabled={busy}>
+                Segna come completata
+              </button>
+            ) : null}
             {progress?.completed_at ? (
               <div className="text" style={{ opacity: 0.8 }}>
                 Completata il {new Date(progress.completed_at).toLocaleString()}
@@ -194,6 +245,8 @@ export default function DashboardLessonDetailPage() {
           ) : (
             <div className="text">Contenuto non disponibile.</div>
           )}
+
+          <div style={{ marginTop: 'var(--spacing-xxl)' }}>{miniNav}</div>
         </>
       ) : null}
     </div>
