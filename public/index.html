@@ -27,6 +27,17 @@
         background-color: var(--white);
       }
 
+      .topbar {
+        margin: 0 auto var(--spacing-xxl);
+        max-width: 375px;
+      }
+
+      .topbar__nav {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-l);
+      }
+
       .section {
         max-width: 375px;
         margin: 0 auto;
@@ -221,6 +232,12 @@
     </style>
   </head>
   <body>
+    <header class="topbar">
+      <nav class="topbar__nav">
+        <a href="/login" class="link">Login</a>
+        <a href="/pricing" class="link">Acquista</a>
+      </nav>
+    </header>
     <section class="section">
       <h2 class="section__title title">
         Che <span id="esperienza">esperienza</span> ti aspetta?
