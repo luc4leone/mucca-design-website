@@ -61,18 +61,26 @@ export default function DashboardLessonsPage() {
       {lessons.length ? (
         <div style={{ display: 'grid', gap: '12px' }}>
           {lessons.map((l) => (
-            <div
+            <a
               key={l.id}
+              href={`/dashboard/lessons/${l.slug}`}
               style={{
-                border: '1px solid var(--grey-300)',
-                padding: '16px',
+                color: 'inherit',
+                textDecoration: 'none',
               }}
             >
-              <div className="text" style={{ fontWeight: 700, marginBottom: '6px' }}>
-                {l.order_index}. {l.title}
+              <div
+                style={{
+                  border: '1px solid var(--grey-300)',
+                  padding: '16px',
+                }}
+              >
+                <div className="text" style={{ fontWeight: 700, marginBottom: '6px', textDecoration: 'underline' }}>
+                  {l.order_index}. {l.title}
+                </div>
+                {l.description ? <div className="text">{l.description}</div> : null}
               </div>
-              {l.description ? <div className="text">{l.description}</div> : null}
-            </div>
+            </a>
           ))}
         </div>
       ) : null}
