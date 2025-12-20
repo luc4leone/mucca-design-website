@@ -4,6 +4,7 @@ import '../../public/components/button/button.css';
 import '../../public/components/link/link.css';
 
 import { createClient } from '@supabase/supabase-js';
+import Link from 'next/link';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -130,14 +131,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             flexWrap: 'wrap',
           }}
         >
-          <a className="title title--sm" href="/dashboard" style={{ color: 'inherit', textDecoration: 'none' }}>
+          <Link className="title title--sm" href="/dashboard" style={{ color: 'inherit', textDecoration: 'none' }}>
             Mucca Design
-          </a>
+          </Link>
 
           <nav style={{ display: 'flex', gap: 'var(--spacing-l)', alignItems: 'center', flexWrap: 'wrap' }}>
-            <a className="link" href="/dashboard/subscription">
+            <Link className="link" href="/dashboard/subscription">
               Abbonamento
-            </a>
+            </Link>
             <button className="button" type="button" onClick={logout} disabled={busy}>
               Logout
             </button>

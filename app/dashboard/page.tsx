@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@supabase/supabase-js';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 
 import { useProgress } from '../../hooks/useProgress';
@@ -197,7 +198,7 @@ export default function DashboardPage() {
       {lessons.length ? (
         <div style={{ display: 'grid', gap: '12px' }}>
           {lessons.map((l) => (
-            <a
+            <Link
               key={l.id}
               href={`/dashboard/lessons/${l.slug}`}
               style={{
@@ -219,7 +220,7 @@ export default function DashboardPage() {
                 </div>
                 {l.description ? <div className="text">{l.description}</div> : null}
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       ) : null}

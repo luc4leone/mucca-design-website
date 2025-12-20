@@ -3,6 +3,7 @@
 import '../../../../public/components/link/link.css';
 
 import { createClient } from '@supabase/supabase-js';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -167,23 +168,23 @@ export default function DashboardLessonDetailPage() {
       }}
     >
       {prevSlug ? (
-        <a className="link" href={`/dashboard/lessons/${prevSlug}`}>
+        <Link className="link" href={`/dashboard/lessons/${prevSlug}`}>
           ← Lezione precedente
-        </a>
+        </Link>
       ) : (
         <span className="link" style={{ opacity: 0.4, cursor: 'not-allowed' }}>
           ← Lezione precedente
         </span>
       )}
 
-      <a className="link" href="/dashboard">
+      <Link className="link" href="/dashboard">
         Tutte le lezioni
-      </a>
+      </Link>
 
       {nextSlug ? (
-        <a className="link" href={`/dashboard/lessons/${nextSlug}`}>
+        <Link className="link" href={`/dashboard/lessons/${nextSlug}`}>
           Lezione successiva →
-        </a>
+        </Link>
       ) : (
         <span className="link" style={{ opacity: 0.4, cursor: 'not-allowed' }}>
           Lezione successiva →
