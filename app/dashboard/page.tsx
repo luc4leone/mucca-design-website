@@ -17,6 +17,11 @@ type Lesson = {
   order_index: number;
 };
 
+type UserProgressRow = {
+  lesson_id: string;
+  completed: boolean;
+};
+
 export default function DashboardPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -34,6 +39,7 @@ export default function DashboardPage() {
   const [authedEmail, setAuthedEmail] = useState<string | null>(null);
   const [progress, setProgress] = useState<ProgressStats | null>(null);
   const [progressError, setProgressError] = useState<string | null>(null);
+  const [completionByLessonId, setCompletionByLessonId] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!supabase) {
@@ -41,10 +47,64 @@ export default function DashboardPage() {
       return;
     }
 
+    const supabaseClient = supabase;
+
+    let cancelled = false;
+    let channel: ReturnType<typeof supabaseClient.channel> | null = null;
+
+    async function loadProgressStats(userId: string) {
+      setProgressError(null);
+      const { data: stats, error: statsError } = await supabaseClient
+        .rpc('get_user_progress_stats', { p_user_id: userId })
+        .single();
+
+      if (cancelled) return;
+
+      if (statsError) {
+        setProgress(null);
+        setProgressError(statsError.message);
+      } else {
+        const anyStats = stats as unknown as ProgressStats;
+        setProgress({
+          total_lessons: anyStats.total_lessons ?? 0,
+          completed_lessons: anyStats.completed_lessons ?? 0,
+          percentage: Number(anyStats.percentage ?? 0),
+        });
+      }
+    }
+
+    async function loadCompletion(userId: string, lessonIds: string[]) {
+      if (!lessonIds.length) {
+        setCompletionByLessonId({});
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from('user_progress')
+        .select('lesson_id,completed')
+        .eq('user_id', userId)
+        .in('lesson_id', lessonIds);
+
+      if (cancelled) return;
+
+      if (error) {
+        return;
+      }
+
+      const map: Record<string, boolean> = {};
+      ((data as UserProgressRow[]) ?? []).forEach((row) => {
+        if (row.completed) {
+          map[row.lesson_id] = true;
+        }
+      });
+
+      setCompletionByLessonId(map);
+    }
+
     (async () => {
       setStatus('Verifica accesso...');
 
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
       if (sessionError) {
         setStatus(`Errore sessione: ${sessionError.message}`);
         return;
@@ -58,25 +118,10 @@ export default function DashboardPage() {
       setAuthedEmail(sessionData.session.user.email ?? null);
       const userId = sessionData.session.user.id;
 
-      setProgressError(null);
-      const { data: stats, error: statsError } = await supabase
-        .rpc('get_user_progress_stats', { p_user_id: userId })
-        .single();
-
-      if (statsError) {
-        setProgress(null);
-        setProgressError(statsError.message);
-      } else {
-        const anyStats = stats as unknown as ProgressStats;
-        setProgress({
-          total_lessons: anyStats.total_lessons ?? 0,
-          completed_lessons: anyStats.completed_lessons ?? 0,
-          percentage: Number(anyStats.percentage ?? 0),
-        });
-      }
+      await loadProgressStats(userId);
 
       setStatus('Carico le lezioni...');
-      const { data: lessonsData, error: lessonsError } = await supabase
+      const { data: lessonsData, error: lessonsError } = await supabaseClient
         .from('lessons')
         .select('id,title,slug,description,order_index')
         .eq('is_published', true)
@@ -88,8 +133,34 @@ export default function DashboardPage() {
       }
 
       setLessons((lessonsData as Lesson[]) ?? []);
+      const ids = ((lessonsData as Lesson[]) ?? []).map((l) => l.id);
+      await loadCompletion(userId, ids);
       setStatus('');
+
+      channel = supabaseClient
+        .channel('user_progress_changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'user_progress',
+            filter: `user_id=eq.${userId}`,
+          },
+          async () => {
+            await loadProgressStats(userId);
+            await loadCompletion(userId, ids);
+          }
+        )
+        .subscribe();
     })();
+
+    return () => {
+      cancelled = true;
+      if (channel) {
+        supabaseClient.removeChannel(channel);
+      }
+    };
   }, [supabase]);
 
   return (
@@ -172,6 +243,9 @@ export default function DashboardPage() {
                   padding: '16px',
                 }}
               >
+                <div className="text" style={{ opacity: 0.8, marginBottom: '6px' }}>
+                  {completionByLessonId[l.id] ? 'Completata' : 'Da fare'}
+                </div>
                 <div className="text" style={{ fontWeight: 700, marginBottom: '6px', textDecoration: 'underline' }}>
                   {l.order_index}. {l.title}
                 </div>
