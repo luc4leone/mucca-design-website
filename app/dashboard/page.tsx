@@ -171,12 +171,6 @@ export default function DashboardPage() {
         padding: '0 20px',
       }}
     >
-      {authedEmail ? (
-        <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>
-          Benvenuto, {authedEmail}
-        </div>
-      ) : null}
-
       <div
         style={{
           backgroundColor: 'var(--grey-100)',

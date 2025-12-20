@@ -129,12 +129,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             flexWrap: 'wrap',
           }}
         >
-          <div className="title title--sm">Corso UX/UI Design</div>
+          <a className="title title--sm" href="/dashboard" style={{ color: 'inherit', textDecoration: 'none' }}>
+            Mucca Design
+          </a>
 
           <nav style={{ display: 'flex', gap: 'var(--spacing-l)', alignItems: 'center', flexWrap: 'wrap' }}>
-            <a className="text" href="/dashboard" style={{ textDecoration: 'underline' }}>
-              Home
-            </a>
             <a className="text" href="/dashboard/subscription" style={{ textDecoration: 'underline' }}>
               Abbonamento
             </a>
@@ -151,9 +150,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               margin: '8px auto 0',
               padding: '0',
               opacity: 0.8,
+              textAlign: 'right',
             }}
           >
-            {authedEmail}
+            Benvenuto {authedEmail}
           </div>
         ) : null}
       </header>
