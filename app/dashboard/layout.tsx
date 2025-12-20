@@ -135,9 +135,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <a className="text" href="/dashboard" style={{ textDecoration: 'underline' }}>
               Home
             </a>
-            <a className="text" href="/dashboard/lessons" style={{ textDecoration: 'underline' }}>
-              Lezioni
-            </a>
             <a className="text" href="/dashboard/subscription" style={{ textDecoration: 'underline' }}>
               Abbonamento
             </a>

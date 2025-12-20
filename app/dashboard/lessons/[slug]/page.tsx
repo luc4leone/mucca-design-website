@@ -140,8 +140,8 @@ export default function DashboardLessonDetailPage() {
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
       <div style={{ marginBottom: 'var(--spacing-l)' }}>
-        <a className="text" href="/dashboard/lessons" style={{ textDecoration: 'underline' }}>
-          ← Torna alle lezioni
+        <a className="text" href="/dashboard" style={{ textDecoration: 'underline' }}>
+          ← Torna alla dashboard
         </a>
       </div>
 
