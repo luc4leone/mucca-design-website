@@ -6,15 +6,15 @@ Guida consolidata per il design system e le convenzioni CSS del progetto.
 
 Usa sempre e solo questi valori per margin, padding, gap:
 
-| Token | Valore | Uso |
-|-------|--------|-----|
-| XS | `4px` | Spacing minimo tra elementi molto vicini |
-| S | `8px` | Gap standard tra elementi inline correlati |
-| M | `12px` | Padding interno componenti, gap tra gruppi piccoli |
-| L | `16px` | Gap tra elementi in liste, spacing orizzontale standard |
-| XL | `20px` | Margin-bottom default per paragrafi |
-| XXL | `24px` | Separazione tra sezioni minori |
-| XXXL | `40px` | Separazione tra sezioni principali |
+| Token | Valore | Uso                                                     |
+| ----- | ------ | ------------------------------------------------------- |
+| XS    | `4px`  | Spacing minimo tra elementi molto vicini                |
+| S     | `8px`  | Gap standard tra elementi inline correlati              |
+| M     | `12px` | Padding interno componenti, gap tra gruppi piccoli      |
+| L     | `16px` | Gap tra elementi in liste, spacing orizzontale standard |
+| XL    | `20px` | Margin-bottom default per paragrafi                     |
+| XXL   | `24px` | Separazione tra sezioni minori                          |
+| XXXL  | `40px` | Separazione tra sezioni principali                      |
 
 **Regola**: Mai usare valori custom.
 
@@ -42,10 +42,10 @@ Usa sempre e solo questi valori per margin, padding, gap:
 
 ### Font Families
 
-| Variabile | Font | Uso |
-|-----------|------|-----|
-| `--font-family-sans` | "Scorekard", sans-serif | Titles, links, UI |
-| `--font-family-serif` | "Inter", sans-serif | Text, body content |
+| Variabile             | Font                    | Uso                |
+| --------------------- | ----------------------- | ------------------ |
+| `--font-family-sans`  | "Scorekard", sans-serif | Titles, links, UI  |
+| `--font-family-serif` | "Inter", sans-serif     | Text, body content |
 
 ### Typography Classes (typography.css)
 
@@ -53,26 +53,26 @@ Usa queste classi per applicare stili tipografici coerenti:
 
 #### Titles (font-sans)
 
-| Classe | Size | Weight | Uso |
-|--------|------|--------|-----|
-| `.title` | 30px | 900 (black) | Titoli di sezione (h2) |
-| `.title.title--md` | 24px | 700 (bold) | Titoli modal, h3 |
-| `.title.title--sm` | 21px | 700 (bold) | Sottotitoli, h4 |
+| Classe             | Size | Weight      | Uso                    |
+| ------------------ | ---- | ----------- | ---------------------- |
+| `.title`           | 30px | 900 (black) | Titoli di sezione (h2) |
+| `.title.title--md` | 24px | 700 (bold)  | Titoli modal, h3       |
+| `.title.title--sm` | 21px | 700 (bold)  | Sottotitoli, h4        |
 
 #### Text (font-serif)
 
-| Classe | Size | Uso |
-|--------|------|-----|
-| `.text` | 18px | Corpo testo principale |
-| `.text.text--sm` | 15px | Testi secondari, note |
-| `.text.text--xs` | 13px | Disclaimer, metadata |
+| Classe           | Size | Uso                    |
+| ---------------- | ---- | ---------------------- |
+| `.text`          | 18px | Corpo testo principale |
+| `.text.text--sm` | 15px | Testi secondari, note  |
+| `.text.text--xs` | 13px | Disclaimer, metadata   |
 
 #### Altri
 
-| Classe | Uso |
-|--------|-----|
-| `.caption` | Didascalie (15px, italic, grey-600) |
-| `.label` | Etichette UI (15px, uppercase, grey-600) |
+| Classe     | Uso                                      |
+| ---------- | ---------------------------------------- |
+| `.caption` | Didascalie (15px, italic, grey-600)      |
+| `.label`   | Etichette UI (15px, uppercase, grey-600) |
 
 #### Modifiers
 
@@ -95,11 +95,11 @@ Usiamo **Material Symbols Outlined** (filled di default, impostato in `base.css`
 
 Le icone usano la variabile di font-size **immediatamente superiore** al testo:
 
-| Testo | Icone |
-|-------|-------|
-| 14px (small) | 16px |
-| 16px (base) | 19px |
-| 19px (large) | 24px |
+| Testo        | Icone |
+| ------------ | ----- |
+| 14px (small) | 16px  |
+| 16px (base)  | 19px  |
+| 19px (large) | 24px  |
 
 ### Icon Colors
 
@@ -132,17 +132,25 @@ Componenti con altezza fissa:
 
 ```css
 /* Block */
-.dropdown { }
+.dropdown {
+}
 
 /* Element */
-.dropdown__select { }
-.dropdown__icon { }
+.dropdown__select {
+}
+.dropdown__icon {
+}
 
 /* Modifier */
-.dropdown--disabled { }
+.dropdown--disabled {
+}
 ```
 
 ## CSS Rules
+
+### Disabled States
+
+**Regola**: quando un elemento è **disabled**, al mouse-over il cursore deve essere `not-allowed`.
 
 ### Margin Management
 
@@ -150,10 +158,15 @@ Componenti con altezza fissa:
 
 ```css
 /* ❌ SBAGLIATO */
-.badge { margin-left: 8px; }
+.badge {
+  margin-left: 8px;
+}
 
 /* ✅ CORRETTO - usa gap sul container */
-.container { display: flex; gap: 8px; }
+.container {
+  display: flex;
+  gap: 8px;
+}
 ```
 
 **Eccezioni**: heading e paragraph mantengono margin-bottom semantico.
@@ -264,4 +277,3 @@ grid-template-columns: 2.2fr 1fr;
 - [ ] Non sto cambiando `display` di componenti base?
 - [ ] Non sto aggiungendo margin esterni a componenti?
 - [ ] Uso `gap` invece di margin tra elementi?
-

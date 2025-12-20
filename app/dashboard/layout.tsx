@@ -1,6 +1,7 @@
 'use client';
 
 import '../../public/components/button/button.css';
+import '../../public/components/link/link.css';
 
 import { createClient } from '@supabase/supabase-js';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
@@ -134,7 +135,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </a>
 
           <nav style={{ display: 'flex', gap: 'var(--spacing-l)', alignItems: 'center', flexWrap: 'wrap' }}>
-            <a className="text" href="/dashboard/subscription" style={{ textDecoration: 'underline' }}>
+            <a className="link" href="/dashboard/subscription">
               Abbonamento
             </a>
             <button className="button" type="button" onClick={logout} disabled={busy}>

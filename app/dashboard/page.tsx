@@ -214,7 +214,7 @@ export default function DashboardPage() {
                 <div className="text" style={{ opacity: 0.8, marginBottom: '6px' }}>
                   {completionByLessonId[l.id] ? 'Completata' : 'Da fare'}
                 </div>
-                <div className="text" style={{ fontWeight: 700, marginBottom: '6px', textDecoration: 'underline' }}>
+                <div className="link link--large" style={{ marginBottom: '6px' }}>
                   {l.order_index}. {l.title}
                 </div>
                 {l.description ? <div className="text">{l.description}</div> : null}

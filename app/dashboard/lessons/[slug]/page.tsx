@@ -1,5 +1,7 @@
 'use client';
 
+import '../../../../public/components/link/link.css';
+
 import { createClient } from '@supabase/supabase-js';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -165,27 +167,27 @@ export default function DashboardLessonDetailPage() {
       }}
     >
       {prevSlug ? (
-        <a className="text" href={`/dashboard/lessons/${prevSlug}`} style={{ textDecoration: 'underline' }}>
+        <a className="link" href={`/dashboard/lessons/${prevSlug}`}>
           ← Lezione precedente
         </a>
       ) : (
-        <div className="text" style={{ opacity: 0.4 }}>
+        <span className="link" style={{ opacity: 0.4, cursor: 'not-allowed' }}>
           ← Lezione precedente
-        </div>
+        </span>
       )}
 
-      <a className="text" href="/dashboard" style={{ textDecoration: 'underline' }}>
+      <a className="link" href="/dashboard">
         Tutte le lezioni
       </a>
 
       {nextSlug ? (
-        <a className="text" href={`/dashboard/lessons/${nextSlug}`} style={{ textDecoration: 'underline' }}>
+        <a className="link" href={`/dashboard/lessons/${nextSlug}`}>
           Lezione successiva →
         </a>
       ) : (
-        <div className="text" style={{ opacity: 0.4 }}>
+        <span className="link" style={{ opacity: 0.4, cursor: 'not-allowed' }}>
           Lezione successiva →
-        </div>
+        </span>
       )}
     </div>
   );
