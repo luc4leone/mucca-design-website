@@ -85,6 +85,27 @@ async function getOrCreateUserIdByEmail(
     email_confirm: true,
   });
 
+  if (error) {
+    const message = error.message ?? String(error);
+    const looksLikeAlreadyExists =
+      message.toLowerCase().includes('already been registered') ||
+      message.toLowerCase().includes('email already') ||
+      message.toLowerCase().includes('email_exists');
+
+    if (looksLikeAlreadyExists) {
+      console.log('[stripe-webhook] createUser raced (email exists) - retrying lookup', {
+        email,
+        message,
+      });
+
+      const raced = await findUserIdByEmail(supabaseAdmin, email);
+      if (raced) {
+        console.log('[stripe-webhook] supabase user found after race', { email, userId: raced });
+        return raced;
+      }
+    }
+  }
+
   if (error || !data.user) {
     throw error ?? new Error('Failed to create user');
   }
