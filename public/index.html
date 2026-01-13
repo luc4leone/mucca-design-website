@@ -27,9 +27,13 @@
         background-color: var(--white);
       }
 
+      .page {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
       .topbar {
-        margin: 0 auto var(--spacing-xxl);
-        max-width: 375px;
+        margin: 0 0 var(--spacing-xxl);
       }
 
       .topbar__nav {
@@ -38,9 +42,113 @@
         gap: var(--spacing-l);
       }
 
-      .section {
-        max-width: 375px;
+      .hero {
+        width: 100%;
+        margin: 0 0 var(--spacing-xxxl);
+      }
+
+      .hero__inner {
+        width: 100%;
+        text-align: center;
         margin: 0 auto;
+      }
+
+      .hero__title {
+        font-family: var(--font-family-sans);
+        font-weight: var(--font-weight-bold);
+        color: var(--grey-900);
+        line-height: var(--line-height-none);
+        letter-spacing: 0.2px;
+        margin: 0;
+        font-size: 40px;
+      }
+
+      .hero__subtitle {
+        font-family: var(--font-family-sans);
+        font-weight: var(--font-weight-medium);
+        color: var(--grey-800);
+        line-height: var(--line-height-tight);
+        margin: var(--spacing-l) 0 0 0;
+        font-size: var(--font-size-lg);
+      }
+
+      .hero__cta {
+        margin-top: var(--spacing-xxxl);
+      }
+
+      .hero__cta-link {
+        display: inline-flex;
+        padding: var(--spacing-m) var(--spacing-xl);
+        background-color: rgba(0, 0, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      @media (min-width: 768px) {
+        .hero__title {
+          font-size: 48px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero__inner {
+          max-width: 70%;
+        }
+
+        .hero__title {
+          font-size: 56px;
+        }
+
+        .hero__subtitle {
+          font-size: var(--font-size-xl);
+        }
+      }
+
+      .landing-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "left"
+          "center"
+          "right";
+        gap: var(--spacing-xxxl);
+        align-items: start;
+      }
+
+      .landing-grid > * {
+        min-width: 0;
+      }
+
+      .landing-left {
+        grid-area: left;
+      }
+
+      .landing-center {
+        grid-area: center;
+      }
+
+      .landing-right {
+        grid-area: right;
+      }
+
+      @media (min-width: 768px) {
+        .landing-grid {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas:
+            "center right"
+            "left right";
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .landing-grid {
+          grid-template-columns: 3fr 4fr 3fr;
+          grid-template-areas: "left center right";
+        }
+      }
+
+      .section {
+        width: 100%;
+        margin: 0;
       }
 
       .section + .section {
@@ -156,343 +264,238 @@
         display: inline-flex;
         margin-top: var(--spacing-xxl);
       }
-
-      /* Modal */
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: var(--z-modal);
-        padding: 5%;
-      }
-
-      .modal-overlay.is-open {
-        display: flex;
-      }
-
-      .modal {
-        background-color: var(--white);
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        overflow-y: auto;
-        position: relative;
-        padding: var(--spacing-xxl);
-      }
-
-      .modal__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: var(--spacing-xxl);
-      }
-
-      /* .modal__title usa .title.title--md */
-
-      .modal__close {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: var(--spacing-s);
-        color: var(--grey-600);
-        font-size: 24px;
-        line-height: 1;
-      }
-
-      .modal__close:hover {
-        color: var(--grey-900);
-      }
-
-      .modal__content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-xxl);
-      }
-
-      .modal__section-title {
-        margin-bottom: var(--spacing-m);
-      }
-
-      /* .modal__section-text usa .text */
-
-      .modal__list {
-        list-style: disc;
-        padding-left: var(--spacing-xl);
-        margin: var(--spacing-m) 0 0 0;
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-s);
-      }
-
-      /* .modal__list-item usa .text */
     </style>
   </head>
   <body>
-    <header class="topbar">
-      <nav class="topbar__nav">
-        <a href="/login" class="link">Login</a>
-        <a href="/pricing" class="link">Acquista</a>
-      </nav>
-    </header>
-    <section class="section">
-      <h2 class="section__title title">
-        Che <span id="esperienza">esperienza</span> ti aspetta?
-      </h2>
+    <div class="page">
+      <header class="topbar">
+        <nav class="topbar__nav">
+          <a href="/login" class="link">Login</a>
+          <a href="/pricing" class="link">Iscriviti</a>
+        </nav>
+      </header>
 
-      <div class="section__text text">
-        <p>Andrea sta sketchando una funzionalità. È concentrata.</p>
-        <p>
-          La osservo, intervengo se necessario. Poche parole di solito bastano.
-          Per farla riflettere, per indirizzarla.
-        </p>
-        <p>
-          <span id="citazione"
-            ><em
-              >"e se non chiedi all'utente conferma di voler cancellare i suoi
-              dati?"</em
+      <section class="hero">
+        <div class="hero__inner">
+          <h1 class="hero__title">
+            Un percorso di esercizi per diventare UX/UI Designer.
+          </h1>
+          <p class="hero__subtitle">
+            Teoria quando serve. Ricevimento 2h al giorno.
+          </p>
+          <div class="hero__cta">
+            <a href="/pricing" class="link hero__cta-link"
+              >Iscriviti al corso</a
             >
-            le chiedo.</span
-          >
-        </p>
-      </div>
-
-      <div class="video-placeholder">
-        <span class="video-placeholder__icon">▶</span>
-        <span class="video-placeholder__label">Video</span>
-        <p class="video-placeholder__description">
-          Quando Andrea e Roberto hanno fatto l'esercizio Media Contacts:
-          "Disegna – Condividi – Lista".
-        </p>
-      </div>
-
-      <a
-        href="#"
-        class="link link--chevron-right expand-toggle"
-        data-toggle="example-list"
-      >
-        Qualche altro esempio
-        <span class="link__chevron material-symbols-outlined"
-          >arrow_drop_down</span
-        >
-      </a>
-
-      <ul class="example-list" id="example-list">
-        <li class="example-list__item text">
-          <span class="example-list__emoji">👉🏻</span>
-          <span
-            ><strong>Lezione 1, minuto 15</strong>: stai già disegnando la tua
-            prima interfaccia. Ti blocchi perché incontri un problema. Condivido
-            subito il mio schermo per mostrarti in diretta come lo
-            affronterei.</span
-          >
-        </li>
-        <li class="example-list__item text">
-          <span class="example-list__emoji">👉🏻</span>
-          <span
-            ><strong>Su Discord, scrivo in privato a Marco</strong>: "Osserva
-            questi due elementi — sono molto vicini. Pensi che siano collegati
-            da un concetto comune? Ricorda il principio di prossimità che
-            abbiamo discusso. Riflettici e dimmi se vorresti modificare qualcosa
-            nell'interfaccia."</span
-          >
-        </li>
-        <li class="example-list__item text">
-          <span class="example-list__emoji">👉🏻</span>
-          <span
-            ><strong>Durante un Ricevimento Studenti</strong>: "Quali problemi
-            notate in questa componente che appare in tutte le pagine prodotto
-            di Amazon? Ridisegnamola in modo da eliminare il problema".</span
-          >
-        </li>
-        <li class="example-list__item text">
-          <span class="example-list__emoji">👉🏻</span>
-          <span
-            ><strong>Anna apre una issue su Github</strong>: "Ciao Luca, vorrei
-            un tuo feedback su come mostrare le funzioni delle varie componenti
-            senza dover ricreare l'intero frame per ogni click". Paola commenta
-            postando uno screenshot della sua soluzione, io aggiungo un breve
-            commento e suggerisco un paio di extra esercizi.</span
-          >
-        </li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <h2 class="section__title title">
-        Ciao, mi chiamo <span id="luca-leone">Luca Leone</span> 👋
-      </h2>
-
-      <div class="section__text text">
-        <p>
-          Ho iniziato nel 2012 disegnando un e-commerce che vendeva numeri
-          verdi. Mi occupavo di digital marketing durante il giorno. La sera
-          studiavo Interaction Design, la mattina in ufficio proponevo del
-          cambiamenti al sito web.
-        </p>
-        <p>
-          Non avevo un metodo preciso, ma come utente riconoscevo le interfacce
-          ben progettate
-          <span id="semplicita">e cercavo di replicarne la semplicità</span>.
-          Oggi, dopo anni di esperienza, ho sviluppato un approccio sistematico
-          mantenendo lo stesso obiettivo: creare interfacce intuitive.
-        </p>
-        <p>
-          Nel 2024 ho avuto l'opportunità di insegnare UX/UI Design per Boolean.
-          Nonostante i dubbi iniziali, (<em
-            >sarò in grado di insegnare ciò che so?</em
-          >
-          🤔), l'esperienza si è rivelata straordinaria.
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <h3 class="section__title title title--md">
-        "Luca Leone dovrebbe avere un corso tutto suo"
-      </h3>
-
-      <ul class="blockquote-list">
-        <li>
-          <blockquote class="blockquote">
-            La metodologia è stata molto efficace e gli esercizi pratici hanno
-            accelerato l'apprendimento
-          </blockquote>
-        </li>
-        <li>
-          <blockquote class="blockquote">
-            Non mi ha insegnato un lavoro, mi ha completamente rivoluzionato il
-            modo di vedere le cose
-          </blockquote>
-        </li>
-        <li>
-          <blockquote class="blockquote">
-            I primi due moduli del corso sono stati illuminanti
-          </blockquote>
-        </li>
-      </ul>
-
-      <p class="section__caption caption">
-        — Recensioni anonime, corso Boolean 2024
-      </p>
-    </section>
-
-    <section class="section">
-      <div class="recensione">
-        <p class="recensione__quote">
-          Il corso di Luca è davvero un percorso completo. Nel corso degli anni
-          ho seguito tanti corsi e uno degli aspetti che ho sempre cercato è la
-          parte pratica. Molti corsi migliorano nel tempo ma al termine di
-          ognuno mi sono sempre chiesto: "Come si comportano quelli che
-          producono questi corsi nella vita reale? L'approccio che mostrano è
-          applicabile quando lavorano con le aziende? Ecco, il corso di Luca
-          risponde esattamente a questa domanda. Non solo spiega in modo chiaro
-          e approfondito, ma ti mostra anche come si comporta realmente con i
-          suoi clienti. Luca condivide il suo metodo senza fronzoli e ti spiega
-          passo dopo passo il suo approccio. Ad esempio: "Per scegliere una
-          palette, faccio questo, questo e quest'altro, stop." Un altro aspetto
-          che rende questo corso diverso dagli altri che ho seguito è
-          l'efficacia del tempo. Se una lezione dura 60 minuti, sono 60 minuti
-          di insegnamenti concreti e utili, inclusi momenti di discussione
-          pratica in aula. Fantastico! Finalmente, ho trovato un vero per-corso.
-        </p>
-        <p class="recensione__author">
-          Roberto Martino – Classe 1 Corso UX/UI Design Boolean e Mini Corso di
-          Grafica Gennaio 2025 di Luca Leone
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2 class="section__title title">Il mio approccio</h2>
-
-      <ul class="approach-list">
-        <li class="approach-list__item text">
-          <strong>Feedback personalizzato</strong> — call 1:1 con me,
-          ricevimento studenti, chat
-        </li>
-        <li class="approach-list__item text">
-          <strong>Si impara disegnando</strong> — niente slide; teoria 20%,
-          pratica 80%; il cuore sono esempi, esercizi e progetti reali
-        </li>
-        <li class="approach-list__item text">
-          <strong>L'obiettivo è renderti autonomo</strong> — a fine corso non
-          avrai bisogno di altri corsi / tutorial
-        </li>
-      </ul>
-
-      <a
-        href="#"
-        class="link link--chevron-right section__link"
-        data-modal="modal-metodo"
-      >
-        Il metodo nei dettagli
-      </a>
-    </section>
-
-    <!-- Modal: Il metodo nei dettagli -->
-    <div class="modal-overlay" id="modal-metodo">
-      <div class="modal">
-        <header class="modal__header">
-          <h2 class="modal__title title title--md">Il metodo nei dettagli</h2>
-          <button class="modal__close" aria-label="Chiudi">&times;</button>
-        </header>
-
-        <div class="modal__content">
-          <div class="modal__section">
-            <h3 class="modal__section-title title title--sm">
-              Perché funziona
-            </h3>
-            <p class="modal__section-text text">
-              Agli studenti piace il mio modo pratico di insegnare, sempre
-              ancorato alla mia esperienza lavorativa. Non parlo mai di cose che
-              non ho sperimentato in prima persona. Il vero successo lo vedo
-              quando affrontano nuove sfide con sicurezza e autonomia.
-            </p>
-          </div>
-
-          <div class="modal__section">
-            <h3 class="modal__section-title title title--sm">
-              Il modello "bottega"
-            </h3>
-            <p class="modal__section-text text">
-              L'allievo osserva, poi prova. Io guardo e correggo. È il modo più
-              antico ed efficace di trasferire un mestiere.
-            </p>
-          </div>
-
-          <div class="modal__section">
-            <h3 class="modal__section-title title title--sm">
-              Designer Mindset
-            </h3>
-            <p class="modal__section-text text">
-              L'insegnante migliore non trasferisce solo nozioni — trasferisce
-              un modo di pensare. È questo che ti resterà quando le mode
-              passeranno e gli strumenti cambieranno.
-            </p>
-          </div>
-
-          <div class="modal__section">
-            <h3 class="modal__section-title title title--sm">
-              I miei principi
-            </h3>
-            <ul class="modal__list">
-              <li class="modal__list-item text">
-                L'interesse dello studente viene prima del resto
-              </li>
-              <li class="modal__list-item text">
-                I principi di design vengono prima delle mode
-              </li>
-              <li class="modal__list-item text">
-                Ogni studente merita attenzione individuale
-              </li>
-            </ul>
           </div>
         </div>
-      </div>
+      </section>
+
+      <main class="landing-grid">
+        <div class="landing-left">
+          <section class="section">
+            <h2 class="section__title title">
+              Che <span id="esperienza">esperienza</span> ti aspetta?
+            </h2>
+
+            <div class="section__text text">
+              <p>Andrea sta sketchando una funzionalità.</p>
+              <p>
+                La osservo, intervengo se necessario. Poche parole di solito
+                bastano. Per farla riflettere, per indirizzarla.
+              </p>
+              <p>
+                <span id="citazione"
+                  ><em
+                    >"e se non chiedi all'utente conferma di voler cancellare i
+                    suoi dati?"</em
+                  >
+                  le chiedo.</span
+                >
+              </p>
+            </div>
+
+            <div class="video-placeholder">
+              <span class="video-placeholder__icon">▶</span>
+              <span class="video-placeholder__label">Video</span>
+              <p class="video-placeholder__description">
+                Quando Andrea e Roberto hanno fatto l'esercizio Media Contacts:
+                "Disegna - Condividi - Lista".
+              </p>
+            </div>
+
+            <a
+              href="#"
+              class="link link--chevron-right expand-toggle"
+              data-toggle="example-list"
+            >
+              Qualche altro esempio
+              <span class="link__chevron material-symbols-outlined"
+                >arrow_drop_down</span
+              >
+            </a>
+
+            <ul class="example-list" id="example-list">
+              <li class="example-list__item text">
+                <span class="example-list__emoji">👉🏻</span>
+                <span
+                  ><strong>Ricevimento studenti, minuto 15</strong>: stai già
+                  disegnando la tua prima interfaccia. Ti blocchi perché
+                  incontri un problema. Condivido subito il mio schermo per
+                  mostrarti in diretta come lo affronterei.</span
+                >
+              </li>
+              <li class="example-list__item text">
+                <span class="example-list__emoji">👉🏻</span>
+                <span
+                  ><strong>Su Discord, scrivo in privato a Marco</strong>:
+                  "Osserva questi due elementi — sono molto vicini. Pensi che
+                  siano collegati da un concetto comune? Ricorda il principio di
+                  prossimità che abbiamo discusso. Riflettici e dimmi se
+                  vorresti modificare qualcosa nell'interfaccia."</span
+                >
+              </li>
+              <li class="example-list__item text">
+                <span class="example-list__emoji">👉🏻</span>
+                <span
+                  ><strong>Durante un Ricevimento Studenti</strong>: "Quali
+                  problemi notate in questa componente che appare in tutte le
+                  pagine prodotto di Amazon? Ridisegnamola in modo da eliminare
+                  il problema".</span
+                >
+              </li>
+              <li class="example-list__item text">
+                <span class="example-list__emoji">👉🏻</span>
+                <span
+                  ><strong>Anna apre una issue su Github</strong>: "Ciao Luca,
+                  vorrei un tuo feedback su come mostrare le funzioni delle
+                  varie componenti senza dover ricreare l'intero frame per ogni
+                  click". Paola commenta postando uno screenshot della sua
+                  soluzione, io aggiungo un breve commento e suggerisco un paio
+                  di extra esercizi.</span
+                >
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="landing-center">
+          <section class="section">
+            <h2 class="section__title title">
+              Ciao, mi chiamo <span id="luca-leone">Luca Leone</span> 👋
+            </h2>
+
+            <div class="section__text text">
+              <p>
+                Ho iniziato nel 2012 disegnando un e-commerce che vendeva numeri
+                verdi. Mi occupavo di digital marketing durante il giorno. La
+                sera studiavo Interaction Design, la mattina in ufficio
+                proponevo del cambiamenti al sito web.
+              </p>
+              <p>
+                Non avevo un metodo preciso, ma come utente riconoscevo le
+                interfacce ben progettate
+                <span id="semplicita"
+                  >e cercavo di replicarne la semplicità</span
+                >. Oggi, dopo anni di esperienza, ho sviluppato un approccio
+                sistematico mantenendo lo stesso obiettivo: creare interfacce
+                intuitive.
+              </p>
+              <p>
+                Nel 2024 ho avuto l'opportunità di insegnare UX/UI Design per
+                Boolean. Nonostante i dubbi iniziali, (<em
+                  >sarò in grado di insegnare ciò che so?</em
+                >
+                🤔), l'esperienza si è rivelata straordinaria.
+              </p>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3 class="section__title title title--md">
+              "Luca Leone dovrebbe avere un corso tutto suo"
+            </h3>
+
+            <ul class="blockquote-list">
+              <li>
+                <blockquote class="blockquote">
+                  La metodologia è stata molto efficace e gli esercizi pratici
+                  hanno accelerato l'apprendimento
+                </blockquote>
+              </li>
+              <li>
+                <blockquote class="blockquote">
+                  Non mi ha insegnato un lavoro, mi ha completamente
+                  rivoluzionato il modo di vedere le cose
+                </blockquote>
+              </li>
+              <li>
+                <blockquote class="blockquote">
+                  I primi due moduli del corso sono stati illuminanti
+                </blockquote>
+              </li>
+            </ul>
+
+            <p class="section__caption caption">
+              — Recensioni anonime, corso Boolean 2024
+            </p>
+          </section>
+
+          <section class="section">
+            <div class="recensione">
+              <p class="recensione__quote">
+                Il corso di Luca è davvero un percorso completo. Nel corso degli
+                anni ho seguito tanti corsi e uno degli aspetti che ho sempre
+                cercato è la parte pratica. Molti corsi migliorano nel tempo ma
+                al termine di ognuno mi sono sempre chiesto: "Come si comportano
+                quelli che producono questi corsi nella vita reale? L'approccio
+                che mostrano è applicabile quando lavorano con le aziende? Ecco,
+                il corso di Luca risponde esattamente a questa domanda. Non solo
+                spiega in modo chiaro e approfondito, ma ti mostra anche come si
+                comporta realmente con i suoi clienti. Luca condivide il suo
+                metodo senza fronzoli e ti spiega passo dopo passo il suo
+                approccio. Ad esempio: "Per scegliere una palette, faccio
+                questo, questo e quest'altro, stop." Un altro aspetto che rende
+                questo corso diverso dagli altri che ho seguito è l'efficacia
+                del tempo. Se una lezione dura 60 minuti, sono 60 minuti di
+                insegnamenti concreti e utili, inclusi momenti di discussione
+                pratica in aula. Fantastico! Finalmente, ho trovato un vero
+                per-corso.
+              </p>
+              <p class="recensione__author">
+                Roberto Martino – Classe 1 Corso UX/UI Design Boolean e Mini
+                Corso di Grafica Gennaio 2025 di Luca Leone
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <div class="landing-right">
+          <section class="section">
+            <h2 class="section__title title">Come funziona</h2>
+
+            <ul class="approach-list">
+              <li class="approach-list__item text">
+                <strong>Il corso sono gli esercizi.</strong> Spiego i concetti
+                quando ti servono per andare avanti.
+              </li>
+              <li class="approach-list__item text">
+                <strong>Feedback quando ti serve.</strong> Chiedi in chat,
+                chiedi a ricevimento — non resti bloccato.
+              </li>
+              <li class="approach-list__item text">
+                <strong>Le milestone si passano.</strong> Sono progetti più
+                complessi che vengono corretti. Se la qualità non c'è, si
+                rifanno prima di andare avanti.
+              </li>
+              <li class="approach-list__item text">
+                <strong>Ricevimento studenti ogni giorno.</strong> Due ore dal
+                vivo per rispondere, correggere, sbloccare.
+              </li>
+            </ul>
+          </section>
+        </div>
+      </main>
     </div>
 
     <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
@@ -530,49 +533,5 @@
       annotationUnderline.show();
     </script>
     <script src="components/link/link.js"></script>
-    <script>
-      // Modal functionality
-      document.addEventListener("DOMContentLoaded", function () {
-        const modalTriggers = document.querySelectorAll("[data-modal]");
-
-        modalTriggers.forEach(function (trigger) {
-          const modalId = trigger.getAttribute("data-modal");
-          const modal = document.getElementById(modalId);
-
-          if (!modal) return;
-
-          const closeBtn = modal.querySelector(".modal__close");
-
-          // Open modal
-          trigger.addEventListener("click", function (e) {
-            e.preventDefault();
-            modal.classList.add("is-open");
-            document.body.style.overflow = "hidden";
-          });
-
-          // Close on button click
-          closeBtn.addEventListener("click", function () {
-            modal.classList.remove("is-open");
-            document.body.style.overflow = "";
-          });
-
-          // Close on overlay click
-          modal.addEventListener("click", function (e) {
-            if (e.target === modal) {
-              modal.classList.remove("is-open");
-              document.body.style.overflow = "";
-            }
-          });
-
-          // Close on Escape key
-          document.addEventListener("keydown", function (e) {
-            if (e.key === "Escape" && modal.classList.contains("is-open")) {
-              modal.classList.remove("is-open");
-              document.body.style.overflow = "";
-            }
-          });
-        });
-      });
-    </script>
   </body>
 </html>
