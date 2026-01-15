@@ -4,8 +4,44 @@
  * Componente header principale
  */
 
-.header {
+.topbar {
+  margin: 0 0 var(--spacing-xxl);
   display: flex;
-  align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.topbar__logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  color: var(--grey-900);
+  line-height: 1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.logo:hover {
+  color: var(--blue-900);
+}
+
+.logo__subtitle {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-sm);
+  color: var(--grey-600);
+  line-height: 1;
+}
+
+.topbar__nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-l);
+  margin-top: var(--spacing-xs);
 }

@@ -1,0 +1,15 @@
+.video-aspect-ratio {
+  position: relative;
+  padding-bottom: 57.66%;
+  height: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-aspect-ratio iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

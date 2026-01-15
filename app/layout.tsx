@@ -1,11 +1,13 @@
-import type { Metadata } from 'next';
-import '../public/styles/variables.css';
-import '../public/styles/base.css';
-import '../public/styles/typography.css';
+import type { Metadata } from "next";
+import "../public/styles/variables.css";
+import "../public/styles/base.css";
+import "../public/styles/typography.css";
+import "../public/components/header/header.css";
+import "../public/components/link/link.css";
 
 export const metadata: Metadata = {
-  title: 'Mucca Design - Corso UX/UI',
-  description: 'Corso completo di UX/UI Design',
+  title: "Mucca Design - Corso UX/UI",
+  description: "Corso completo di UX/UI Design",
 };
 
 export default function RootLayout({
@@ -16,11 +18,15 @@ export default function RootLayout({
   return (
     <html lang="it">
       <head>
-        {/* Google Fonts */}
+        {/* Google Fonts - Inter */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet"
         />
         {/* Material Symbols */}
@@ -33,4 +39,3 @@ export default function RootLayout({
     </html>
   );
 }
-
