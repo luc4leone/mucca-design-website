@@ -11,7 +11,7 @@ body {
 
 .hero {
   width: 100%;
-  margin: 0 0 var(--spacing-xxxl);
+  margin: 0 0 var(--spacing-3xl);
 }
 
 .hero__inner {
@@ -30,6 +30,21 @@ body {
   font-size: 40px;
 }
 
+.hero__word-with-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.hero__word-icon {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -65%);
+  height: 47px;
+  width: auto;
+  pointer-events: none;
+}
+
 .hero__subtitle {
   font-family: var(--font-family-sans);
   font-weight: var(--font-weight-medium);
@@ -40,12 +55,12 @@ body {
 }
 
 .hero__cta {
-  margin-top: var(--spacing-xxxl);
+  margin-top: var(--spacing-3xl);
 }
 
 .link.hero__cta-link {
   display: inline-flex;
-  padding: var(--spacing-l) var(--spacing-xxl);
+  padding: var(--spacing-l) var(--spacing-2xl);
   background-color: rgba(0, 0, 255, 0.1);
   border-radius: 8px;
   font-size: var(--font-size-lg);
@@ -78,7 +93,7 @@ body {
     "left"
     "center"
     "right";
-  gap: var(--spacing-xxxl);
+  gap: var(--spacing-3xl);
   align-items: start;
 }
 
@@ -120,15 +135,15 @@ body {
 }
 
 .section + .section {
-  margin-top: var(--spacing-xxxl);
+  margin-top: var(--spacing-3xl);
 }
 
 .section__title {
-  margin-bottom: var(--spacing-xxl);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .section__text {
-  margin-bottom: var(--spacing-xxl);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .section__text p {
@@ -142,7 +157,7 @@ body {
 .video-placeholder {
   background-color: var(--grey-200);
   border: 2px dashed var(--grey-400);
-  padding: var(--spacing-xxl);
+  padding: var(--spacing-2xl);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,7 +190,7 @@ body {
 }
 
 .expand-toggle {
-  margin-top: var(--spacing-xxl);
+  margin-top: var(--spacing-2xl);
   cursor: pointer;
 }
 
@@ -230,16 +245,16 @@ body {
   width: 100%;
   height: 1px;
   background-color: var(--grey-300);
-  margin: var(--spacing-xxxl) 0;
+  margin: var(--spacing-3xl) 0;
 }
 
 .section__link {
   display: inline-flex;
-  margin-top: var(--spacing-xxl);
+  margin-top: var(--spacing-2xl);
 }
 
 .video-container {
-  margin-top: var(--spacing-xxxl);
+  margin-top: var(--spacing-3xl);
   width: 100%;
 }
 

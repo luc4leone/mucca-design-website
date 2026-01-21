@@ -30,14 +30,14 @@ export default function PricingPage() {
 
   return (
     <div style={{ maxWidth: '800px', margin: '80px auto', padding: '0 20px' }}>
-      <div style={{ marginBottom: 'var(--spacing-xxl)' }}>
+      <div style={{ marginBottom: 'var(--spacing-2xl)' }}>
         <div className="title">Iscriviti al Corso</div>
       </div>
 
       <div
         style={{
           backgroundColor: 'var(--grey-100)',
-          padding: 'var(--spacing-xxl)',
+          padding: 'var(--spacing-2xl)',
           marginBottom: 'var(--spacing-l)',
         }}
       >

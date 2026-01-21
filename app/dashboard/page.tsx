@@ -149,8 +149,8 @@ export default function DashboardPage() {
       <div
         style={{
           backgroundColor: 'var(--grey-100)',
-          padding: 'var(--spacing-xxl)',
-          marginBottom: 'var(--spacing-xxl)',
+          padding: 'var(--spacing-2xl)',
+          marginBottom: 'var(--spacing-2xl)',
           border: '1px solid var(--grey-300)',
         }}
       >

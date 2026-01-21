@@ -211,7 +211,7 @@ export default function DashboardLessonDetailPage() {
             </div>
           ) : null}
 
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: 'var(--spacing-xxl)' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginBottom: 'var(--spacing-2xl)' }}>
             {!completed ? (
               <button className="button" type="button" onClick={markCompleted} disabled={busy}>
                 Segna come completata
@@ -225,7 +225,7 @@ export default function DashboardLessonDetailPage() {
           </div>
 
           {lesson.video_url ? (
-            <div style={{ marginBottom: 'var(--spacing-xxl)' }}>
+            <div style={{ marginBottom: 'var(--spacing-2xl)' }}>
               <iframe
                 src={lesson.video_url}
                 title={lesson.title}
@@ -241,7 +241,7 @@ export default function DashboardLessonDetailPage() {
               style={{
                 border: '1px solid var(--grey-300)',
                 backgroundColor: 'var(--white)',
-                padding: 'var(--spacing-xxl)',
+                padding: 'var(--spacing-2xl)',
               }}
               dangerouslySetInnerHTML={{ __html: lesson.content }}
             />
@@ -249,7 +249,7 @@ export default function DashboardLessonDetailPage() {
             <div className="text">Contenuto non disponibile.</div>
           )}
 
-          <div style={{ marginTop: 'var(--spacing-xxl)' }}>{miniNav}</div>
+          <div style={{ marginTop: 'var(--spacing-2xl)' }}>{miniNav}</div>
         </>
       ) : null}
     </div>

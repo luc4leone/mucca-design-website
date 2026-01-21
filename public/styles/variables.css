@@ -10,7 +10,8 @@
    ======================================== */
 @font-face {
   font-family: "Scorekard";
-  src: url("../assets/fonts/Scorekard/Scorekard-Regular.woff2") format("woff2"),
+  src:
+    url("../assets/fonts/Scorekard/Scorekard-Regular.woff2") format("woff2"),
     url("../assets/fonts/Scorekard/Scorekard-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
@@ -19,7 +20,8 @@
 
 @font-face {
   font-family: "Scorekard";
-  src: url("../assets/fonts/Scorekard/Scorekard-Semibold.woff2") format("woff2"),
+  src:
+    url("../assets/fonts/Scorekard/Scorekard-Semibold.woff2") format("woff2"),
     url("../assets/fonts/Scorekard/Scorekard-Semibold.woff") format("woff");
   font-weight: 600;
   font-style: normal;
@@ -28,7 +30,8 @@
 
 @font-face {
   font-family: "Scorekard";
-  src: url("../assets/fonts/Scorekard/Scorekard-Bold.woff2") format("woff2"),
+  src:
+    url("../assets/fonts/Scorekard/Scorekard-Bold.woff2") format("woff2"),
     url("../assets/fonts/Scorekard/Scorekard-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
@@ -76,8 +79,10 @@
   --spacing-m: 12px;
   --spacing-l: 16px;
   --spacing-xl: 20px;
-  --spacing-xxl: 24px;
-  --spacing-xxxl: 40px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 64px;
+  --spacing-5xl: 128px;
 
   /* ========================================
      TYPOGRAPHY
@@ -92,6 +97,8 @@
   --font-size-lg: 21px;
   --font-size-xl: 24px;
   --font-size-2xl: 30px;
+  --font-size-3xl: 48px;
+  --font-size-4xl: 56px;
 
   /* Font weights */
   --font-weight-normal: 400;

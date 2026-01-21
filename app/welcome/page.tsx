@@ -99,7 +99,7 @@ export default function WelcomePage() {
         textAlign: 'center',
       }}
     >
-      <div className="title" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+      <div className="title" style={{ marginBottom: 'var(--spacing-2xl)' }}>
         Benvenuto!
       </div>
 
@@ -132,7 +132,7 @@ export default function WelcomePage() {
       </button>
 
       {status ? (
-        <div className="text" style={{ marginTop: 'var(--spacing-xxl)' }}>
+        <div className="text" style={{ marginTop: 'var(--spacing-2xl)' }}>
           {status}
         </div>
       ) : null}

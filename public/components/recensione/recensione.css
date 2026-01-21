@@ -26,7 +26,7 @@
   color: var(--grey-50);
   line-height: var(--line-height-relaxed); /* 1.6 */
   background-color: var(--grey-900);
-  padding: var(--spacing-xxl); /* 24px */
+  padding: var(--spacing-2xl); /* 24px */
   margin: 0;
 }
 

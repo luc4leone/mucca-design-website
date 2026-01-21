@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
@@ -15,10 +15,386 @@
     <link rel="stylesheet" href="../styles/typography.css" />
     <link rel="stylesheet" href="../components/header/header.css" />
     <link rel="stylesheet" href="../components/link/link.css" />
+    <link rel="stylesheet" href="../components/recensione/recensione.css" />
     <style>
       .page {
         max-width: 1280px;
         margin: 0 auto;
+      }
+
+      .chi-hero-image {
+        display: block;
+        width: 720px;
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        margin: 0 auto var(--spacing-xl);
+      }
+
+      .chi-title {
+        text-align: center;
+        font-family: var(--font-family-sans);
+        font-weight: var(--font-weight-bold);
+        color: var(--grey-900);
+        line-height: var(--line-height-none);
+        letter-spacing: 0.2px;
+        margin: var(--spacing-4xl) 0 var(--spacing-3xl);
+      }
+
+      .chi-title__line1 {
+        display: block;
+        font-size: var(--font-size-4xl);
+        max-width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .chi-title__line2 {
+        font-weight: var(--font-weight-medium);
+        font-family: var(--font-family-serif);
+        display: block;
+        font-size: var(--font-size-2xl);
+        max-width: 920px;
+        margin-top: var(--spacing-m);
+        margin-left: auto;
+        margin-right: auto;
+        text-wrap: balance;
+        line-height: var(--line-height-normal);
+      }
+
+      .chi-title__line2 strong {
+        font-weight: var(--font-weight-bold);
+      }
+
+      .chi-text-card {
+        --chi-card-padding: calc(var(--spacing-2xl) * 2);
+        background-color: var(--white);
+        border: 1px solid var(--grey-300);
+        border-radius: 12px;
+        padding: var(--chi-card-padding);
+        box-shadow: var(--shadow-lg);
+        transform: rotate(-1deg);
+      }
+
+      .chi-text-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+      }
+
+      .chi-text {
+        font-family: var(--font-family-serif);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-normal);
+        color: var(--grey-900);
+        line-height: var(--line-height-relaxed);
+      }
+
+      .chi-text > p {
+        margin: 0 0 var(--spacing-l);
+      }
+
+      .chi-text > p:first-child {
+        margin-bottom: var(--spacing-l);
+      }
+
+      .chi-text > p:last-child {
+        margin-bottom: 0;
+      }
+
+      .chi-method {
+        margin: var(--spacing-5xl) 0 0;
+      }
+
+      .chi-method__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+      }
+
+      .chi-method__card {
+        background: var(--white);
+        border: 1px solid var(--grey-300);
+        border-radius: 12px;
+        padding: var(--spacing-2xl);
+        box-shadow: var(--shadow-md, var(--shadow-lg));
+      }
+
+      .chi-method__title {
+        margin: 0 0 var(--spacing-l);
+        font-family: var(--font-family-sans);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-2xl);
+        line-height: var(--line-height-tight, var(--line-height-normal));
+        letter-spacing: 0.2px;
+        color: var(--grey-900);
+      }
+
+      .chi-method__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-m);
+      }
+
+      .chi-method__list li {
+        position: relative;
+        padding-left: 18px;
+      }
+
+      .chi-method__list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.62em;
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--grey-500);
+      }
+
+      @media (min-width: 768px) {
+        .chi-text-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: var(--spacing-3xl);
+        }
+
+        .chi-text-grid > :nth-child(2) {
+          border-left: 1px solid var(--grey-300);
+          padding-left: var(--spacing-3xl);
+        }
+
+        .chi-method__grid {
+          grid-template-columns: 1fr 1fr;
+          gap: var(--spacing-3xl);
+        }
+      }
+
+      .chi-text--right {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chi-signature {
+        --chi-signature-font-size: 16px;
+        margin-top: auto;
+        padding-top: var(--spacing-3xl);
+      }
+
+      .chi-goal {
+        margin: var(--spacing-5xl) 0 0;
+      }
+
+      .chi-goal .chi-title {
+        margin: 0;
+      }
+
+      .chi-reviews {
+        margin-top: var(--spacing-4xl);
+      }
+
+      .chi-reviews__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3xl);
+        margin-top: var(--spacing-3xl);
+      }
+
+      .chi-review__author-row {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-m);
+      }
+
+      .chi-review__avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 999px;
+        object-fit: cover;
+        flex: 0 0 auto;
+        border: 1px solid var(--grey-300);
+      }
+
+      .chi-reviews .recensione__quote {
+        border-radius: 12px;
+      }
+
+      .chi-projects {
+        margin: var(--spacing-5xl) 0 0;
+      }
+
+      .chi-projects__subtitle2 {
+        margin-top: var(--spacing-m);
+      }
+
+      .chi-gallery {
+        margin-top: var(--spacing-3xl);
+      }
+
+      .chi-gallery__viewport {
+        display: flex;
+        gap: var(--spacing-3xl);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: var(--spacing-m);
+      }
+
+      .chi-gallery__viewport::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .chi-gallery__viewport::-webkit-scrollbar-thumb {
+        background: var(--grey-300);
+        border-radius: 999px;
+      }
+
+      .chi-gallery__slide {
+        scroll-snap-align: start;
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+
+      .chi-gallery__image {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid var(--grey-300);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .chi-gallery__indicator {
+        margin-top: var(--spacing-l);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-l);
+      }
+
+      .chi-gallery__caption {
+        text-align: center;
+        margin: var(--spacing-l) 0 0;
+      }
+
+      .chi-gallery__nav {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        border: 1px solid var(--grey-300);
+        background: var(--white);
+        color: var(--grey-800);
+        cursor: pointer;
+      }
+
+      .chi-gallery__nav:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .chi-gallery__count {
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-sm);
+        color: var(--grey-700);
+      }
+
+      .chi-gallery__dots {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-s);
+      }
+
+      .chi-gallery__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--grey-300);
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .chi-gallery__dot.is-active {
+        background: var(--grey-700);
+      }
+
+      .chi-gallery__dot:focus-visible,
+      .chi-gallery__nav:focus-visible {
+        outline: 2px solid var(--blue-900);
+        outline-offset: 2px;
+      }
+
+      @media (min-width: 768px) {
+        .chi-reviews__grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .chi-reviews__grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      .chi-signature__mark {
+        display: block;
+        height: 80px;
+        width: auto;
+        margin: 0 0 var(--spacing-l);
+      }
+
+      .chi-signature__row {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-l);
+      }
+
+      .chi-signature__avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 999px;
+        object-fit: cover;
+        flex: 0 0 auto;
+      }
+
+      .chi-signature__meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .chi-signature__line1 {
+        font-family: var(--font-family-serif);
+        font-size: var(--chi-signature-font-size);
+        font-weight: var(--font-weight-normal);
+        color: var(--grey-900);
+        line-height: var(--line-height-tight);
+        margin: 0;
+      }
+
+      .chi-signature__line1 strong {
+        font-weight: var(--font-weight-bold);
+      }
+
+      .chi-signature__line1 .link {
+        font-family: var(--font-family-serif);
+        font-weight: var(--font-weight-normal);
+        font-size: var(--chi-signature-font-size);
+      }
+
+      .chi-signature__line2 {
+        font-family: var(--font-family-serif);
+        font-size: var(--chi-signature-font-size);
+        font-style: italic;
+        color: var(--grey-900);
+        line-height: var(--line-height-tight);
+        margin: 0;
       }
     </style>
     <link
@@ -40,8 +416,378 @@
       </header>
 
       <main>
-        <p class="text">coming soon</p>
+        <img
+          src="/assets/images/lezione.png"
+          alt="Lezione"
+          class="chi-hero-image"
+        />
+
+        <h1 class="chi-title">
+          <span class="chi-title__line1">Chi sono e come insegno</span>
+          <span class="chi-title__line2"
+            >Ti aiuto a diventare un UX/UI Designer autonomo. Meno teoria fine a
+            se stessa, più esercizi e progetti guidati
+            <strong>per entrare nel settore</strong>.
+          </span>
+        </h1>
+
+        <section class="chi-text-card">
+          <div class="chi-text-grid">
+            <div class="chi-text">
+              <p>
+                Mi chiamo Luca Leone. Ho iniziato nel 2012: di giorno mi
+                occupavo di marketing, la sera studiavo Interaction Design.
+                Anche senza un metodo “ufficiale”, da utente riconoscevo le
+                interfacce ben progettate e cercavo di replicarne la semplicità,
+                portando sketch e proposte al team di sviluppo.
+              </p>
+              <p>
+                Col tempo ho trasformato quell’intuizione in un
+                <strong>approccio sistematico</strong>: un modo di progettare
+                che punta alla chiarezza, riduce l’ambiguità e rende le
+                decisioni difendibili. L’obiettivo è sempre lo stesso: creare
+                interfacce intuitive.
+              </p>
+              <p>
+                Nel 2024 ho iniziato a insegnare in un corso UX/UI Design per
+                Boolean. Avevo dubbi iniziali, ma l'esperienza è stata intensa e
+                sorprendente: ho visto quanto velocemente le persone crescono
+                quando lavorano su esempi, esercizi e progetti, con
+                <strong>feedback e metodo</strong>.
+              </p>
+            </div>
+
+            <div class="chi-text chi-text--right">
+              <p>
+                Mi appassiona aiutare aspiranti UX/UI Designer a trasformare
+                <strong>competenze e carriera</strong>. Prendo questa
+                responsabilità molto sul serio: parlo solo di ciò che ho
+                sperimentato in prima persona.
+              </p>
+              <p>
+                Il mio obiettivo è che a fine percorso lo studente sia
+                <strong>autonomo</strong>: capace di colmare le proprie lacune,
+                affrontare nuove sfide progettuali e continuare a migliorare
+                senza dipendere continuamente da altri corsi o tutorial.
+              </p>
+
+              <div class="chi-signature">
+                <img
+                  src="/assets/images/firma.png"
+                  alt=""
+                  class="chi-signature__mark"
+                />
+                <div class="chi-signature__row">
+                  <img
+                    src="/assets/images/selfie.png"
+                    alt="Luca Leone"
+                    class="chi-signature__avatar"
+                  />
+                  <div class="chi-signature__meta">
+                    <p class="chi-signature__line1">
+                      <strong>Luca Leone</strong>,
+                      <a href="mailto:luca@mucca.design" class="link"
+                        >luca@mucca.design</a
+                      >
+                    </p>
+                    <p class="chi-signature__line2">
+                      Interaction Designer, creatore di Mucca Design
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chi-method">
+          <div class="chi-method__grid">
+            <div class="chi-method__card chi-text">
+              <h2 class="chi-method__title">Come insegno (3 principi)</h2>
+              <ul class="chi-method__list">
+                <li>
+                  <strong>Pratica guidata:</strong> esempi, esercizi e progetti
+                  (non solo teoria)
+                </li>
+                <li>
+                  <strong>Metodo replicabile:</strong> un processo che puoi
+                  riusare su qualsiasi progetto
+                </li>
+                <li>
+                  <strong>Esperienza reale:</strong> insegno solo ciò che ho
+                  sperimentato in prima persona
+                </li>
+              </ul>
+            </div>
+
+            <div class="chi-method__card chi-text">
+              <h2 class="chi-method__title">Cosa ottieni</h2>
+              <ul class="chi-method__list">
+                <li>
+                  Chiarezza su cosa fare e in che ordine, quando inizi da zero
+                </li>
+                <li>
+                  Abitudine al ragionamento (scelte motivate, non “mi piace/non
+                  mi piace”)
+                </li>
+                <li>Progetti che ti allenano sulle competenze giuste</li>
+                <li>
+                  <strong>Autonomia:</strong> la capacità di continuare a
+                  migliorare senza dipendere da altri corsi/tutorial
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="chi-goal">
+          <h2 class="chi-title">
+            <span class="chi-title__line1"
+              >Il mio obiettivo non è farti “sentire pronto”</span
+            >
+            <span class="chi-title__line2"
+              >L'idea è questa: la fiducia di poter disegnare qualsiasi UI te la
+              devi guadagnare disegno dopo disegno.</span
+            >
+          </h2>
+
+          <div class="chi-reviews">
+            <div class="chi-reviews__grid">
+              <div class="recensione">
+                <p class="recensione__quote">
+                  Fantastico, ovviamente non potrò portarlo in produzione, ma è
+                  tutto un altro livello. Certo che puoi portarlo domani, devo
+                  dire che hai proprio dei ragionamenti importanti, cioè super
+                  analitico. Interessante come hai preso punto per punto e
+                  smembrato mantenendo comunque una visione globale.
+                </p>
+                <div class="chi-review__author-row">
+                  <img
+                    src="/assets/images/bryan_zanella.jpg"
+                    alt="Brian Zanella"
+                    class="chi-review__avatar"
+                  />
+                  <p class="recensione__author">
+                    Brian Zanella - classe 2 Corso UX/UI Design Boolean
+                  </p>
+                </div>
+              </div>
+
+              <div class="recensione">
+                <p class="recensione__quote">
+                  Mi permetto l'ultima sviolinata (come si dice dalle mie
+                  parti), averti come primo prof al corso è stato molto di
+                  impatto ma so di parlare a nome di tutti, complimenti perché
+                  ci hai passato i valori di questo mondo e soprattutto non ci
+                  hai mai fatto vedere una slide e questo dice tanto di te
+                </p>
+                <div class="chi-review__author-row">
+                  <img
+                    src="/assets/images/andrea_schiavon.jpg"
+                    alt="Andrea Schiavon"
+                    class="chi-review__avatar"
+                  />
+                  <p class="recensione__author">
+                    Andrea Schiavon - classe 2 Corso UX/UI Design Boolean
+                  </p>
+                </div>
+              </div>
+
+              <div class="recensione">
+                <p class="recensione__quote">
+                  A mio parere come Teacher sei uno dei migliori che abbia
+                  avuto, contando anche i professori universitari eh che poi
+                  nella realtà non sono dei grandi insegnanti ma solo grandi
+                  ricercatori 😬
+                </p>
+                <div class="chi-review__author-row">
+                  <img
+                    src="/assets/images/davide_cester.jpg"
+                    alt="Davide Cester"
+                    class="chi-review__avatar"
+                  />
+                  <p class="recensione__author">
+                    Davide Cester - classe 2 Corso UX/UI Design Boolean
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chi-projects">
+          <h2 class="chi-title">
+            <span class="chi-title__line1">Risultati, non promesse.</span>
+            <span class="chi-title__line2"
+              >Cosa riesci a costruire quando segui un percorso fatto di
+              <strong>pratica e feedback</strong>.</span
+            >
+            <span class="chi-title__line2 chi-projects__subtitle2"
+              >Progetti degli studenti,<br />
+              guidati da <strong>metodo e iterazione</strong>.</span
+            >
+          </h2>
+
+          <div class="chi-gallery" data-gallery>
+            <div class="chi-gallery__viewport" data-gallery-viewport>
+              <div
+                class="chi-gallery__slide"
+                data-gallery-slide
+                data-caption="Davide Vignozzi - Progetto Media Contacts - Master Mucca Design UX/UI"
+              >
+                <img
+                  src="/assets/images/gallery-progetti-studenti/mediacontacts-davide.jpg"
+                  alt="Progetto studente: MediaContacts"
+                  class="chi-gallery__image"
+                />
+              </div>
+              <div
+                class="chi-gallery__slide"
+                data-gallery-slide
+                data-caption="Roberto Migani - Progetto Pound 4 Pound - Master Mucca Design UX/UI"
+              >
+                <img
+                  src="/assets/images/gallery-progetti-studenti/pound4pound-roberto2.jpg"
+                  alt="Progetto studente: Pound4Pound"
+                  class="chi-gallery__image"
+                />
+              </div>
+            </div>
+
+            <p
+              class="recensione__author chi-gallery__caption"
+              data-gallery-caption
+              aria-live="polite"
+            >
+              Davide Vignozzi - Progetto Media Contacts - Master Mucca Design
+              UX/UI
+            </p>
+
+            <div class="chi-gallery__indicator" aria-live="polite">
+              <button
+                class="chi-gallery__nav"
+                type="button"
+                data-gallery-prev
+                aria-label="Slide precedente"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true"
+                  >chevron_left</span
+                >
+              </button>
+              <span class="chi-gallery__dots" data-gallery-dots>
+                <button
+                  class="chi-gallery__dot is-active"
+                  type="button"
+                  data-gallery-dot
+                  aria-label="Vai alla slide 1"
+                ></button>
+                <button
+                  class="chi-gallery__dot"
+                  type="button"
+                  data-gallery-dot
+                  aria-label="Vai alla slide 2"
+                ></button>
+              </span>
+              <button
+                class="chi-gallery__nav"
+                type="button"
+                data-gallery-next
+                aria-label="Slide successiva"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true"
+                  >chevron_right</span
+                >
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
+
+    <script>
+      (function () {
+        const galleries = document.querySelectorAll("[data-gallery]");
+        galleries.forEach((gallery) => {
+          const viewport = gallery.querySelector("[data-gallery-viewport]");
+          const slides = Array.from(
+            gallery.querySelectorAll("[data-gallery-slide]"),
+          );
+          const captionEl = gallery.querySelector("[data-gallery-caption]");
+          const dots = Array.from(
+            gallery.querySelectorAll("[data-gallery-dot]"),
+          );
+          const prevBtn = gallery.querySelector("[data-gallery-prev]");
+          const nextBtn = gallery.querySelector("[data-gallery-next]");
+
+          if (!viewport || slides.length === 0 || dots.length === 0) {
+            return;
+          }
+
+          const total = slides.length;
+          let activeIndex = 0;
+
+          const setActive = (index) => {
+            activeIndex = index;
+            dots.forEach((d, i) =>
+              d.classList.toggle("is-active", i === index),
+            );
+
+            if (captionEl) {
+              const caption = slides[index]?.getAttribute("data-caption") || "";
+              captionEl.textContent = caption;
+            }
+
+            if (prevBtn) prevBtn.disabled = index <= 0;
+            if (nextBtn) nextBtn.disabled = index >= total - 1;
+          };
+
+          const scrollToIndex = (index) => {
+            const clamped = Math.max(0, Math.min(total - 1, index));
+            slides[clamped].scrollIntoView({
+              behavior: "smooth",
+              inline: "start",
+              block: "nearest",
+            });
+            setActive(clamped);
+          };
+
+          setActive(0);
+
+          dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => scrollToIndex(index));
+          });
+
+          if (prevBtn) {
+            prevBtn.addEventListener("click", () =>
+              scrollToIndex(activeIndex - 1),
+            );
+          }
+
+          if (nextBtn) {
+            nextBtn.addEventListener("click", () =>
+              scrollToIndex(activeIndex + 1),
+            );
+          }
+
+          const io = new IntersectionObserver(
+            (entries) => {
+              const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+              if (!visible) return;
+              const idx = slides.indexOf(visible.target);
+              if (idx >= 0) setActive(idx);
+            },
+            {
+              root: viewport,
+              threshold: [0.5, 0.75],
+            },
+          );
+
+          slides.forEach((s) => io.observe(s));
+        });
+      })();
+    </script>
   </body>
 </html>

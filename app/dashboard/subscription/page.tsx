@@ -3,7 +3,7 @@
 export default function DashboardSubscriptionPage() {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px' }}>
-      <div className="title" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+      <div className="title" style={{ marginBottom: 'var(--spacing-2xl)' }}>
         Abbonamento
       </div>
 

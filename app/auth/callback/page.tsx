@@ -81,11 +81,11 @@ export default function AuthCallbackPage() {
         textAlign: 'center',
       }}
     >
-      <div className="title" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+      <div className="title" style={{ marginBottom: 'var(--spacing-2xl)' }}>
         Accesso
       </div>
 
-      <div className="text" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+      <div className="text" style={{ marginBottom: 'var(--spacing-2xl)' }}>
         {status}
       </div>
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
@@ -39,7 +39,7 @@
       }
 
       .sidebar-heading:not(:first-child) {
-        margin-top: var(--spacing-xxxl);
+        margin-top: var(--spacing-3xl);
       }
 
       /* Page list */
@@ -256,7 +256,7 @@
         const iframe = document.getElementById("content-frame");
         const placeholder = document.querySelector(".content-placeholder");
         const sidebarLinks = document.querySelectorAll(
-          '.page-list__link[data-target="iframe"]'
+          '.page-list__link[data-target="iframe"]',
         );
 
         let currentAnnotation = null;

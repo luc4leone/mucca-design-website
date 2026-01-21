@@ -13,7 +13,7 @@ export default function SubscriptionExpiredPage() {
       <div className="title" style={{ marginBottom: 'var(--spacing-l)' }}>
         Abbonamento Scaduto
       </div>
-      <div className="text" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+      <div className="text" style={{ marginBottom: 'var(--spacing-2xl)' }}>
         Il tuo abbonamento non è più attivo. Riattivalo per continuare ad accedere al corso.
       </div>
       <a href="/pricing" className="button">

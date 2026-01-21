@@ -103,7 +103,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           textAlign: 'center',
         }}
       >
-        <div className="title" style={{ marginBottom: 'var(--spacing-xxl)' }}>
+        <div className="title" style={{ marginBottom: 'var(--spacing-2xl)' }}>
           Dashboard
         </div>
         <div className="text">{status}</div>
@@ -164,7 +164,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: 'var(--spacing-xxl)',
+          padding: 'var(--spacing-2xl)',
         }}
       >
         {children}

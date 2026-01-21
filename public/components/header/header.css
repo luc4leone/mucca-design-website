@@ -5,7 +5,7 @@
  */
 
 .topbar {
-  margin: 0 0 var(--spacing-xxl);
+  margin: 0 0 var(--spacing-2xl);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
