@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
@@ -62,260 +62,658 @@
       </section>
 
       <main class="landing-grid">
-        <div class="landing-left">
-          <section class="section">
-            <h2 class="section__title title">
-              Che <span id="esperienza">esperienza</span> ti aspetta?
-            </h2>
+        <section class="three-col">
+          <div class="three-col__left">
+            <section class="section" id="section-esperienza">
+              <h2 class="section__title title">
+                Che <span id="esperienza">esperienza</span> ti aspetta?
+              </h2>
 
-            <div class="section__text text">
-              <p>Andrea sta sketchando una funzionalità.</p>
-              <p>
-                La osservo, intervengo se necessario. Poche parole di solito
-                bastano. Per farla riflettere, per indirizzarla.
-              </p>
-              <p>
-                <span id="citazione"><em>"Edit perché?"</em> le chiedo.</span>
-              </p>
-            </div>
-
-            <div class="video-container">
-              <div style="padding: 56.25% 0 0 0; position: relative">
-                <iframe
-                  src="https://player.vimeo.com/video/1154591143?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                  frameborder="0"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  style="
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                  "
-                  title='Esercizio "condividi" con Roberto e Andrea'
-                ></iframe>
+              <div class="section__text text">
+                <p>Andrea sta sketchando una funzionalità.</p>
+                <p>
+                  La osservo, intervengo se necessario. Poche parole di solito
+                  bastano. Per farla riflettere, per indirizzarla.
+                </p>
+                <p>
+                  <span id="citazione"><em>"Edit perché?"</em> le chiedo.</span>
+                </p>
               </div>
-              <script src="https://player.vimeo.com/api/player.js"></script>
-              <p class="section__caption caption">
-                Quando Andrea e Roberto hanno fatto l'esercizio "Condividi
-                lista".
-              </p>
-            </div>
 
-            <a
-              href="#"
-              class="link link--chevron-right expand-toggle"
-              data-toggle="example-list"
-            >
-              Qualche altro esempio
-              <span class="link__chevron material-symbols-outlined"
-                >arrow_drop_down</span
+              <div class="video-container">
+                <div style="padding: 56.25% 0 0 0; position: relative">
+                  <iframe
+                    src="https://player.vimeo.com/video/1154591143?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    frameborder="0"
+                    allow="
+                      autoplay;
+                      fullscreen;
+                      picture-in-picture;
+                      clipboard-write;
+                      encrypted-media;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    style="
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                    "
+                    title='Esercizio "condividi" con Roberto e Andrea'
+                  ></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+                <p class="section__caption caption">
+                  Quando Andrea e Roberto hanno fatto l'esercizio "Condividi
+                  lista".
+                </p>
+              </div>
+
+              <a
+                href="#"
+                class="link link--chevron-right expand-toggle"
+                data-toggle="example-list"
               >
-            </a>
+                Qualche altro esempio
+                <span class="link__chevron material-symbols-outlined"
+                  >arrow_drop_down</span
+                >
+              </a>
 
-            <ul class="example-list" id="example-list">
-              <li class="example-list__item text">
-                <span class="example-list__emoji">👉🏻</span>
-                <span
-                  ><strong>Ricevimento studenti, minuto 15</strong>: stai già
-                  disegnando la tua prima interfaccia. Ti blocchi perché
-                  incontri un problema. Condivido subito il mio schermo per
-                  mostrarti in diretta come lo affronterei.</span
-                >
-              </li>
-              <li class="example-list__item text">
-                <span class="example-list__emoji">👉🏻</span>
-                <span
-                  ><strong>Su Discord, scrivo in privato a Marco</strong>:
-                  "Osserva questi due elementi — sono molto vicini. Pensi che
-                  siano collegati da un concetto comune? Ricorda il principio di
-                  prossimità che abbiamo discusso. Riflettici e dimmi se
-                  vorresti modificare qualcosa nell'interfaccia."</span
-                >
-              </li>
-              <li class="example-list__item text">
-                <span class="example-list__emoji">👉🏻</span>
-                <span
-                  ><strong>Durante un Ricevimento Studenti</strong>: "Quali
-                  problemi notate in questa componente che appare in tutte le
-                  pagine prodotto di Amazon? Ridisegnamola in modo da eliminare
-                  il problema".</span
-                >
-              </li>
-              <li class="example-list__item text">
-                <span class="example-list__emoji">👉🏻</span>
-                <span
-                  ><strong>Anna apre una issue su Github</strong>: "Ciao Luca,
-                  vorrei un tuo feedback su come mostrare le funzioni delle
-                  varie componenti senza dover ricreare l'intero frame per ogni
-                  click". Paola commenta postando uno screenshot della sua
-                  soluzione, io aggiungo un breve commento e suggerisco un paio
-                  di extra esercizi.</span
-                >
-              </li>
-            </ul>
-          </section>
-        </div>
+              <ul class="example-list" id="example-list">
+                <li class="example-list__item text">
+                  <span class="example-list__emoji">👉🏻</span>
+                  <span
+                    ><strong>Ricevimento studenti, minuto 15</strong>: stai già
+                    disegnando la tua prima interfaccia. Ti blocchi perché
+                    incontri un problema. Condivido subito il mio schermo per
+                    mostrarti in diretta come lo affronterei.</span
+                  >
+                </li>
+                <li class="example-list__item text">
+                  <span class="example-list__emoji">👉🏻</span>
+                  <span
+                    ><strong>Su Discord, scrivo in privato a Marco</strong>:
+                    "Osserva questi due elementi — sono molto vicini. Pensi che
+                    siano collegati da un concetto comune? Ricorda il principio
+                    di prossimità che abbiamo discusso. Riflettici e dimmi se
+                    vorresti modificare qualcosa nell'interfaccia."</span
+                  >
+                </li>
+                <li class="example-list__item text">
+                  <span class="example-list__emoji">👉🏻</span>
+                  <span
+                    ><strong>Durante un Ricevimento Studenti</strong>: "Quali
+                    problemi notate in questa componente che appare in tutte le
+                    pagine prodotto di Amazon? Ridisegnamola in modo da
+                    eliminare il problema".</span
+                  >
+                </li>
+                <li class="example-list__item text">
+                  <span class="example-list__emoji">👉🏻</span>
+                  <span
+                    ><strong>Anna apre una issue su Github</strong>: "Ciao Luca,
+                    vorrei un tuo feedback su come mostrare le funzioni delle
+                    varie componenti senza dover ricreare l'intero frame per
+                    ogni click". Paola commenta postando uno screenshot della
+                    sua soluzione, io aggiungo un breve commento e suggerisco un
+                    paio di extra esercizi.</span
+                  >
+                </li>
+              </ul>
+            </section>
+          </div>
 
-        <div class="landing-center">
-          <section class="section">
-            <h2 class="section__title title">
-              Ciao, mi chiamo <span id="luca-leone">Luca Leone</span> 👋
-            </h2>
+          <div class="three-col__center">
+            <section class="section">
+              <h2 class="section__title title">
+                Ciao, mi chiamo <span id="luca-leone">Luca Leone</span> 👋
+              </h2>
 
-            <div class="section__text text">
-              <p>
-                Progetto interfacce dal 2012. Ecommerce, gestionali, CAD, player
-                musicali, e molto altro. Insegno UX/UI Design partendo dalla
-                pratica: esempi, esercizi e progetti reali. L'obiettivo è
-                renderti indipendente nel disegnare interfacce chiare, usabili e
-                difendibili.
+              <div class="section__text text">
+                <p>
+                  Progetto interfacce dal 2012. Ecommerce, gestionali, CAD,
+                  player musicali, e molto altro. Insegno UX/UI Design partendo
+                  dalla pratica: esempi, esercizi e progetti reali. L'obiettivo
+                  è renderti indipendente nel disegnare interfacce chiare,
+                  usabili e difendibili.
+                </p>
+              </div>
+            </section>
+
+            <section class="section">
+              <blockquote class="blockquote">
+                Non mi ha insegnato un lavoro, mi ha completamente rivoluzionato
+                il modo di vedere le cose
+              </blockquote>
+
+              <p class="section__caption caption">
+                — Recensione anonima, corso Boolean 2024
               </p>
-            </div>
-          </section>
 
-          <section class="section">
-            <blockquote class="blockquote">
-              Non mi ha insegnato un lavoro, mi ha completamente rivoluzionato
-              il modo di vedere le cose
-            </blockquote>
-
-            <p class="section__caption caption">
-              — Recensione anonima, corso Boolean 2024
-            </p>
-
-            <a href="/pages/chi-sono.html" class="link section__link"
-              >Di più su chi sono e come insegno</a
-            >
-          </section>
-
-          <section class="section">
-            <h2 class="section__title title">Programma del corso</h2>
-          </section>
-        </div>
-
-        <div class="landing-right">
-          <section class="section">
-            <h2 class="section__title title">Come funziona</h2>
-
-            <ul class="approach-list">
-              <li class="approach-list__item text">
-                <strong>Il corso sono gli esercizi.</strong> Spiego i concetti
-                quando ti servono per andare avanti.
-              </li>
-              <li class="approach-list__item text">
-                <strong>Feedback quando ti serve.</strong> Chiedi in chat,
-                chiedi a ricevimento — non resti bloccato.
-              </li>
-              <li class="approach-list__item text">
-                <strong>Le milestone si devono passare.</strong> Sono progetti
-                più complessi che vengono valutati. Se la qualità non c'è, si
-                mettono a posto prima di andare avanti.
-              </li>
-              <li class="approach-list__item text">
-                <strong>Ricevimento studenti ogni giorno.</strong> Due ore dal
-                vivo per rispondere, correggere, sbloccare.
-              </li>
-            </ul>
-
+              <a href="/pages/chi-sono.html" class="link section__link"
+                >Di più su chi sono e come insegno</a
+              >
+            </section>
             <div class="vertical-separator"></div>
 
-            <div class="video-container">
-              <h3 class="section__title title title--md">
-                "Di solito prendo appunti...a un certo punto ho smesso"
-              </h3>
-              <div style="padding: 57.66% 0 0 0; position: relative">
-                <iframe
-                  src="https://player.vimeo.com/video/1154594012?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                  frameborder="0"
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  style="
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                  "
-                  title="Ilaria sul mio metodo"
-                ></iframe>
+            <section class="section">
+              <div class="video-container">
+                <h3 class="section__title title title--md">
+                  "Di solito prendo appunti...a un certo punto ho smesso"
+                </h3>
+                <div style="padding: 57.66% 0 0 0; position: relative">
+                  <iframe
+                    src="https://player.vimeo.com/video/1154594012?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    frameborder="0"
+                    allow="
+                      autoplay;
+                      fullscreen;
+                      picture-in-picture;
+                      clipboard-write;
+                      encrypted-media;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    style="
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                    "
+                    title="Ilaria sul mio metodo"
+                  ></iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+
+                <p class="section__caption caption">
+                  Ilaria Bottinelli - estratto di un intervento di Ilaria
+                  durante l'ultima lezione del corso UX/UI Design classe 2
+                  Boolean.
+                </p>
               </div>
-              <script src="https://player.vimeo.com/api/player.js"></script>
+            </section>
+          </div>
 
-              <p class="section__caption caption">
-                Ilaria Bottinelli - estratto di un intervento di Ilaria durante
-                l'ultima lezione del corso UX/UI Design classe 2 Boolean.
+          <div class="three-col__right">
+            <section class="section" id="section-come-funziona">
+              <h2 class="section__title title">Come funziona</h2>
+
+              <ul class="approach-list">
+                <li class="approach-list__item text">
+                  <strong>Il corso sono gli esercizi.</strong> Spiego i concetti
+                  quando ti servono per andare avanti.
+                </li>
+                <li class="approach-list__item text">
+                  <strong>Feedback quando ti serve.</strong> Chiedi in chat,
+                  chiedi a ricevimento — non resti bloccato.
+                </li>
+                <li class="approach-list__item text">
+                  <strong>Le milestone si devono passare.</strong> Sono progetti
+                  più complessi che vengono valutati. Se la qualità non c'è, si
+                  mettono a posto prima di andare avanti.
+                </li>
+                <li class="approach-list__item text">
+                  <strong>Ricevimento studenti ogni giorno.</strong> Due ore dal
+                  vivo per rispondere, correggere, sbloccare.
+                </li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="full-width">
+          <section class="chi-projects">
+            <h2 class="chi-title">
+              <span class="chi-title__line1">Risultati, non promesse.</span>
+              <span class="chi-title__line2"
+                >Cosa riesci a costruire quando segui un percorso fatto di
+                <strong>pratica e feedback</strong>.</span
+              >
+              <span class="chi-title__line2 chi-projects__subtitle2"
+                >Progetti degli studenti,<br />
+                guidati da <strong>metodo e iterazione</strong>.</span
+              >
+            </h2>
+
+            <div class="chi-gallery" data-gallery>
+              <div class="chi-gallery__viewport" data-gallery-viewport>
+                <div
+                  class="chi-gallery__slide"
+                  data-gallery-slide
+                  data-caption="Davide Vignozzi - Progetto Media Contacts - Master Mucca Design UX/UI"
+                >
+                  <img
+                    src="/assets/images/gallery-progetti-studenti/mediacontacts-davide.jpg"
+                    alt="Progetto studente: MediaContacts"
+                    class="chi-gallery__image"
+                  />
+                </div>
+                <div
+                  class="chi-gallery__slide"
+                  data-gallery-slide
+                  data-caption="Roberto Migani - Progetto Pound 4 Pound - Master Mucca Design UX/UI"
+                >
+                  <img
+                    src="/assets/images/gallery-progetti-studenti/pound4pound-roberto2.jpg"
+                    alt="Progetto studente: Pound4Pound"
+                    class="chi-gallery__image"
+                  />
+                </div>
+              </div>
+
+              <p
+                class="recensione__author chi-gallery__caption"
+                data-gallery-caption
+                aria-live="polite"
+              >
+                Davide Vignozzi - Progetto Media Contacts - Master Mucca Design
+                UX/UI
               </p>
+
+              <div class="chi-gallery__indicator" aria-live="polite">
+                <button
+                  class="chi-gallery__nav"
+                  type="button"
+                  data-gallery-prev
+                  aria-label="Slide precedente"
+                >
+                  <span class="material-symbols-outlined" aria-hidden="true"
+                    >chevron_left</span
+                  >
+                </button>
+                <span class="chi-gallery__dots" data-gallery-dots>
+                  <button
+                    class="chi-gallery__dot is-active"
+                    type="button"
+                    data-gallery-dot
+                    aria-label="Vai alla slide 1"
+                  ></button>
+                  <button
+                    class="chi-gallery__dot"
+                    type="button"
+                    data-gallery-dot
+                    aria-label="Vai alla slide 2"
+                  ></button>
+                </span>
+                <button
+                  class="chi-gallery__nav"
+                  type="button"
+                  data-gallery-next
+                  aria-label="Slide successiva"
+                >
+                  <span class="material-symbols-outlined" aria-hidden="true"
+                    >chevron_right</span
+                  >
+                </button>
+              </div>
             </div>
           </section>
+        </section>
 
-          <div class="vertical-separator"></div>
+        <section class="faq" aria-label="Domande frequenti">
+          <div class="faq__inner">
+            <h2 class="chi-title faq__title">
+              <span class="chi-title__line1">Domande frequenti</span>
+            </h2>
 
-          <section class="section">
-            <div class="recensione">
-              <p class="recensione__quote">
-                Il corso di Luca è davvero un percorso completo. Nel corso degli
-                anni ho seguito tanti corsi e uno degli aspetti che ho sempre
-                cercato è la parte pratica. Molti corsi migliorano nel tempo ma
-                al termine di ognuno mi sono sempre chiesto: "Come si comportano
-                quelli che producono questi corsi nella vita reale? L'approccio
-                che mostrano è applicabile quando lavorano con le aziende? Ecco,
-                il corso di Luca risponde esattamente a questa domanda. Non solo
-                spiega in modo chiaro e approfondito, ma ti mostra anche come si
-                comporta realmente con i suoi clienti. Luca condivide il suo
-                metodo senza fronzoli e ti spiega passo dopo passo il suo
-                approccio. Ad esempio: "Per scegliere una palette, faccio
-                questo, questo e quest'altro, stop." Un altro aspetto che rende
-                questo corso diverso dagli altri che ho seguito è l'efficacia
-                del tempo. Se una lezione dura 60 minuti, sono 60 minuti di
-                insegnamenti concreti e utili, inclusi momenti di discussione
-                pratica in aula. Fantastico! Finalmente, ho trovato un vero
-                per-corso.
-              </p>
-              <p class="recensione__author">
-                Roberto Martino - Classe 1 Corso UX/UI Design Boolean e classe 1
-                Corso UI Design di Luca Leone
-              </p>
+            <div class="faq__list">
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Cos’è Mucca Design, in pratica?
+                </summary>
+                <div class="faq-item__answer text">
+                  È un percorso in abbonamento per diventare UX/UI Designer
+                  attraverso esercizi, progetti e feedback. La teoria la uso
+                  quando serve per sbloccare un problema reale, non come fine a
+                  se stessa.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  A chi è adatto? Posso partire da zero?
+                </summary>
+                <div class="faq-item__answer text">
+                  Sì, è adatto anche se parti da zero: l’obiettivo è costruire
+                  ordine, metodo e autonomia. Se invece hai già fatto corsi o
+                  hai basi, il percorso ti aiuta a rendere le scelte più
+                  “difendibili” e ad alzare lo standard dei lavori.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  In cosa è diverso dai corsi di UX/UI tradizionali?
+                </summary>
+                <div class="faq-item__answer text">
+                  Qui il centro non sono le slide: il corso sono gli esercizi.
+                  Lavori su casi concreti, ricevi correzioni e iteri finché il
+                  lavoro regge. È più simile a “allenamento guidato” che a
+                  “lezioni da consumare”.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Come funziona il feedback?
+                </summary>
+                <div class="faq-item__answer text">
+                  Puoi chiedere aiuto quando ti blocchi (chat/community) e
+                  durante i momenti di revisione. Il feedback non è solo
+                  “bello/brutto”: si lavora su ragionamento, chiarezza,
+                  usabilità e metodo.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Che cosa sono le milestone?
+                </summary>
+                <div class="faq-item__answer text">
+                  Sono progetti più complessi che segnano un passaggio di
+                  livello. Servono a evitare l’effetto “ho visto tutto ma non so
+                  applicare”: la qualità si costruisce con consegne e revisione.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Cosa vuol dire “le milestone si devono passare”?
+                </summary>
+                <div class="faq-item__answer text">
+                  Vuol dire che non si va avanti lasciandosi dietro lavori
+                  fragili. Se una milestone non è ancora ok, si corregge e si
+                  itera: l’obiettivo è imparare a portare un lavoro a uno
+                  standard solido, non “finire il programma”.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Chi valuta le milestone? Ci sono tutor?
+                </summary>
+                <div class="faq-item__answer text">
+                  Al momento valuto io personalmente. Non ci sono tutor:
+                  preferisco mantenere coerenza di standard e di metodo.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Quanto tempo serve a settimana?
+                </summary>
+                <div class="faq-item__answer text">
+                  Dipende dal ritmo, ma serve continuità. Anche 30–60 minuti al
+                  giorno, se fatti bene, contano più di una maratona ogni tanto.
+                  Se vuoi risultati più rapidi, aumenta il tempo, ma l’idea
+                  resta: progressi misurabili, esercizio dopo esercizio.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  197€/mese non è poco: perché questo prezzo?
+                </summary>
+                <div class="faq-item__answer text">
+                  Perché non stai pagando “contenuti”: stai pagando un percorso
+                  con standard + iterazione + feedback, che è la parte che di
+                  solito manca nei corsi solo-video. E rispetto a molti corsi
+                  live (es. percorsi da ~4000€ una tantum o a rate) è un
+                  investimento mensile più flessibile: paghi finché ti serve.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  È un abbonamento: posso disdire quando voglio?
+                </summary>
+                <div class="faq-item__answer text">
+                  Sì. L’abbonamento non si rinnova automaticamente dal ciclo
+                  successivo.
+                  <br />
+                  Esempio: ti abboni il 3 febbraio.
+                  <br />
+                  Se disdici il 24 febbraio, puoi continuare ad accedere fino al
+                  3 marzo.
+                  <br />
+                  Dal 4 marzo l’abbonamento non è più attivo e l’accesso
+                  termina.
+                  <br />
+                  In altre parole: disdici quando vuoi, ma resti attivo fino
+                  alla fine del periodo già pagato.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Mi aiuti anche con lavoro, CV o colloqui?
+                </summary>
+                <div class="faq-item__answer text">
+                  Non faccio supporto carriera “classico”. Il focus è la
+                  crescita delle skill: il miglior risultato pratico è costruire
+                  un portfolio forte perché sai progettare, motivare le scelte e
+                  iterare con metodo.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Che risultati ottengo?
+                </summary>
+                <div class="faq-item__answer text">
+                  Dipende da punto di partenza e tempo investito, ma l’obiettivo
+                  del percorso è renderti autonomo: capace di progettare UI
+                  chiare e usabili, e soprattutto di spiegare e difendere le
+                  decisioni (non “a sentimento”).
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Serve saper programmare?
+                </summary>
+                <div class="faq-item__answer text">
+                  No, useremo AI per programmare i prototipi.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Che strumenti servono? (Figma, Discord, ecc.)
+                </summary>
+                <div class="faq-item__answer text">
+                  Useremo Excalidraw per gli sketch, Windsurf come editor per
+                  costruire i prototipi con AI e Figma per la grafica.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  C’è una roadmap o un ordine consigliato?
+                </summary>
+                <div class="faq-item__answer text">lorem ipsum</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Se resto indietro, perdo l’accesso o mi blocco? (ottima per
+                  ridurre ansia)
+                </summary>
+                <div class="faq-item__answer text">lorem ipsum</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">
+                  Posso vedere esempi di lavori degli studenti? (link diretto
+                  alla gallery su chi-sono)
+                </summary>
+                <div class="faq-item__answer text">
+                  <a href="/pages/chi-sono.html" class="link">link</a>
+                </div>
+              </details>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
     </div>
 
+    <script>
+      (function () {
+        const galleries = document.querySelectorAll("[data-gallery]");
+        galleries.forEach((gallery) => {
+          const viewport = gallery.querySelector("[data-gallery-viewport]");
+          const slides = Array.from(
+            gallery.querySelectorAll("[data-gallery-slide]"),
+          );
+          const captionEl = gallery.querySelector("[data-gallery-caption]");
+          const dots = Array.from(
+            gallery.querySelectorAll("[data-gallery-dot]"),
+          );
+          const prevBtn = gallery.querySelector("[data-gallery-prev]");
+          const nextBtn = gallery.querySelector("[data-gallery-next]");
+
+          if (!viewport || slides.length === 0 || dots.length === 0) {
+            return;
+          }
+
+          const total = slides.length;
+          let activeIndex = 0;
+
+          const setActive = (index) => {
+            activeIndex = index;
+            dots.forEach((d, i) =>
+              d.classList.toggle("is-active", i === index),
+            );
+
+            if (captionEl) {
+              const caption = slides[index]?.getAttribute("data-caption") || "";
+              captionEl.textContent = caption;
+            }
+
+            if (prevBtn) prevBtn.disabled = index <= 0;
+            if (nextBtn) nextBtn.disabled = index >= total - 1;
+          };
+
+          const scrollToIndex = (index) => {
+            const clamped = Math.max(0, Math.min(total - 1, index));
+            slides[clamped].scrollIntoView({
+              behavior: "smooth",
+              inline: "start",
+              block: "nearest",
+            });
+            setActive(clamped);
+          };
+
+          setActive(0);
+
+          dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => scrollToIndex(index));
+          });
+
+          if (prevBtn) {
+            prevBtn.addEventListener("click", () =>
+              scrollToIndex(activeIndex - 1),
+            );
+          }
+
+          if (nextBtn) {
+            nextBtn.addEventListener("click", () =>
+              scrollToIndex(activeIndex + 1),
+            );
+          }
+
+          const io = new IntersectionObserver(
+            (entries) => {
+              const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+              if (!visible) return;
+              const idx = slides.indexOf(visible.target);
+              if (idx !== -1 && idx !== activeIndex) {
+                setActive(idx);
+              }
+            },
+            {
+              root: viewport,
+              threshold: [0.6],
+            },
+          );
+
+          slides.forEach((slide) => io.observe(slide));
+        });
+      })();
+    </script>
+
     <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
     <script>
-      // Get CSS variable value
-      const pink300 = getComputedStyle(document.documentElement)
-        .getPropertyValue("--pink-300")
-        .trim();
+      window.addEventListener("load", () => {
+        if (!window.RoughNotation) return;
 
-      const esperienza = document.querySelector("#esperienza");
-      const annotationCircle = RoughNotation.annotate(esperienza, {
-        type: "box",
-        animate: false,
-        color: pink300,
-        strokeWidth: 4,
-      });
-      annotationCircle.show();
+        // Get CSS variable value
+        const pink300 = getComputedStyle(document.documentElement)
+          .getPropertyValue("--pink-300")
+          .trim();
 
-      const lucaLeone = document.querySelector("#luca-leone");
-      const annotationLucaLeone = RoughNotation.annotate(lucaLeone, {
-        type: "underline",
-        animate: false,
-        color: pink300,
-        strokeWidth: 4,
-      });
-      annotationLucaLeone.show();
+        const esperienza = document.querySelector("#esperienza");
+        if (esperienza) {
+          const annotationCircle = RoughNotation.annotate(esperienza, {
+            type: "box",
+            animate: false,
+            color: pink300,
+            strokeWidth: 4,
+          });
+          annotationCircle.show();
+        }
 
-      const semplicita = document.querySelector("#semplicita");
-      const annotationUnderline = RoughNotation.annotate(semplicita, {
-        type: "highlight",
-        color: "#fde047",
-        animate: false,
-        multiline: true,
+        const lucaLeone = document.querySelector("#luca-leone");
+        if (lucaLeone) {
+          const annotationLucaLeone = RoughNotation.annotate(lucaLeone, {
+            type: "underline",
+            animate: false,
+            color: pink300,
+            strokeWidth: 4,
+          });
+          annotationLucaLeone.show();
+        }
+
+        const semplicita = document.querySelector("#semplicita");
+        if (semplicita) {
+          const annotationUnderline = RoughNotation.annotate(semplicita, {
+            type: "highlight",
+            color: "#fde047",
+            animate: false,
+            multiline: true,
+          });
+          annotationUnderline.show();
+        }
+
+        const sectionComeFunziona = document.querySelector(
+          "#section-come-funziona",
+        );
+        if (sectionComeFunziona) {
+          const listComeFunziona =
+            sectionComeFunziona.querySelector(".approach-list");
+          if (listComeFunziona) {
+            const annotationBrackets = RoughNotation.annotate(
+              listComeFunziona,
+              {
+                type: "bracket",
+                brackets: ["left", "right"],
+                color: pink300,
+                animate: false,
+                strokeWidth: 4,
+                padding: 12,
+              },
+            );
+            annotationBrackets.show();
+          }
+        }
       });
-      annotationUnderline.show();
     </script>
     <script src="components/link/link.js"></script>
   </body>
