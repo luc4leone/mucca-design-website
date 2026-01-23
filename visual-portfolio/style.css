@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#gallery {
+  /* Prevent vertical gaps */
+  line-height: 0;
+  font-size: 0; /* Elimina spazi da whitespace HTML */
+  background-color: #181818;
+
+  -webkit-column-count: 5;
+  -webkit-column-gap: 0px;
+  -moz-column-count: 5;
+  -moz-column-gap: 0px;
+  column-count: 5;
+  column-gap: 12px;
+
+  /* Fix per layout colonne */
+  -webkit-column-fill: balance;
+  -moz-column-fill: balance;
+  column-fill: balance;
+}
+
+/* Media query per schermi più piccoli */
+@media (max-width: 900px) {
+  #gallery {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+  }
+}
+
+/* Media query per dispositivi molto piccoli (smartphone) */
+@media (max-width: 560px) {
+  #gallery {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+}
+
+#gallery img {
+  /* Just in case there are inline attributes */
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 !important;
+  margin-bottom: 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  vertical-align: top !important;
+}
+
+#modal {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #00000099;
+}

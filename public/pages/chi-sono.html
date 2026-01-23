@@ -221,113 +221,73 @@
         border-radius: 12px;
       }
 
-      .chi-projects {
+      .chi-portfolio {
         margin: var(--spacing-5xl) 0 0;
       }
 
-      .chi-projects__subtitle2 {
+      .chi-portfolio__subtitle {
         margin-top: var(--spacing-m);
       }
 
-      .chi-gallery {
+      .chi-portfolio__gallery {
         margin-top: var(--spacing-3xl);
+        line-height: 0;
+        font-size: 0;
+        column-count: 5;
+        column-gap: var(--spacing-l);
+        column-fill: balance;
       }
 
-      .chi-gallery__viewport {
+      @media (max-width: 900px) {
+        .chi-portfolio__gallery {
+          column-count: 3;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .chi-portfolio__gallery {
+          column-count: 2;
+        }
+      }
+
+      .chi-portfolio__img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 !important;
+        margin-bottom: var(--spacing-l) !important;
+        padding: 0 !important;
+        border-radius: 4px;
+        border: 1px solid var(--grey-300);
+        box-shadow: var(--shadow-md);
+        cursor: pointer;
+        vertical-align: top !important;
+        break-inside: avoid;
+        background: var(--grey-100);
+      }
+
+      .chi-portfolio__modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-2xl);
+      }
+
+      .chi-portfolio__modal.is-open {
         display: flex;
-        gap: var(--spacing-3xl);
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: var(--spacing-m);
       }
 
-      .chi-gallery__viewport::-webkit-scrollbar {
-        height: 8px;
-      }
-
-      .chi-gallery__viewport::-webkit-scrollbar-thumb {
-        background: var(--grey-300);
-        border-radius: 999px;
-      }
-
-      .chi-gallery__slide {
-        scroll-snap-align: start;
-        flex: 0 0 100%;
-        max-width: 100%;
-      }
-
-      .chi-gallery__image {
-        display: block;
+      .chi-portfolio__modal-img {
         width: 100%;
-        height: auto;
+        height: 100%;
+        max-width: 1200px;
+        max-height: 85vh;
+        object-fit: contain;
         border-radius: 12px;
-        border: 1px solid var(--grey-300);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .chi-gallery__indicator {
-        margin-top: var(--spacing-l);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--spacing-l);
-      }
-
-      .chi-gallery__caption {
-        text-align: center;
-        margin: var(--spacing-l) 0 0;
-      }
-
-      .chi-gallery__nav {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 999px;
-        border: 1px solid var(--grey-300);
-        background: var(--white);
-        color: var(--grey-800);
-        cursor: pointer;
-      }
-
-      .chi-gallery__nav:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
-      }
-
-      .chi-gallery__count {
-        font-family: var(--font-family-sans);
-        font-size: var(--font-size-sm);
-        color: var(--grey-700);
-      }
-
-      .chi-gallery__dots {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--spacing-s);
-      }
-
-      .chi-gallery__dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: var(--grey-300);
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-      }
-
-      .chi-gallery__dot.is-active {
-        background: var(--grey-700);
-      }
-
-      .chi-gallery__dot:focus-visible,
-      .chi-gallery__nav:focus-visible {
-        outline: 2px solid var(--blue-900);
-        outline-offset: 2px;
       }
 
       @media (min-width: 768px) {
@@ -615,90 +575,27 @@
           </div>
         </section>
 
-        <section class="chi-projects">
+        <section class="chi-portfolio" id="chi-portfolio">
           <h2 class="chi-title">
-            <span class="chi-title__line1">Risultati, non promesse.</span>
-            <span class="chi-title__line2"
-              >Cosa riesci a costruire quando segui un percorso fatto di
-              <strong>pratica e feedback</strong>.</span
-            >
-            <span class="chi-title__line2 chi-projects__subtitle2"
-              >Progetti degli studenti,<br />
-              guidati da <strong>metodo e iterazione</strong>.</span
+            <span class="chi-title__line1">Interfacce che ho progettato</span>
+            <span class="chi-title__line2 chi-portfolio__subtitle"
+              >Schermate di UI reali che ho progettato: grafiche, wireframes,
+              prototipi, sketch.</span
             >
           </h2>
 
-          <div class="chi-gallery" data-gallery>
-            <div class="chi-gallery__viewport" data-gallery-viewport>
-              <div
-                class="chi-gallery__slide"
-                data-gallery-slide
-                data-caption="Davide Vignozzi - Progetto Media Contacts - Master Mucca Design UX/UI"
-              >
-                <img
-                  src="/assets/images/gallery-progetti-studenti/mediacontacts-davide.jpg"
-                  alt="Progetto studente: MediaContacts"
-                  class="chi-gallery__image"
-                />
-              </div>
-              <div
-                class="chi-gallery__slide"
-                data-gallery-slide
-                data-caption="Roberto Migani - Progetto Pound 4 Pound - Master Mucca Design UX/UI"
-              >
-                <img
-                  src="/assets/images/gallery-progetti-studenti/pound4pound-roberto2.jpg"
-                  alt="Progetto studente: Pound4Pound"
-                  class="chi-gallery__image"
-                />
-              </div>
-            </div>
+          <div class="chi-portfolio__gallery" data-portfolio-gallery></div>
 
-            <p
-              class="recensione__author chi-gallery__caption"
-              data-gallery-caption
-              aria-live="polite"
-            >
-              Davide Vignozzi - Progetto Media Contacts - Master Mucca Design
-              UX/UI
-            </p>
-
-            <div class="chi-gallery__indicator" aria-live="polite">
-              <button
-                class="chi-gallery__nav"
-                type="button"
-                data-gallery-prev
-                aria-label="Slide precedente"
-              >
-                <span class="material-symbols-outlined" aria-hidden="true"
-                  >chevron_left</span
-                >
-              </button>
-              <span class="chi-gallery__dots" data-gallery-dots>
-                <button
-                  class="chi-gallery__dot is-active"
-                  type="button"
-                  data-gallery-dot
-                  aria-label="Vai alla slide 1"
-                ></button>
-                <button
-                  class="chi-gallery__dot"
-                  type="button"
-                  data-gallery-dot
-                  aria-label="Vai alla slide 2"
-                ></button>
-              </span>
-              <button
-                class="chi-gallery__nav"
-                type="button"
-                data-gallery-next
-                aria-label="Slide successiva"
-              >
-                <span class="material-symbols-outlined" aria-hidden="true"
-                  >chevron_right</span
-                >
-              </button>
-            </div>
+          <div
+            class="chi-portfolio__modal"
+            data-portfolio-modal
+            aria-hidden="true"
+          >
+            <img
+              class="chi-portfolio__modal-img"
+              data-portfolio-modal-img
+              alt=""
+            />
           </div>
         </section>
       </main>
@@ -706,87 +603,68 @@
 
     <script>
       (function () {
-        const galleries = document.querySelectorAll("[data-gallery]");
-        galleries.forEach((gallery) => {
-          const viewport = gallery.querySelector("[data-gallery-viewport]");
-          const slides = Array.from(
-            gallery.querySelectorAll("[data-gallery-slide]"),
-          );
-          const captionEl = gallery.querySelector("[data-gallery-caption]");
-          const dots = Array.from(
-            gallery.querySelectorAll("[data-gallery-dot]"),
-          );
-          const prevBtn = gallery.querySelector("[data-gallery-prev]");
-          const nextBtn = gallery.querySelector("[data-gallery-next]");
+        const gallery = document.querySelector("[data-portfolio-gallery]");
+        const modal = document.querySelector("[data-portfolio-modal]");
+        const modalImg = document.querySelector("[data-portfolio-modal-img]");
 
-          if (!viewport || slides.length === 0 || dots.length === 0) {
+        if (!gallery || !modal || !modalImg) return;
+
+        let files = [];
+        let activeIndex = -1;
+
+        const srcFor = (file) =>
+          `/assets/portfolio/${encodeURIComponent(file)}`;
+
+        const openAt = (index) => {
+          if (!files.length) return;
+          activeIndex = Math.max(0, Math.min(files.length - 1, index));
+          modalImg.src = srcFor(files[activeIndex]);
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+        };
+
+        const close = () => {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+          modalImg.removeAttribute("src");
+          activeIndex = -1;
+        };
+
+        modal.addEventListener("click", close);
+
+        document.addEventListener("keydown", (event) => {
+          if (!modal.classList.contains("is-open")) return;
+
+          if (event.key === "Escape") {
+            close();
             return;
           }
 
-          const total = slides.length;
-          let activeIndex = 0;
-
-          const setActive = (index) => {
-            activeIndex = index;
-            dots.forEach((d, i) =>
-              d.classList.toggle("is-active", i === index),
-            );
-
-            if (captionEl) {
-              const caption = slides[index]?.getAttribute("data-caption") || "";
-              captionEl.textContent = caption;
-            }
-
-            if (prevBtn) prevBtn.disabled = index <= 0;
-            if (nextBtn) nextBtn.disabled = index >= total - 1;
-          };
-
-          const scrollToIndex = (index) => {
-            const clamped = Math.max(0, Math.min(total - 1, index));
-            slides[clamped].scrollIntoView({
-              behavior: "smooth",
-              inline: "start",
-              block: "nearest",
-            });
-            setActive(clamped);
-          };
-
-          setActive(0);
-
-          dots.forEach((dot, index) => {
-            dot.addEventListener("click", () => scrollToIndex(index));
-          });
-
-          if (prevBtn) {
-            prevBtn.addEventListener("click", () =>
-              scrollToIndex(activeIndex - 1),
-            );
+          if (event.key === "ArrowRight") {
+            openAt((activeIndex + 1) % files.length);
+            return;
           }
 
-          if (nextBtn) {
-            nextBtn.addEventListener("click", () =>
-              scrollToIndex(activeIndex + 1),
-            );
+          if (event.key === "ArrowLeft") {
+            openAt((activeIndex - 1 + files.length) % files.length);
           }
-
-          const io = new IntersectionObserver(
-            (entries) => {
-              const visible = entries
-                .filter((e) => e.isIntersecting)
-                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-              if (!visible) return;
-              const idx = slides.indexOf(visible.target);
-              if (idx >= 0) setActive(idx);
-            },
-            {
-              root: viewport,
-              threshold: [0.5, 0.75],
-            },
-          );
-
-          slides.forEach((s) => io.observe(s));
         });
+
+        fetch("/assets/portfolio/manifest.json")
+          .then((r) => (r.ok ? r.json() : { images: [] }))
+          .then((data) => {
+            files = Array.isArray(data.images) ? data.images : [];
+            files.forEach((file, index) => {
+              const img = document.createElement("img");
+              img.className = "chi-portfolio__img";
+              img.loading = "lazy";
+              img.decoding = "async";
+              img.alt = "";
+              img.src = srcFor(file);
+              img.addEventListener("click", () => openAt(index));
+              gallery.appendChild(img);
+            });
+          });
       })();
     </script>
   </body>
