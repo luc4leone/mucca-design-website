@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/typography.css" />
     <link rel="stylesheet" href="components/link/link.css" />
+    <link rel="stylesheet" href="components/footer/footer.css" />
     <style>
       /* Reset body padding per layout full-width */
       body {
@@ -31,6 +32,11 @@
         padding: var(--spacing-xl);
         overflow-y: auto;
         border-right: 1px solid var(--grey-300);
+      }
+
+      .sidebar .footer__inner {
+        max-width: none;
+        margin: 0;
       }
 
       /* Sidebar headings */
@@ -235,6 +241,15 @@
           >
         </li>
       </ul>
+
+      <footer class="footer">
+        <div class="footer__inner">
+          <div class="footer__divider"></div>
+          <div class="footer__text">
+            2026 Mucca Design di Luca Leone - PIVA IT08200720962
+          </div>
+        </div>
+      </footer>
     </aside>
 
     <!-- Content area con iframe -->

@@ -170,6 +170,15 @@ body {
   margin-bottom: var(--spacing-2xl);
 }
 
+.section__selfie {
+  display: block;
+  width: 240px;
+  max-width: 70%;
+  height: auto;
+  margin: var(--spacing-l) auto var(--spacing-2xl);
+  border-radius: 12px;
+}
+
 .section__text {
   margin-bottom: var(--spacing-2xl);
 }
@@ -437,6 +446,126 @@ body {
   outline-offset: 2px;
 }
 
+.fit {
+  width: 100%;
+  grid-column: 1 / -1;
+  margin: var(--spacing-5xl) 0;
+}
+
+.fit__inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fit__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-3xl);
+  align-items: start;
+}
+
+.fit-card {
+  background: var(--white);
+  border: 1px solid var(--grey-300);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-3xl);
+}
+
+.fit-card__title {
+  text-align: left;
+  margin: 0 0 var(--spacing-xl);
+}
+
+.fit-card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-l);
+}
+
+.fit-card__list li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.fit-card__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--grey-900);
+}
+
+.fit-card--yes {
+  transform: rotate(-2deg);
+}
+
+.fit-card--no {
+  transform: rotate(2deg);
+}
+
+.fit-review {
+  background: var(--white);
+  border: 1px solid var(--grey-300);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transform: rotate(-2deg);
+}
+
+.fit-review__author-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-m);
+  padding: 0 var(--spacing-2xl) var(--spacing-2xl);
+}
+
+.fit-review__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  border: 1px solid var(--grey-300);
+}
+
+.fit-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+}
+
+@media (min-width: 768px) {
+  .fit__cards {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4xl);
+  }
+
+  .fit-card--yes {
+    justify-self: start;
+  }
+
+  .fit-stack--right {
+    justify-self: end;
+    align-items: flex-end;
+  }
+
+  .fit-stack--right > * {
+    width: 100%;
+  }
+
+  .fit-stack--right .fit-card--no {
+    transform: rotate(2deg) translateY(calc(var(--spacing-3xl)));
+  }
+}
+
 .faq {
   width: 100%;
   grid-column: 1 / -1;
@@ -444,7 +573,7 @@ body {
 
 .faq__inner {
   width: 100%;
-  max-width: 560px;
+  max-width: 660px;
   margin: 0 auto;
 }
 

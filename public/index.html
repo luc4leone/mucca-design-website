@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="styles/typography.css" />
     <link rel="stylesheet" href="components/header/header.css" />
     <link rel="stylesheet" href="components/link/link.css" />
+    <link rel="stylesheet" href="components/footer/footer.css" />
     <link rel="stylesheet" href="components/blockquote/blockquote.css" />
     <link rel="stylesheet" href="components/recensione/recensione.css" />
     <link rel="stylesheet" href="components/video/video.css" />
@@ -171,6 +172,12 @@
               <h2 class="section__title title">
                 Ciao, mi chiamo <span id="luca-leone">Luca Leone</span> 👋
               </h2>
+
+              <img
+                src="/assets/images/selfie.png"
+                alt="Selfie di Luca Leone"
+                class="section__selfie"
+              />
 
               <div class="section__text text">
                 <p>
@@ -352,6 +359,119 @@
               </div>
             </div>
           </section>
+        </section>
+
+        <section class="fit full-width" aria-label="Per chi è adatto il corso">
+          <div class="fit__inner">
+            <div class="fit__cards">
+              <div class="fit-card fit-card--yes">
+                <h2 class="fit-card__title title">
+                  Per chi è perfetto questo corso
+                </h2>
+
+                <ul class="fit-card__list text">
+                  <li>
+                    <span
+                      ><strong
+                        >Chi vuole iniziare una carriera come UX/UI
+                        Designer.</strong
+                      >
+                      Hai bisogno di una progressione chiara di skill, esercizi
+                      e feedback rapido (non solo teoria).
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      ><strong
+                        >Visual designers che vogliono rafforzare UX, usabilità
+                        e interaction design</strong
+                      >. Per passare da “bella UI” a interfacce che funzionano e
+                      scelte difendibili.</span
+                    >
+                  </li>
+                  <li>
+                    <span
+                      ><strong
+                        >Frontend developer che vogliono progettare UI semplici
+                        da usare e belle da vedere.</strong
+                      >
+                      Per smettere di “inventare UI” e iniziare a ragionare su
+                      gerarchie, flussi e trade-off.</span
+                    >
+                  </li>
+                  <li>
+                    <span
+                      ><strong
+                        >Founder e imprenditori che stanno costruendo un
+                        prodotto.</strong
+                      >
+                      Per progettare app efficaci e intuitive, o valutare con
+                      competenza il lavoro di designer e sviluppatori.</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="fit-stack fit-stack--right">
+                <div class="fit-review recensione">
+                  <p class="recensione__quote">
+                    A mio parere come Teacher sei uno dei migliori che abbia
+                    avuto, contando anche i professori universitari eh che poi
+                    nella realtà non sono dei grandi insegnanti ma solo grandi
+                    ricercatori 😬
+                  </p>
+                  <div class="fit-review__author-row">
+                    <img
+                      src="/assets/images/davide_cester.jpg"
+                      alt="Davide Cester"
+                      class="fit-review__avatar"
+                    />
+                    <p class="recensione__author">
+                      Davide Cester - classe 2 Corso UX/UI Design Boolean
+                    </p>
+                  </div>
+                </div>
+
+                <div class="fit-card fit-card--no">
+                  <h2 class="fit-card__title title">
+                    Per chi NON è il corso giusto
+                  </h2>
+
+                  <ul class="fit-card__list text">
+                    <li>
+                      <span
+                        ><strong
+                          >Se cerchi un corso "solo video" da consumare
+                          passivamente</strong
+                        >. Qui si impara facendo: esercizi, iterazione e
+                        revisione.</span
+                      >
+                    </li>
+                    <li>
+                      <span
+                        ><strong
+                          >Se vuoi scorciatoie o risultati senza pratica
+                          costante.</strong
+                        >
+                        Le skill si costruiscono con continuità, disegno dopo
+                        disegno.</span
+                      >
+                    </li>
+                    <li>
+                      <span
+                        ><strong
+                          >Se ti serve supporto carriera (CV/colloqui) come
+                          servizio principale.</strong
+                        >
+                        Il focus è sulle competenze; conseguenza indiretta sarà
+                        la costruzione di un eccellente portfolio.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="faq" aria-label="Domande frequenti">
@@ -559,6 +679,15 @@
           </div>
         </section>
       </main>
+
+      <footer class="footer">
+        <div class="footer__inner">
+          <div class="footer__divider"></div>
+          <div class="footer__text">
+            2026 Mucca Design di Luca Leone - PIVA IT08200720962
+          </div>
+        </div>
+      </footer>
     </div>
 
     <script>
@@ -707,11 +836,26 @@
                 color: pink300,
                 animate: false,
                 strokeWidth: 4,
-                padding: 12,
+                padding: [0, 6, 6, 12],
               },
             );
             annotationBrackets.show();
           }
+        }
+
+        const fitYesList = document.querySelector(
+          ".fit-card--yes .fit-card__list",
+        );
+        if (fitYesList) {
+          const annotationBracketsFit = RoughNotation.annotate(fitYesList, {
+            type: "bracket",
+            brackets: ["left", "right"],
+            color: pink300,
+            animate: false,
+            strokeWidth: 4,
+            padding: [0, 6, 6, 12],
+          });
+          annotationBracketsFit.show();
         }
       });
     </script>
