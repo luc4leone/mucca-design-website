@@ -28,7 +28,7 @@
  * Uso: titoli h3, titoli modal
  */
 .title--md {
-  font-size: var(--font-size-xl); /* 24px */
+  font-size: var(--font-size-2xl); /* 24px */
   font-weight: var(--font-weight-bold); /* 700 */
 }
 
