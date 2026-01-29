@@ -249,6 +249,21 @@ html {
   cursor: pointer;
 }
 
+.chi-gallery__nav--side {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.chi-gallery__nav--prev {
+  left: 0;
+}
+
+.chi-gallery__nav--next {
+  right: 0;
+}
+
 .expand-toggle .link__chevron {
   transition: transform 0.2s ease;
 }
@@ -362,7 +377,7 @@ html {
   margin-left: auto;
   margin-right: auto;
   text-wrap: balance;
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height-tight);
 }
 
 .chi-title__line2 strong {
@@ -375,6 +390,10 @@ html {
 
 .chi-gallery {
   margin-top: var(--spacing-3xl);
+}
+
+.chi-gallery__frame {
+  position: relative;
 }
 
 .chi-gallery__viewport {
@@ -400,15 +419,19 @@ html {
   scroll-snap-align: start;
   flex: 0 0 100%;
   max-width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chi-gallery__image {
   display: block;
-  width: 100%;
-  height: auto;
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
   border-radius: 12px;
   border: 1px solid var(--grey-300);
-  box-shadow: var(--shadow-lg);
 }
 
 .chi-gallery__indicator {
@@ -682,6 +705,77 @@ html {
 
 .faq-item__answer.text strong {
   font-weight: var(--font-weight-bold);
+}
+
+.program {
+  width: 100%;
+  grid-column: 1 / -1;
+  margin: var(--spacing-5xl) 0;
+}
+
+.program__inner {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.program__title {
+  margin: 0 0 var(--spacing-3xl);
+}
+
+.program__modules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+}
+
+.program__module-title {
+  margin: 0 0 var(--spacing-l);
+  text-align: left;
+}
+
+.program__table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--grey-300);
+  background: var(--white);
+}
+
+.program-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.program-table th,
+.program-table td {
+  padding: 14px 16px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--grey-300);
+}
+
+.program-table thead th {
+  text-align: left;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  background: var(--grey-50);
+}
+
+.program-table tbody td {
+  font-family: var(--font-family-serif);
+  color: var(--grey-900);
+}
+
+.program-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 860px) {
+  .program__inner {
+    padding: 0 var(--spacing-2xl);
+  }
 }
 
 .start-for-free {
