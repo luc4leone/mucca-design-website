@@ -5,10 +5,17 @@
 - [] contratto
 - [] sezione programma delle lezioni
 - [] aggiungi le recensioni che mancano
-- [] aggiungi slide a "risultati non promesse"
 - [] responsive -> mobile
 - [] sostituire la recensione di Davide Cester in chi-sono
 - [] faq: posso mettere l'abbonamento in "stand-by"? 
+
+## 28/01/2026
+- [] studio strategia "vendi prima di creare il prodotto"
+
+## 27/01/2026
+
+- [] fix ilaria in mezzo in home
+- [] aggiungi slide a "risultati non promesse"
 
 ## 26/01/2026
 

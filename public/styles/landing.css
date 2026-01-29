@@ -261,13 +261,17 @@ html {
   list-style: none;
   padding: 0;
   margin: var(--spacing-l) 0 0 0;
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);
 }
 
 .example-list.is-visible {
   display: flex;
+}
+
+.example-list__title {
+  margin-top: var(--spacing-2xl);
 }
 
 .example-list__item {
@@ -538,6 +542,14 @@ html {
   transform: rotate(-2deg);
 }
 
+.fit-review--falvella {
+  transform: none;
+}
+
+.fit-review--andrea {
+  transform: none;
+}
+
 .fit-review__author-row {
   display: flex;
   align-items: center;
@@ -558,6 +570,14 @@ html {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3xl);
+}
+
+.fit-stack--falvella {
+  margin-top: var(--spacing-3xl);
+}
+
+.fit-stack--andrea {
+  margin-top: var(--spacing-3xl);
 }
 
 @media (min-width: 768px) {

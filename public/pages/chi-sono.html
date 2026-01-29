@@ -226,6 +226,61 @@
         margin: var(--spacing-5xl) 0 0;
       }
 
+      .chi-cv {
+        margin: var(--spacing-5xl) 0 0;
+      }
+
+      .chi-cv__subtitle {
+        margin-top: var(--spacing-m);
+      }
+
+      .chi-cv__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3xl);
+      }
+
+      .chi-cv__stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3xl);
+      }
+
+      .fit-review {
+        background: var(--white);
+        border: 1px solid var(--grey-300);
+        border-radius: 12px;
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transform: rotate(-1deg);
+      }
+
+      .fit-review__author-row {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-m);
+        padding: 0 var(--spacing-2xl) var(--spacing-2xl);
+      }
+
+      .fit-review__avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 999px;
+        object-fit: cover;
+        flex: 0 0 auto;
+        border: 1px solid var(--grey-300);
+      }
+
+      .chi-method__card .fit-review {
+        margin-top: var(--spacing-xl);
+      }
+
+      @media (min-width: 768px) {
+        .chi-cv__grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
       .chi-portfolio__subtitle {
         margin-top: var(--spacing-m);
       }
@@ -371,6 +426,7 @@
           <div class="logo__subtitle">di Luca Leone</div>
         </div>
         <nav class="topbar__nav">
+          <a href="../pages/chi-sono.html" class="link">Chi sono</a>
           <a href="../pricing" class="link">Iscriviti</a>
           <a href="../login" class="link">Accedi</a>
         </nav>
@@ -467,25 +523,26 @@
               <h2 class="chi-method__title">Come insegno</h2>
               <ul class="chi-method__list">
                 <li>
-                  <strong>Show, don’t tell:</strong> si parte dalla schermata,
-                  non dalla teoria. Ti metto davanti a un problema vero e lo
-                  risolviamo. Ti mostro come faccio, non te lo racconto.
+                  <strong>Ti mostro come faccio, non te lo racconto:</strong> si
+                  parte dalla schermata, non dalla teoria. Ti metto davanti a un
+                  problema vero e lo risolviamo.
                 </li>
                 <li>
-                  <strong>Info “just-in-time” (anti-noia):</strong> quando sei
-                  bloccato, ti do solo le info che ti servono per sbloccare quel
-                  passaggio. Così studi con un obiettivo, non “per accumulare”
-                  info just-in-case (come a scuola).
+                  <strong>Info QUANDO servono:</strong> quando sei bloccato, ti
+                  do solo le info che ti servono per sbloccare quel passaggio.
+                  Così studi con un obiettivo, non "per accumulare" info NEL
+                  CASO servano (come a scuola).
                 </li>
                 <li>
-                  <strong>Percorso progettato per skill:</strong> curo la
-                  progressione degli esercizi per costruire competenze una alla
-                  volta e trasferire il <em>mindset</em>
-                  da designer, non solo nozioni.
+                  <strong>Crescita delle competenze:</strong>
+                  Ho studiato la progressione degli esercizi per costruire
+                  competenze una alla volta in modo naturale e TRASFERIRE IL
+                  MINDSET da Designer. L'opposto di rigurgitare la propria
+                  conoscenza.
                 </li>
                 <li>
                   <strong>Esperienza reale:</strong> insegno solo ciò che ho
-                  sperimentato in prima persona.
+                  sperimentato in prima persona. Ciò che so che funziona.
                 </li>
               </ul>
             </div>
@@ -584,19 +641,20 @@
 
               <div class="recensione">
                 <p class="recensione__quote">
-                  A mio parere come Teacher sei uno dei migliori che abbia
-                  avuto, contando anche i professori universitari eh che poi
-                  nella realtà non sono dei grandi insegnanti ma solo grandi
-                  ricercatori 😬
+                  Ci tenevo anche a lasciarti un piccolo feedback personale, in
+                  quanto mi son trovato molto bene con l'approccio umano che hai
+                  avuto con noi a lezione, ho avuto l'impressione di essere al
+                  cospetto di un "amico che ne sa molto" ma comunque qualcuno
+                  che sappia spronare in modo eccellente.
                 </p>
                 <div class="chi-review__author-row">
                   <img
-                    src="/assets/images/davide_cester.jpg"
-                    alt="Davide Cester"
+                    src="/assets/images/nicolo_giglietti.jpeg"
+                    alt="Nicolò Giglietti"
                     class="chi-review__avatar"
                   />
                   <p class="recensione__author">
-                    Davide Cester - classe 2 Corso UX/UI Design Boolean
+                    Nicolò Giglietti - classe 4 Corso UX/UI Design Boolean.
                   </p>
                 </div>
               </div>
@@ -625,6 +683,218 @@
               data-portfolio-modal-img
               alt=""
             />
+          </div>
+        </section>
+
+        <section class="chi-cv" id="chi-cv">
+          <h2 class="chi-title">
+            <span class="chi-title__line1">Esperienza</span>
+            <span class="chi-title__line2 chi-cv__subtitle"
+              >Progetti selezionati (2012-2025)</span
+            >
+          </h2>
+
+          <div class="chi-cv__grid">
+            <div class="chi-method__card chi-text">
+              <h3 class="chi-method__title">Freelance UX/UI/IxD Designer</h3>
+              <ul class="chi-method__list">
+                <li>
+                  <strong
+                    >Web app per la ricerca dei giornalisti e la gestione
+                    dell'Ufficio Stampa</strong
+                  >
+                  per Mediaddress (2025-2026)
+                </li>
+                <li>
+                  <strong
+                    >Dashboard per monitorare efficienza e produttività della
+                    sala</strong
+                  >per Morgan Tecnica
+                </li>
+                <li>
+                  <strong>Web app per lo scouting</strong> e il miglioramento
+                  dei calciatori dilettanti per CalcioClip
+                </li>
+                <li>
+                  <strong
+                    >Sito web ecommerce per la vendita di cosmetica su
+                    misura</strong
+                  >
+                  per Glowal
+                </li>
+                <li>
+                  <strong><span id="chi-cv-cad2d">CAD 2D</span></strong> per la
+                  progettazione di capi d'abbigliamento per Morgan Tecnica
+                </li>
+                <li>
+                  <strong
+                    >Interfaccia touch per macchina automatica per l'erogazione
+                    di caffè</strong
+                  >
+                  per Egro (gruppo Rancilio)
+                </li>
+                <li>
+                  <strong
+                    >Sito web ecommerce per la vendita di coupon sconto</strong
+                  >
+                  per Poinx
+                </li>
+                <li>
+                  <strong
+                    >Interfaccia touch per macchina automatica per la stesura di
+                    tessuti</strong
+                  >
+                  per Morgan Tecnica
+                </li>
+                <li>
+                  <strong>iPhone app per gestioni lezioni di musica</strong> per
+                  Pianolink
+                </li>
+                <li>
+                  <strong
+                    >Sito web ecommerce per la vendita di ricambi e componenti
+                    idraulici</strong
+                  >
+                  di Arbo
+                </li>
+                <li>
+                  <strong>Player musicale</strong> in un progetto di domotica
+                  per BTicino
+                </li>
+                <li>
+                  <strong>Piattaforma di rassegne stampa</strong> per Eco della
+                  Stampa. Test di usabilità con i suoi clienti (Trussardi, Lego,
+                  Politecnico di Milano, etc)
+                </li>
+                <li>
+                  <strong>Macchina automatica per il taglio di tessuti</strong>
+                  per Morgan Tecnica
+                </li>
+                <li>
+                  <strong>Macchina automatica per la creazione di calze</strong>
+                  per Dinema (gruppo Lonati)
+                </li>
+                <li>
+                  <strong>CAD 3D</strong> per la progettazione di capi
+                  d'abbigliamento per Morgan Tecnica
+                </li>
+                <li>
+                  <strong
+                    >Desktop app per l'ottimizzazione degli ordini di
+                    produzione</strong
+                  >
+                  per Morgan Tecnica
+                </li>
+                <li>
+                  <strong
+                    >Sito web ecommerce per la vendita di italian food</strong
+                  >
+                  in UK per Ciao Gusto
+                </li>
+                <li>
+                  <strong
+                    >Sito web ecommerce per la vendita di servizi per le
+                    telecomunicazioni</strong
+                  >
+                  per B2You (2012)
+                </li>
+                <li>
+                  <strong
+                    >Sito web per la vendita di tariffe telefoniche
+                    internazionali</strong
+                  >
+                  per iNova
+                </li>
+              </ul>
+            </div>
+
+            <div class="chi-cv__stack">
+              <div class="chi-method__card chi-text">
+                <h3 class="chi-method__title">
+                  Progetti Open Source / No profit
+                </h3>
+                <ul class="chi-method__list">
+                  <li>
+                    <strong>LeAp website</strong>. No profit USA impegnata
+                    nell'Arts Education per i giovani di New York. Auditing
+                    UX/UI, nuova grafica
+                  </li>
+                  <li>
+                    <strong
+                      ><span id="chi-cv-firefox">Firefox browser</span>.</strong
+                    >
+                    Ho dato dei
+                    <a
+                      href="https://github.com/firefox-devtools/ux/issues/102"
+                      class="link link--inter"
+                      >contributi di UX design al Developer Tool</a
+                    >
+                    e ho pushato una PR per migliorare l'editor
+                  </li>
+                </ul>
+              </div>
+
+              <div class="chi-method__card chi-text">
+                <h3 class="chi-method__title">Insegnante di UX/UI Design</h3>
+                <ul class="chi-method__list">
+                  <li>
+                    <strong>Docente di UX/UI Design</strong> per Mucca Design
+                    Master (2025 / 2026)
+                  </li>
+                  <li>
+                    <strong>Docente di UI Design</strong> per Mucca Design
+                    (gennaio 2025)
+                  </li>
+                  <li>
+                    <strong>Docente di UX Design</strong> del corso "UX/UI
+                    Design" di Boolean classe 1, 2 e 4 (2024 / 2025)
+                  </li>
+                  <li>
+                    <strong>Mentor di UX/UI Design</strong> per Bloc (poi
+                    diventata Thinkful poi Chegg) (2020)
+                  </li>
+                  <li>
+                    <strong>Student Guide</strong> per il corso di UX/UI Design
+                    di Udacity (2019)
+                  </li>
+                </ul>
+              </div>
+              <div class="fit-review recensione">
+                <p class="recensione__quote">
+                  Ho seguito il corso di UX e UI di Luca in un gruppo di 10
+                  persone. Già dalle prime lezioni mi sono accorto che il
+                  livello del corso era alto, poiché tra lezioni e fuori dalle
+                  lezioni per l'esercitazione, la richiesta di tempo era molta.
+                  Ritengo che questo tipo di corso sia davvero in grado di dare
+                  ottime conoscenze del design e fare avanzare di livello i suoi
+                  studenti. Ho particolarmente apprezzato la metodologia che ha
+                  usato Luca come insegnamento, orientata all'esercitazione ed
+                  al feedback, sia diretto sia come review di gruppo, partendo
+                  da elementi di base e crescendo di difficoltà con la giusta
+                  curva. Ha funzionato molto bene la compresenza di punti di
+                  teoria e di esercizi aderenti alla teoria appena trattata, in
+                  modo da non tralasciare buchi nella progressione. Dal punto di
+                  vista più idealistico, Luca trasmette idee e pensieri che
+                  ritengo molto brillanti: il modo di vedere l'essenziale e
+                  ragionare sull'importanza o la superfluità di tanti dettagli,
+                  è quel raro elemento che è stato in grado di trasmettere,
+                  indipendentemente dal significato tecnico, donando un modo di
+                  ragionare che supera un elenco ordinato di regole.
+                  Complessivamente non posso che essere molto soddisfatto del
+                  corso.
+                </p>
+                <div class="fit-review__author-row">
+                  <img
+                    src="/assets/images/davide-galli.webp"
+                    alt="Davide Galli"
+                    class="fit-review__avatar"
+                  />
+                  <p class="recensione__author">
+                    Davide Galli - Senior Developer and Architect
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -704,6 +974,32 @@
             });
           });
       })();
+    </script>
+
+    <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+    <script>
+      window.addEventListener("load", () => {
+        if (!window.RoughNotation) return;
+
+        const firefox = document.querySelector("#chi-cv-firefox");
+        const cad2d = document.querySelector("#chi-cv-cad2d");
+
+        if (firefox) {
+          RoughNotation.annotate(firefox, {
+            type: "highlight",
+            color: "#fde047",
+            animate: false,
+          }).show();
+        }
+
+        if (cad2d) {
+          RoughNotation.annotate(cad2d, {
+            type: "highlight",
+            color: "#fde047",
+            animate: false,
+          }).show();
+        }
+      });
     </script>
   </body>
 </html>

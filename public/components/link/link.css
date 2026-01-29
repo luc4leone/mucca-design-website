@@ -15,6 +15,10 @@
   font-size: var(--font-size-sm);
 }
 
+.link--inter {
+  font-family: var(--font-family-serif);
+}
+
 .link--small .link__icon,
 .link--small .link__chevron {
   font-size: var(--font-size-base); /* 16px - step superiore a 14px */
