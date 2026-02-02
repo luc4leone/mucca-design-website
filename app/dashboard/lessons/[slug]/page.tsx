@@ -2,7 +2,7 @@
 
 import '../../../../public/components/link/link.css';
 
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseBrowserClient } from '../../../../lib/supabase-browser';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -11,10 +11,13 @@ type Lesson = {
   id: string;
   title: string;
   slug: string;
+  public_id: string;
   description: string | null;
   content: string | null;
   video_url: string | null;
   order_index: number;
+  module_id: string;
+  lesson_index: number;
 };
 
 type ProgressRow = {
@@ -25,17 +28,22 @@ type ProgressRow = {
 export default function DashboardLessonDetailPage() {
   const routeParams = useParams();
   const slugParam = routeParams?.slug;
-  const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
+  const rawSlug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
+  const lessonKey = useMemo(() => {
+    if (!rawSlug) return rawSlug;
+    if (typeof rawSlug !== 'string') return rawSlug;
+    try {
+      return decodeURIComponent(rawSlug);
+    } catch {
+      return rawSlug;
+    }
+  }, [rawSlug]);
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   const supabase = useMemo(() => {
-    if (!supabaseUrl || !supabaseAnonKey) {
-      return null;
-    }
-
-    return createClient(supabaseUrl, supabaseAnonKey);
+    return getSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
   }, [supabaseUrl, supabaseAnonKey]);
 
   const [status, setStatus] = useState<string>('Caricamento...');
@@ -47,7 +55,7 @@ export default function DashboardLessonDetailPage() {
   const [nextSlug, setNextSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!slug) {
+    if (!lessonKey) {
       setStatus('Caricamento...');
       return;
     }
@@ -76,8 +84,8 @@ export default function DashboardLessonDetailPage() {
 
       const { data: lessonData, error: lessonError } = await supabase
         .from('lessons')
-        .select('id,title,slug,description,content,video_url,order_index')
-        .eq('slug', slug)
+        .select('id,title,slug,public_id,description,content,video_url,order_index,module_id,lesson_index')
+        .or(`public_id.eq.${lessonKey},slug.eq.${lessonKey}`)
         .eq('is_published', true)
         .maybeSingle();
 
@@ -92,19 +100,41 @@ export default function DashboardLessonDetailPage() {
       }
 
       setLesson(lessonData as Lesson);
+      const currentPublicId = (lessonData as any)?.public_id as string | undefined;
 
       const { data: navLessons, error: navError } = await supabase
         .from('lessons')
-        .select('slug,order_index')
+        .select('public_id,order_index,lesson_index,module:modules(order_index)')
         .eq('is_published', true)
         .order('order_index', { ascending: true });
 
       if (!navError) {
-        const list = (navLessons as Array<{ slug: string; order_index: number }>) ?? [];
-        const idx = list.findIndex((l) => l.slug === slug);
+        const rawList = (navLessons as Array<any>) ?? [];
+        const list = rawList
+          .map((l) => ({
+            public_id: l.public_id as string,
+            order_index: l.order_index as number,
+            lesson_index: l.lesson_index as number | null,
+            module_order_index: (l.module?.order_index as number | null) ?? null,
+          }))
+          .sort((a, b) => {
+            if (a.module_order_index != null && b.module_order_index != null) {
+              if (a.module_order_index !== b.module_order_index) {
+                return a.module_order_index - b.module_order_index;
+              }
 
-        setPrevSlug(idx > 0 ? list[idx - 1]?.slug ?? null : null);
-        setNextSlug(idx >= 0 && idx < list.length - 1 ? list[idx + 1]?.slug ?? null : null);
+              if (a.lesson_index != null && b.lesson_index != null) {
+                return a.lesson_index - b.lesson_index;
+              }
+            }
+
+            return a.order_index - b.order_index;
+          });
+
+        const idx = currentPublicId ? list.findIndex((l) => l.public_id === currentPublicId) : -1;
+
+        setPrevSlug(idx > 0 ? list[idx - 1]?.public_id ?? null : null);
+        setNextSlug(idx >= 0 && idx < list.length - 1 ? list[idx + 1]?.public_id ?? null : null);
       }
 
       const { data: progressData, error: progressError } = await supabase
@@ -122,7 +152,7 @@ export default function DashboardLessonDetailPage() {
       setProgress((progressData as ProgressRow) ?? null);
       setStatus('');
     })();
-  }, [supabase, slug]);
+  }, [supabase, lessonKey]);
 
   async function markCompleted() {
     if (!supabase || !lesson || !userId) return;
@@ -168,7 +198,7 @@ export default function DashboardLessonDetailPage() {
       }}
     >
       {prevSlug ? (
-        <Link className="link" href={`/dashboard/lessons/${prevSlug}`}>
+        <Link className="link" href={`/dashboard/lessons/${encodeURIComponent(prevSlug)}`}>
           ← Lezione precedente
         </Link>
       ) : (
@@ -182,7 +212,7 @@ export default function DashboardLessonDetailPage() {
       </Link>
 
       {nextSlug ? (
-        <Link className="link" href={`/dashboard/lessons/${nextSlug}`}>
+        <Link className="link" href={`/dashboard/lessons/${encodeURIComponent(nextSlug)}`}>
           Lezione successiva →
         </Link>
       ) : (

@@ -30,11 +30,17 @@
       <header class="topbar">
         <div class="topbar__logo">
           <a href="/" class="logo">MUCCA DESIGN</a>
-          <div class="logo__subtitle">di Luca Leone</div>
+          <div class="logo__subtitle">
+            di
+            <a
+              href="/pages/chi-sono.html"
+              style="text-decoration: none; color: var(--blue-900)"
+              >Luca Leone</a
+            >
+          </div>
         </div>
-        <nav class="topbar__nav">
-          <a href="/pages/chi-sono.html" class="link">Chi sono</a>
-          <a href="/pricing" class="link">Iscriviti</a>
+        <nav class="topbar__nav" style="margin-top: 0; gap: 16px">
+          <a href="/dashboard" class="link">Moduli</a>
           <a href="/login" class="link">Accedi</a>
         </nav>
       </header>
@@ -285,13 +291,22 @@
                   chiedi a ricevimento — non resti bloccato.
                 </li>
                 <li class="approach-list__item text">
-                  <strong>Le milestone si devono passare.</strong> Sono progetti
-                  più complessi che vengono valutati. Se la qualità non c'è, si
-                  mettono a posto prima di andare avanti.
+                  <strong
+                    ><span id="milestone-passare"
+                      >Le milestone si devono passare</span
+                    >.</strong
+                  >
+                  Le milestone sono progetti (che puoi mettere in portfolio).
+                  Vengono valutati: OK / non OK. Serve OK per sbloccare il
+                  modulo successivo
                 </li>
                 <li class="approach-list__item text">
-                  <strong>Ricevimento studenti ogni giorno.</strong> Due ore dal
-                  vivo per rispondere, correggere, sbloccare.
+                  <strong
+                    ><span id="ricevimento-ogni-giorno"
+                      >Ricevimento studenti ogni giorno.</span
+                    ></strong
+                  >
+                  Due ore dal vivo per rispondere, correggere, sbloccare.
                 </li>
               </ul>
             </section>
@@ -1269,7 +1284,7 @@
               <li class="start-for-free__step">
                 <div class="start-for-free__step-body">
                   <h4 class="start-for-free__step-title title title--sm">
-                    Ti iscrivi gratis
+                    Accedi gratis
                   </h4>
                   <p class="start-for-free__step-text text">
                     Nessun vincolo. Nessun pagamento. Nessuna carta. Un limite:
@@ -1295,7 +1310,7 @@
                     Decidi dopo se continuare
                   </h4>
                   <p class="start-for-free__step-text text">
-                    Se vuoi sbloccare gli altri moduli, attivi l'abbonamento
+                    Se vuoi accedere agli altri moduli, attivi l'abbonamento
                     (196€/mese). Disdici quando vuoi.
                   </p>
                 </div>
@@ -1307,7 +1322,7 @@
                 Accedi gratis al Modulo 1
               </a>
               <a href="/pricing" class="link start-for-free__link">
-                Vuoi sbloccare tutti i moduli subito?
+                Vuoi accedere a tutti i moduli subito?
               </a>
             </div>
           </div>
@@ -1442,6 +1457,36 @@
             multiline: true,
           });
           annotationUnderline.show();
+        }
+
+        const milestonePassare = document.querySelector("#milestone-passare");
+        if (milestonePassare) {
+          const annotationMilestonePassare = RoughNotation.annotate(
+            milestonePassare,
+            {
+              type: "highlight",
+              color: "#fde047",
+              animate: false,
+              multiline: true,
+            },
+          );
+          annotationMilestonePassare.show();
+        }
+
+        const ricevimentoOgniGiorno = document.querySelector(
+          "#ricevimento-ogni-giorno",
+        );
+        if (ricevimentoOgniGiorno) {
+          const annotationRicevimentoOgniGiorno = RoughNotation.annotate(
+            ricevimentoOgniGiorno,
+            {
+              type: "highlight",
+              color: "#fde047",
+              animate: false,
+              multiline: true,
+            },
+          );
+          annotationRicevimentoOgniGiorno.show();
         }
 
         const sectionComeFunziona = document.querySelector(

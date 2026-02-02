@@ -812,7 +812,7 @@ html {
 
 .start-for-free__step {
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   gap: var(--spacing-2xl);
 }
 
@@ -827,7 +827,7 @@ html {
   flex: 0 0 56px;
   width: 56px;
   text-align: right;
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .start-for-free__step-title {

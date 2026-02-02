@@ -1,84 +1,90 @@
-'use client';
+"use client";
 
-import '../../public/components/button/button.css';
-import '../../public/components/link/link.css';
+import "../../public/components/button/button.css";
+import "../../public/components/header/header.css";
+import "../../public/components/link/link.css";
 
-import { createClient } from '@supabase/supabase-js';
-import Link from 'next/link';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { getSupabaseBrowserClient } from "../../lib/supabase-browser";
+import Link from "next/link";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+type DashboardProgress = {
+  completedLessons: number;
+  totalLessons: number;
+  percentage: number;
+} | null;
+
+type DashboardProgressContextValue = {
+  progress: DashboardProgress;
+  setProgress: (progress: DashboardProgress) => void;
+};
+
+const DashboardProgressContext = createContext<DashboardProgressContextValue | null>(null);
+
+export function useDashboardProgress() {
+  const ctx = useContext(DashboardProgressContext);
+  if (!ctx) {
+    return {
+      progress: null,
+      setProgress: () => {},
+    } as DashboardProgressContextValue;
+  }
+  return ctx;
+}
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   const supabase = useMemo(() => {
-    if (!supabaseUrl || !supabaseAnonKey) {
-      return null;
-    }
-
-    return createClient(supabaseUrl, supabaseAnonKey);
+    return getSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
   }, [supabaseUrl, supabaseAnonKey]);
 
-  const [status, setStatus] = useState<string>('Caricamento...');
+  const [status, setStatus] = useState<string>("Caricamento...");
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [authedEmail, setAuthedEmail] = useState<string | null>(null);
+  const [progress, setProgress] = useState<DashboardProgress>(null);
+
+  const progressCtxValue = useMemo(() => {
+    return {
+      progress,
+      setProgress,
+    } satisfies DashboardProgressContextValue;
+  }, [progress]);
 
   useEffect(() => {
     if (!supabase) {
-      setStatus('Configurazione mancante: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY');
+      setStatus(
+        "Configurazione mancante: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      );
       return;
     }
 
     (async () => {
-      const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-      const allowedStatuses = new Set(['active', 'trialing']);
-
       setReady(false);
-      setStatus('Verifica accesso...');
+      setStatus("Verifica accesso...");
 
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
       if (sessionError) {
         setStatus(`Errore sessione: ${sessionError.message}`);
         return;
       }
 
       if (!sessionData.session) {
-        window.location.href = '/welcome';
+        window.location.href = "/welcome";
         return;
       }
 
-      setAuthedEmail(sessionData.session.user.email ?? null);
-      const userId = sessionData.session.user.id;
-
-      setStatus('Verifica abbonamento...');
-      let subscriptionStatus: string | null = null;
-
-      for (let attempt = 0; attempt < 5; attempt += 1) {
-        const { data: subscription, error: subscriptionError } = await supabase
-          .from('subscriptions')
-          .select('status')
-          .eq('user_id', userId)
-          .maybeSingle();
-
-        if (subscriptionError) {
-          setStatus(`Errore abbonamento: ${subscriptionError.message}`);
-          return;
-        }
-
-        subscriptionStatus = subscription?.status ?? null;
-        if (subscriptionStatus && allowedStatuses.has(subscriptionStatus)) {
-          setReady(true);
-          setStatus('');
-          return;
-        }
-
-        if (attempt < 4) {
-          await sleep(1000);
-        }
-      }
-
-      window.location.href = '/subscription-expired';
+      setReady(true);
+      setStatus("");
     })();
   }, [supabase]);
 
@@ -87,7 +93,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     setBusy(true);
     try {
       await supabase.auth.signOut();
-      window.location.href = '/welcome';
+      window.location.href = "/";
     } finally {
       setBusy(false);
     }
@@ -97,13 +103,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (
       <div
         style={{
-          maxWidth: '800px',
-          margin: '80px auto',
-          padding: '0 20px',
-          textAlign: 'center',
+          maxWidth: "800px",
+          margin: "80px auto",
+          padding: "0 20px",
+          textAlign: "center",
         }}
       >
-        <div className="title" style={{ marginBottom: 'var(--spacing-2xl)' }}>
+        <div className="title" style={{ marginBottom: "var(--spacing-2xl)" }}>
           Dashboard
         </div>
         <div className="text">{status}</div>
@@ -112,63 +118,60 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div>
-      <header
-        style={{
-          backgroundColor: 'var(--grey-100)',
-          padding: 'var(--spacing-l)',
-          borderBottom: '1px solid var(--grey-300)',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '12px',
-            flexWrap: 'wrap',
-          }}
-        >
-          <Link className="title title--sm" href="/dashboard" style={{ color: 'inherit', textDecoration: 'none' }}>
-            Mucca Design
-          </Link>
-
-          <nav style={{ display: 'flex', gap: 'var(--spacing-l)', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Link className="link" href="/dashboard/subscription">
-              Abbonamento
-            </Link>
-            <button className="button" type="button" onClick={logout} disabled={busy}>
-              Logout
-            </button>
-          </nav>
-        </div>
-        {authedEmail ? (
+    <DashboardProgressContext.Provider value={progressCtxValue}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+        <header className="topbar">
+        <div className="topbar__logo">
           <div
-            className="text"
             style={{
-              maxWidth: '1200px',
-              margin: '8px auto 0',
-              padding: '0',
-              opacity: 0.8,
-              textAlign: 'right',
+              display: "flex",
+              alignItems: "baseline",
+              gap: "var(--spacing-l)",
             }}
           >
-            Benvenuto {authedEmail}
+            <Link href="/" className="logo">
+              MUCCA DESIGN
+            </Link>
           </div>
-        ) : null}
-      </header>
+          <div className="logo__subtitle">
+            di{' '}
+            <Link href="/pages/chi-sono.html" style={{ textDecoration: 'none', color: 'var(--blue-900)' }}>
+              Luca Leone
+            </Link>
+          </div>
+        </div>
 
-      <main
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: 'var(--spacing-2xl)',
-        }}
-      >
-        {children}
-      </main>
-    </div>
+        <div style={{ flex: 1 }} />
+
+        <nav className="topbar__nav" style={{ marginTop: 0, gap: '16px' }}>
+          <Link href="/dashboard" className="link">
+            Moduli
+          </Link>
+          <a
+            className="link"
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              void logout();
+            }}
+            aria-disabled={busy}
+            style={busy ? { opacity: 0.6, pointerEvents: "none" } : undefined}
+          >
+            Logout
+          </a>
+        </nav>
+        </header>
+
+        <main
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "var(--spacing-2xl)",
+          }}
+        >
+          {children}
+        </main>
+      </div>
+    </DashboardProgressContext.Provider>
   );
 }

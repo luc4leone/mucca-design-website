@@ -1,21 +1,22 @@
 # Mucca Design
 
 ## todos
+- [] aggiungi a "non è il corso per te" il fatto che in questo corso si disegnano + interfacce interattive che ui statiche e super graficate, se quello è il tuo fine, meglio un corso con focus sulla grafica
 - [] rivedi i testi di tutte le faq
 - [] contratto
-- [] sezione programma delle lezioni
-- [] aggiungi le recensioni che mancano
-- [] responsive -> mobile
-- [] sostituire la recensione di Davide Cester in chi-sono
+- [] aggiungi le 3 recensioni che mancano
+- [] responsive -> mobile, sia loggato che sloggato
 - [] faq: posso mettere l'abbonamento in "stand-by"? 
+- [x] sezione programma delle lezioni
+- [x] sostituire la recensione di Davide Cester in chi-sono
 
 ## 28/01/2026
-- [] studio strategia "vendi prima di creare il prodotto"
+- [x] studio strategia "vendi prima di creare il prodotto"
 
 ## 27/01/2026
 
-- [] fix ilaria in mezzo in home
-- [] aggiungi slide a "risultati non promesse"
+- [x] fix ilaria in mezzo in home
+- [x] aggiungi slide a "risultati non promesse"
 
 ## 26/01/2026
 
