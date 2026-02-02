@@ -53,6 +53,9 @@ export default function DevLessonsClient() {
   const [newModulePublished, setNewModulePublished] = useState(true);
   const [editingModuleId, setEditingModuleId] = useState<string | null>(null);
 
+  const [moduleDialogOpen, setModuleDialogOpen] = useState(false);
+  const [lessonDialogOpen, setLessonDialogOpen] = useState(false);
+
   const linkButtonStyle: React.CSSProperties = {
     background: 'none',
     border: 'none',
@@ -61,6 +64,7 @@ export default function DevLessonsClient() {
   };
 
   const formMode = useMemo(() => (editingId ? 'edit' : 'create'), [editingId]);
+  const moduleFormMode = useMemo(() => (editingModuleId ? 'edit' : 'create'), [editingModuleId]);
 
   const modulesById = useMemo(() => {
     const map: Record<string, ModuleRow> = {};
@@ -158,6 +162,28 @@ export default function DevLessonsClient() {
     setModuleId(modules[0]?.id ?? '');
   }, [modules, moduleId]);
 
+  useEffect(() => {
+    if (!moduleDialogOpen && !lessonDialogOpen) return;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== 'Escape') return;
+      if (busy) return;
+      if (lessonDialogOpen) {
+        setLessonDialogOpen(false);
+        resetForm();
+        setStatus('');
+      }
+      if (moduleDialogOpen) {
+        setModuleDialogOpen(false);
+        resetModuleForm();
+        setStatus('');
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [lessonDialogOpen, moduleDialogOpen, busy]);
+
   function resetModuleForm() {
     setEditingModuleId(null);
     setNewModuleTitle('');
@@ -215,9 +241,48 @@ export default function DevLessonsClient() {
 
       resetModuleForm();
       setStatus('');
+      setModuleDialogOpen(false);
     } finally {
       setBusy(false);
     }
+  }
+
+  function openNewModuleDialog() {
+    resetModuleForm();
+    setStatus('');
+    setModuleDialogOpen(true);
+  }
+
+  function openEditModuleDialog(m: ModuleRow) {
+    fillModuleFormFromModule(m);
+    setStatus('');
+    setModuleDialogOpen(true);
+  }
+
+  function closeModuleDialog() {
+    if (busy) return;
+    setModuleDialogOpen(false);
+    resetModuleForm();
+    setStatus('');
+  }
+
+  function openNewLessonDialog() {
+    resetForm();
+    setStatus('');
+    setLessonDialogOpen(true);
+  }
+
+  function openEditLessonDialog(l: LessonRow) {
+    fillFormFromLesson(l);
+    setStatus('');
+    setLessonDialogOpen(true);
+  }
+
+  function closeLessonDialog() {
+    if (busy) return;
+    setLessonDialogOpen(false);
+    resetForm();
+    setStatus('');
   }
 
   async function reorderModule(id: string, direction: 'up' | 'down') {
@@ -381,6 +446,7 @@ export default function DevLessonsClient() {
       resetForm();
       await load();
       setStatus('');
+      setLessonDialogOpen(false);
     } finally {
       setBusy(false);
     }
@@ -461,59 +527,11 @@ export default function DevLessonsClient() {
               padding: 'var(--spacing-2xl)',
             }}
           >
-            <div className="title title--md" style={{ marginBottom: 'var(--spacing-l)' }}>
-              Nuovo modulo
-            </div>
-
-            <div style={{ display: 'grid', gap: '12px' }}>
-              <label className="text">
-                Titolo
-                <input
-                  value={newModuleTitle}
-                  onChange={(e) => setNewModuleTitle(e.target.value)}
-                  style={{ width: '100%', padding: '10px', marginTop: '6px' }}
-                />
-              </label>
-
-              <label className="text">
-                Accesso
-                <select
-                  value={newModuleAccessLevel}
-                  onChange={(e) => setNewModuleAccessLevel(e.target.value === 'paid' ? 'paid' : 'free')}
-                  style={{ display: 'block', width: '100%', maxWidth: '220px', padding: '10px', marginTop: '6px' }}
-                >
-                  <option value="free">free</option>
-                  <option value="paid">paid</option>
-                </select>
-              </label>
-
-              <label className="text" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <input checked={newModulePublished} onChange={(e) => setNewModulePublished(e.target.checked)} type="checkbox" />
-                Pubblicato
-              </label>
-
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <button className="link" type="button" onClick={() => void createModule()} disabled={busy} style={linkButtonStyle}>
-                  {editingModuleId ? 'Salva modulo' : 'Crea modulo'}
-                </button>
-                {editingModuleId ? (
-                  <button className="link" type="button" onClick={() => resetModuleForm()} disabled={busy} style={linkButtonStyle}>
-                    Annulla
-                  </button>
-                ) : null}
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              border: '1px solid var(--grey-300)',
-              backgroundColor: 'var(--white)',
-              padding: 'var(--spacing-2xl)',
-            }}
-          >
-            <div className="title title--md" style={{ marginBottom: 'var(--spacing-l)' }}>
-              Moduli ({modules.length})
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px', marginBottom: 'var(--spacing-l)' }}>
+              <div className="title title--md">Moduli ({modules.length})</div>
+              <button className="link" type="button" onClick={() => openNewModuleDialog()} disabled={busy} style={linkButtonStyle}>
+                Nuovo modulo
+              </button>
             </div>
 
             <div style={{ display: 'grid', gap: '10px' }}>
@@ -557,7 +575,7 @@ export default function DevLessonsClient() {
                       >
                         ↓
                       </button>
-                      <button className="link" type="button" onClick={() => fillModuleFormFromModule(m)} disabled={busy} style={linkButtonStyle}>
+                      <button className="link" type="button" onClick={() => openEditModuleDialog(m)} disabled={busy} style={linkButtonStyle}>
                         Modifica
                       </button>
                       <button className="link" type="button" onClick={() => void deleteModule(m.id)} disabled={busy} style={linkButtonStyle}>
@@ -579,11 +597,209 @@ export default function DevLessonsClient() {
               padding: 'var(--spacing-2xl)',
             }}
           >
-            <div className="title title--md" style={{ marginBottom: 'var(--spacing-l)' }}>
-              {formMode === 'create' ? 'Nuova lezione' : 'Modifica lezione'}
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px', marginBottom: 'var(--spacing-m)' }}>
+              <div className="title title--md">Lezioni ({lessons.length})</div>
+              <button className="link" type="button" onClick={() => openNewLessonDialog()} disabled={busy} style={linkButtonStyle}>
+                Nuova lezione
+              </button>
             </div>
 
-            <form onSubmit={onSubmit} style={{ display: 'grid', gap: '12px' }}>
+            <div style={{ display: 'grid', gap: '10px' }}>
+              {sortedLessons.map((l, lessonIdx) => (
+                <div
+                  key={l.id}
+                  style={{
+                    border: '1px solid var(--grey-300)',
+                    backgroundColor: 'var(--white)',
+                    padding: '12px',
+                    display: 'grid',
+                    gap: '8px',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
+                    <div>
+                      <div className="link link--large" style={{ color: 'inherit' }}>
+                        {(modulesById[l.module_id]?.order_index ?? '?')}.{l.lesson_index}. {l.title}
+                      </div>
+                      <div className="text" style={{ opacity: 0.8 }}>
+                        modulo: {modulesById[l.module_id]?.title ?? l.module_id} · slug: {l.slug} {l.is_published ? '· pubblicata' : '· bozza'}
+                      </div>
+                      {l.skills ? (
+                        <div className="text" style={{ opacity: 0.8 }}>
+                          skills: {l.skills}
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <button
+                        className="link"
+                        type="button"
+                        onClick={() => void reorder(l.id, 'up')}
+                        disabled={busy || lessonIdx === 0}
+                        style={{ ...linkButtonStyle, opacity: busy || lessonIdx === 0 ? 0.4 : 1 }}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        className="link"
+                        type="button"
+                        onClick={() => void reorder(l.id, 'down')}
+                        disabled={busy || lessonIdx === sortedLessons.length - 1}
+                        style={{ ...linkButtonStyle, opacity: busy || lessonIdx === sortedLessons.length - 1 ? 0.4 : 1 }}
+                      >
+                        ↓
+                      </button>
+                      <button className="link" type="button" onClick={() => openEditLessonDialog(l)} disabled={busy} style={linkButtonStyle}>
+                        Modifica
+                      </button>
+                      <button className="link" type="button" onClick={() => void deleteLesson(l.id)} disabled={busy} style={linkButtonStyle}>
+                        Elimina
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {moduleDialogOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => {
+            closeModuleDialog();
+          }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 1000,
+            backgroundColor: 'rgba(0, 0, 0, 0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '720px',
+              border: '1px solid var(--grey-300)',
+              backgroundColor: 'var(--white)',
+              padding: 'var(--spacing-2xl)',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'space-between',
+                gap: '12px',
+                marginBottom: 'var(--spacing-l)',
+              }}
+            >
+              <div className="title title--md">{moduleFormMode === 'create' ? 'Nuovo modulo' : 'Modifica modulo'}</div>
+              <button className="link" type="button" onClick={() => closeModuleDialog()} disabled={busy} style={linkButtonStyle}>
+                Chiudi
+              </button>
+            </div>
+
+            <div style={{ display: 'grid', gap: '12px' }}>
+              <label className="text">
+                Titolo
+                <input
+                  value={newModuleTitle}
+                  onChange={(e) => setNewModuleTitle(e.target.value)}
+                  style={{ width: '100%', padding: '10px', marginTop: '6px' }}
+                />
+              </label>
+
+              <label className="text">
+                Accesso
+                <select
+                  value={newModuleAccessLevel}
+                  onChange={(e) => setNewModuleAccessLevel(e.target.value === 'paid' ? 'paid' : 'free')}
+                  style={{ display: 'block', width: '100%', maxWidth: '220px', padding: '10px', marginTop: '6px' }}
+                >
+                  <option value="free">free</option>
+                  <option value="paid">paid</option>
+                </select>
+              </label>
+
+              <label className="text" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input checked={newModulePublished} onChange={(e) => setNewModulePublished(e.target.checked)} type="checkbox" />
+                Pubblicato
+              </label>
+
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <button className="link" type="button" onClick={() => void createModule()} disabled={busy} style={linkButtonStyle}>
+                  {moduleFormMode === 'create' ? 'Crea' : 'Salva'}
+                </button>
+                <button className="link" type="button" onClick={() => closeModuleDialog()} disabled={busy} style={linkButtonStyle}>
+                  Annulla
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {lessonDialogOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => {
+            closeLessonDialog();
+          }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 1000,
+            backgroundColor: 'rgba(0, 0, 0, 0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '860px',
+              border: '1px solid var(--grey-300)',
+              backgroundColor: 'var(--white)',
+              padding: 'var(--spacing-2xl)',
+              maxHeight: '90vh',
+              overflow: 'auto',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'space-between',
+                gap: '12px',
+                marginBottom: 'var(--spacing-l)',
+              }}
+            >
+              <div className="title title--md">{formMode === 'create' ? 'Nuova lezione' : 'Modifica lezione'}</div>
+              <button className="link" type="button" onClick={() => closeLessonDialog()} disabled={busy} style={linkButtonStyle}>
+                Chiudi
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                void onSubmit(e);
+              }}
+              style={{ display: 'grid', gap: '12px' }}
+            >
               <label className="text">
                 Titolo
                 <input value={title} onChange={(e) => setTitle(e.target.value)} style={{ width: '100%', padding: '10px', marginTop: '6px' }} />
@@ -645,17 +861,8 @@ export default function DevLessonsClient() {
                 <button className="link" type="submit" disabled={busy} style={linkButtonStyle}>
                   {formMode === 'create' ? 'Crea' : 'Salva'}
                 </button>
-                <button
-                  className="link"
-                  type="button"
-                  onClick={() => {
-                    resetForm();
-                    setStatus('');
-                  }}
-                  disabled={busy}
-                  style={linkButtonStyle}
-                >
-                  Reset
+                <button className="link" type="button" onClick={() => closeLessonDialog()} disabled={busy} style={linkButtonStyle}>
+                  Annulla
                 </button>
                 <button className="link" type="button" onClick={() => void load()} disabled={busy} style={linkButtonStyle}>
                   Ricarica
@@ -663,78 +870,8 @@ export default function DevLessonsClient() {
               </div>
             </form>
           </div>
-
-          <div
-            style={{
-              border: '1px solid var(--grey-300)',
-              backgroundColor: 'var(--white)',
-              padding: 'var(--spacing-2xl)',
-            }}
-          >
-            <div className="title title--md" style={{ marginBottom: 'var(--spacing-m)' }}>
-              Lezioni ({lessons.length})
-            </div>
-
-            <div style={{ display: 'grid', gap: '10px' }}>
-              {sortedLessons.map((l, lessonIdx) => (
-                <div
-                  key={l.id}
-                  style={{
-                    border: '1px solid var(--grey-300)',
-                    backgroundColor: 'var(--white)',
-                    padding: '12px',
-                    display: 'grid',
-                    gap: '8px',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
-                    <div>
-                      <div className="link link--large" style={{ color: 'inherit' }}>
-                        {(modulesById[l.module_id]?.order_index ?? '?')}.{l.lesson_index}. {l.title}
-                      </div>
-                      <div className="text" style={{ opacity: 0.8 }}>
-                        modulo: {modulesById[l.module_id]?.title ?? l.module_id} · slug: {l.slug} {l.is_published ? '· pubblicata' : '· bozza'}
-                      </div>
-                      {l.skills ? (
-                        <div className="text" style={{ opacity: 0.8 }}>
-                          skills: {l.skills}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-                      <button
-                        className="link"
-                        type="button"
-                        onClick={() => void reorder(l.id, 'up')}
-                        disabled={busy || lessonIdx === 0}
-                        style={{ ...linkButtonStyle, opacity: busy || lessonIdx === 0 ? 0.4 : 1 }}
-                      >
-                        ↑
-                      </button>
-                      <button
-                        className="link"
-                        type="button"
-                        onClick={() => void reorder(l.id, 'down')}
-                        disabled={busy || lessonIdx === sortedLessons.length - 1}
-                        style={{ ...linkButtonStyle, opacity: busy || lessonIdx === sortedLessons.length - 1 ? 0.4 : 1 }}
-                      >
-                        ↓
-                      </button>
-                      <button className="link" type="button" onClick={() => fillFormFromLesson(l)} disabled={busy} style={linkButtonStyle}>
-                        Modifica
-                      </button>
-                      <button className="link" type="button" onClick={() => void deleteLesson(l.id)} disabled={busy} style={linkButtonStyle}>
-                        Elimina
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

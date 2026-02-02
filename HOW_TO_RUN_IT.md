@@ -26,3 +26,11 @@ Poi apri:
   npm ci
   ```
   al posto di `npm install`.
+
+## Script manuale per popolare Program in home
+> npm run generate:program
+
+Requisiti: nel tuo ambiente devono essere presenti:
+- NEXT_PUBLIC_SUPABASE_URL
+- SUPABASE_SERVICE_ROLE_KEY
+tipicamente in .env.local (lo script prova a caricarlo automaticamente)
