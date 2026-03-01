@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 export const runtime = 'nodejs';
@@ -40,12 +40,43 @@ function getSupabaseAdmin() {
   });
 }
 
-export async function PATCH(request: Request, ctx: { params: { id: string } }) {
+async function compactLessonIndexesForModule(
+  supabaseAdmin: ReturnType<typeof getSupabaseAdmin>,
+  moduleId: string,
+) {
+  const { data: lessonsInModule, error: lessonsInModuleError } = await supabaseAdmin
+    .from('lessons')
+    .select('id,lesson_index')
+    .eq('module_id', moduleId)
+    .order('lesson_index', { ascending: true });
+
+  if (lessonsInModuleError) {
+    throw new Error(lessonsInModuleError.message);
+  }
+
+  const rows = (lessonsInModule as Array<{ id: string; lesson_index: number }> | null) ?? [];
+
+  for (let idx = 0; idx < rows.length; idx += 1) {
+    const row = rows[idx];
+    if (row.lesson_index === idx) continue;
+
+    const { error: updateError } = await supabaseAdmin
+      .from('lessons')
+      .update({ lesson_index: idx })
+      .eq('id', row.id);
+
+    if (updateError) {
+      throw new Error(updateError.message);
+    }
+  }
+}
+
+export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!isDevRequest(request)) {
     return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
   }
 
-  const params = await (ctx as any).params;
+  const params = await ctx.params;
   const id = params?.id;
   if (!id) {
     return NextResponse.json({ ok: false, error: 'Missing id' }, { status: 400 });
@@ -130,7 +161,7 @@ export async function PATCH(request: Request, ctx: { params: { id: string } }) {
       }
 
       const nextLessonIndex =
-        typeof (lastInTargetModule as any)?.lesson_index === 'number' ? (lastInTargetModule as any).lesson_index + 1 : 1;
+        typeof (lastInTargetModule as any)?.lesson_index === 'number' ? (lastInTargetModule as any).lesson_index + 1 : 0;
       patch.lesson_index = nextLessonIndex;
     }
   }
@@ -144,12 +175,12 @@ export async function PATCH(request: Request, ctx: { params: { id: string } }) {
   return NextResponse.json({ ok: true, lesson: data, warning: devKeyWarning() });
 }
 
-export async function DELETE(request: Request, ctx: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!isDevRequest(request)) {
     return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
   }
 
-  const params = await (ctx as any).params;
+  const params = await ctx.params;
   const id = params?.id;
   if (!id) {
     return NextResponse.json({ ok: false, error: 'Missing id' }, { status: 400 });
@@ -163,10 +194,33 @@ export async function DELETE(request: Request, ctx: { params: { id: string } }) 
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 
+  const { data: lessonToDelete, error: lessonToDeleteError } = await supabaseAdmin
+    .from('lessons')
+    .select('module_id')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (lessonToDeleteError) {
+    return NextResponse.json({ ok: false, error: lessonToDeleteError.message }, { status: 500 });
+  }
+
+  if (!lessonToDelete?.module_id) {
+    return NextResponse.json({ ok: false, error: 'Lesson not found' }, { status: 404 });
+  }
+
+  const moduleId = lessonToDelete.module_id as string;
+
   const { error } = await supabaseAdmin.from('lessons').delete().eq('id', id);
 
   if (error) {
     return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  }
+
+  try {
+    await compactLessonIndexesForModule(supabaseAdmin, moduleId);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true, warning: devKeyWarning() });

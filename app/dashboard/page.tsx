@@ -1,6 +1,7 @@
 'use client';
 
 import { getSupabaseBrowserClient } from '../../lib/supabase-browser';
+import { marked } from 'marked';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -28,6 +29,7 @@ type Lesson = {
   public_id: string;
   description: string | null;
   skills?: string | null;
+  lesson_type?: 'esercizio' | 'intermezzo' | 'milestone' | null;
   module_id: string;
   lesson_index: number;
   order_index: number;
@@ -44,6 +46,7 @@ type LessonMeta = {
   public_id: string;
   description: string | null;
   skills?: string | null;
+  lesson_type?: 'esercizio' | 'intermezzo' | 'milestone' | null;
   module_id: string;
   lesson_index: number;
   order_index: number;
@@ -233,6 +236,31 @@ export default function DashboardPage() {
         return;
       }
 
+      const missingLessonType = lessonsMeta.some((l) => !l.lesson_type);
+      if (missingLessonType) {
+        const lessonIds = lessonsMeta.map((l) => l.id).filter(Boolean);
+        if (lessonIds.length) {
+          const { data: lessonTypesData, error: lessonTypesError } = await supabaseClient
+            .from('lessons')
+            .select('id,lesson_type')
+            .in('id', lessonIds);
+
+          if (!lessonTypesError) {
+            const lessonTypeById: Record<string, Lesson['lesson_type']> = {};
+            ((lessonTypesData as Array<{ id: string; lesson_type: Lesson['lesson_type'] }> | null) ?? []).forEach(
+              (row) => {
+                lessonTypeById[row.id] = row.lesson_type ?? null;
+              },
+            );
+
+            lessonsMeta = lessonsMeta.map((lesson) => ({
+              ...lesson,
+              lesson_type: lesson.lesson_type ?? lessonTypeById[lesson.id] ?? null,
+            }));
+          }
+        }
+      }
+
       setLessons((lessonsMeta as Lesson[]) ?? []);
       await loadCompletion(userId);
       setStatus('');
@@ -336,6 +364,20 @@ export default function DashboardPage() {
     : 0;
   const progressLabelPercentage = Math.round(progressPercentage);
 
+  function renderLessonSkills(rawSkills: string | null | undefined) {
+    if (!rawSkills?.trim()) return null;
+
+    const html = marked.parse(rawSkills);
+
+    return (
+      <div
+        className="text lesson-skills-markdown"
+        style={{ opacity: 0.8, marginTop: '6px' }}
+        dangerouslySetInnerHTML={{ __html: html as string }}
+      />
+    );
+  }
+
   return (
     <div
       style={{
@@ -344,92 +386,158 @@ export default function DashboardPage() {
         padding: '0 20px',
       }}
     >
+      <style jsx global>{`
+        .lesson-skills-markdown ul,
+        .lesson-skills-markdown ol {
+          margin-top: 0;
+        }
+
+        .lesson-skills-markdown h4 {
+          margin-bottom: 0;
+        }
+
+        .dashboard-lesson-card {
+          transition: background-color 120ms ease;
+        }
+
+        .dashboard-lesson-card:hover {
+          background-color: var(--grey-200) !important;
+        }
+
+        .dashboard-module-card {
+          transition: background-color 120ms ease;
+        }
+
+        .dashboard-module-card:hover {
+          background-color: var(--grey-200) !important;
+        }
+
+      `}</style>
+
       {status ? <div className="text" style={{ marginBottom: 'var(--spacing-l)' }}>{status}</div> : null}
 
       {modules.length ? (
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
-            columnGap: '16px',
-            rowGap: '12px',
+            display: 'flex',
+            gap: '16px',
             alignItems: 'start',
           }}
         >
-          <Link href="/pricing" className="link" style={{ justifySelf: 'start', alignSelf: 'center' }}>
-            Vuoi accedere a tutti i moduli?
-          </Link>
+          <div style={{ flex: 1, display: 'grid', gap: '12px', alignContent: 'start' }}>
+            <div style={{ minHeight: '56px', paddingTop: '16px' }}>
+              <details>
+                <summary className="link" style={{ cursor: 'pointer' }}>
+                Vuoi accedere a tutti i moduli?
+                </summary>
 
-          <div
-            style={{
-              padding: '8px 0px',
-              justifySelf: 'start',
-              width: '100%',
-            }}
-          >
-            <div className="text" style={{ marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)' }}>
-              Lezioni: {progressStats.completedLessons} di {progressStats.totalLessons} completate ~{progressLabelPercentage}%
-            </div>
-            <div
-              style={{
-                width: '100%',
-                height: '8px',
-                border: '1px solid var(--grey-300)',
-                backgroundColor: 'var(--grey-100, #f3f4f6)',
-                overflow: 'hidden',
-              }}
-            >
-              <div
-                style={{
-                  width: `${progressPercentage}%`,
-                  height: '100%',
-                  backgroundColor: 'var(--grey-900)',
-                }}
-              />
-            </div>
-          </div>
-
-          <div
-            style={{
-              border: '1px solid var(--grey-300)',
-              padding: '16px',
-            }}
-          >
-            <div className="title title--md" style={{ marginBottom: '12px' }}>
-              Moduli
-            </div>
-
-            <div style={{ display: 'grid', gap: '10px' }}>
-              {modules.map((m) => {
-                const active = m.id === selectedModuleId;
-                const canAccess = Boolean(accessByModuleId[m.id]);
-                const moduleLessons = lessonsByModuleId[m.id] ?? [];
-                const isCompleted =
-                  moduleLessons.length > 0 && moduleLessons.every((l) => Boolean(completionByLessonId[l.id]));
-                const backgroundColor = !canAccess ? 'var(--white)' : isCompleted ? '#dcfce7' : 'var(--white)';
-
-                return (
-                  <button
-                    key={m.id}
-                    type="button"
-                    onClick={() => setSelectedModuleId(m.id)}
+                <p
+                  className="text"
+                  style={{
+                    margin: '8px 0 0',
+                    maxWidth: '42ch',
+                    fontSize: 'var(--font-size-sm)',
+                    lineHeight: 'var(--line-height-normal)',
+                  }}
+                >
+                  Per accedere ai moduli successivi al primo devi{' '}
+                  <Link
+                    href="/pricing"
+                    className="link"
                     style={{
-                      border: active ? '4px solid var(--grey-900)' : '1px solid var(--grey-300)',
-                      backgroundColor,
-                      padding: '12px',
-                      textAlign: 'left',
-                      cursor: 'pointer',
+                      fontFamily: 'var(--font-family-serif)',
+                      fontSize: 'var(--font-size-sm)',
                     }}
                   >
-                    <div
-                      className="text"
+                    sottoscrivere un abbonamento mensile
+                  </Link>
+                  .
+                </p>
+              </details>
+            </div>
+
+            <div
+              style={{
+                border: '1px solid var(--grey-300)',
+                padding: '16px',
+              }}
+            >
+              <div className="title title--md" style={{ marginBottom: '12px' }}>
+                Moduli
+              </div>
+
+              <div style={{ display: 'grid', gap: '10px' }}>
+                {modules.map((m) => {
+                  const active = m.id === selectedModuleId;
+                  const canAccess = Boolean(accessByModuleId[m.id]);
+                  const moduleLessons = lessonsByModuleId[m.id] ?? [];
+                  const isCompleted =
+                    moduleLessons.length > 0 && moduleLessons.every((l) => Boolean(completionByLessonId[l.id]));
+                  const backgroundColor = !canAccess ? 'var(--white)' : isCompleted ? '#dcfce7' : 'var(--white)';
+
+                  return (
+                    <button
+                      key={m.id}
+                      className="dashboard-module-card"
+                      type="button"
+                      onClick={() => setSelectedModuleId(m.id)}
                       style={{
-                        opacity: 0.8,
-                        marginBottom: '6px',
-                        fontSize: 'var(--font-size-sm)',
+                        border: active ? '4px solid var(--grey-900)' : '1px solid var(--grey-300)',
+                        backgroundColor,
+                        padding: '12px',
+                        textAlign: 'left',
+                        cursor: 'pointer',
                       }}
                     >
-                      {canAccess ? (
+                      <div
+                        className="text"
+                        style={{
+                          opacity: 0.8,
+                          marginBottom: '6px',
+                          fontSize: 'var(--font-size-sm)',
+                          display: 'flex',
+                          gap: '8px',
+                          flexWrap: 'wrap',
+                        }}
+                      >
+                        {canAccess ? (
+                          <span
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              padding: '2px 10px',
+                              borderRadius: '999px',
+                              border: '1px solid var(--grey-500)',
+                              backgroundColor: 'transparent',
+                              color: 'var(--grey-900)',
+                              fontFamily:
+                                'Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
+                              fontSize: '14px',
+                              lineHeight: 1.2,
+                            }}
+                          >
+                            sbloccato
+                          </span>
+                        ) : (
+                          <span
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              padding: '2px 10px',
+                              borderRadius: '999px',
+                              border: '1px solid #ef4444',
+                              backgroundColor: '#fee2e2',
+                              color: '#991b1b',
+                              fontFamily:
+                                'Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
+                              fontSize: '14px',
+                              lineHeight: 1.2,
+                            }}
+                          >
+                            bloccato
+                          </span>
+                        )}
+
                         <span
                           style={{
                             display: 'inline-flex',
@@ -437,7 +545,7 @@ export default function DashboardPage() {
                             padding: '2px 10px',
                             borderRadius: '999px',
                             border: '1px solid var(--grey-500)',
-                            backgroundColor: 'transparent',
+                            backgroundColor: 'var(--grey-200)',
                             color: 'var(--grey-900)',
                             fontFamily:
                               'Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
@@ -445,44 +553,59 @@ export default function DashboardPage() {
                             lineHeight: 1.2,
                           }}
                         >
-                          sbloccato
+                          {moduleLessons.length} lezioni
                         </span>
-                      ) : (
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            padding: '2px 10px',
-                            borderRadius: '999px',
-                            border: '1px solid #ef4444',
-                            backgroundColor: '#fee2e2',
-                            color: '#991b1b',
-                            fontFamily:
-                              'Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
-                            fontSize: '14px',
-                            lineHeight: 1.2,
-                          }}
-                        >
-                          bloccato
-                        </span>
-                      )}
-                    </div>
+                      </div>
 
-                    <div className="link" style={{ color: 'inherit' }}>
-                      {m.title}
-                    </div>
-                  </button>
-                );
-              })}
+                      <div className="link" style={{ color: 'inherit' }}>
+                        {m.title}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          <div
-            style={{
-              border: '1px solid var(--grey-300)',
-              padding: '16px',
-            }}
-          >
+          <div style={{ flex: 2, display: 'grid', gap: '12px', alignContent: 'start' }}>
+            <div
+              style={{
+                minHeight: '56px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                justifySelf: 'start',
+                width: '100%',
+              }}
+            >
+              <div className="text" style={{ marginBottom: 'var(--spacing-xs)', fontSize: 'var(--font-size-sm)' }}>
+                Lezioni: {progressStats.completedLessons} di {progressStats.totalLessons} completate ~{progressLabelPercentage}%
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  height: '8px',
+                  border: '1px solid var(--grey-300)',
+                  backgroundColor: 'var(--grey-100, #f3f4f6)',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    width: `${progressPercentage}%`,
+                    height: '100%',
+                    backgroundColor: 'var(--grey-900)',
+                  }}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                border: '1px solid var(--grey-300)',
+                padding: '16px',
+              }}
+            >
             {selectedModule ? (
             (() => {
               const m = selectedModule;
@@ -557,11 +680,7 @@ export default function DashboardPage() {
                                 {l.title}
                               </div>
                               {l.description ? <div className="text">{l.description}</div> : null}
-                              {l.skills ? (
-                                <div className="text" style={{ opacity: 0.8, marginTop: '6px' }}>
-                                  {l.skills}
-                                </div>
-                              ) : null}
+                              {renderLessonSkills(l.skills)}
                             </div>
                           ))}
                         </div>
@@ -583,13 +702,15 @@ export default function DashboardPage() {
                           }}
                         >
                           <div
+                            className="dashboard-lesson-card"
                             style={{
                               border: '1px solid var(--grey-300)',
+                              backgroundColor: 'var(--white)',
                               padding: '12px',
                             }}
                           >
-                            {completionByLessonId[l.id] ? (
-                              <div style={{ marginBottom: '6px' }}>
+                            <div style={{ marginBottom: '6px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                              {completionByLessonId[l.id] ? (
                                 <span
                                   style={{
                                     display: 'inline-flex',
@@ -606,9 +727,7 @@ export default function DashboardPage() {
                                 >
                                   completata
                                 </span>
-                              </div>
-                            ) : (
-                              <div style={{ marginBottom: '6px' }}>
+                              ) : (
                                 <span
                                   style={{
                                     display: 'inline-flex',
@@ -625,13 +744,30 @@ export default function DashboardPage() {
                                 >
                                   da completare
                                 </span>
-                              </div>
-                            )}
+                              )}
+
+                              <span
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  padding: '2px 10px',
+                                  borderRadius: '999px',
+                                  border: '1px solid var(--grey-500)',
+                                  backgroundColor: 'var(--grey-300)',
+                                  color: 'var(--grey-900)',
+                                  fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
+                                  fontSize: '14px',
+                                  lineHeight: 1.2,
+                                }}
+                              >
+                                {l.lesson_type ?? 'esercizio'}
+                              </span>
+                            </div>
                             <div className="link link--large" style={{ marginBottom: '6px' }}>
                               {l.title}
                             </div>
                             {l.description ? <div className="text">{l.description}</div> : null}
-                            {l.skills ? <div className="text" style={{ opacity: 0.8, marginTop: '6px' }}>{l.skills}</div> : null}
+                            {renderLessonSkills(l.skills)}
                           </div>
                         </Link>
                       ))}
@@ -645,6 +781,7 @@ export default function DashboardPage() {
             ) : (
               <div className="text">Seleziona un modulo.</div>
             )}
+            </div>
           </div>
         </div>
       ) : (

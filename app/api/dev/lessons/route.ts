@@ -1,62 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { randomBytes } from 'crypto';
 
 export const runtime = 'nodejs';
-
-async function getDefaultModuleId(supabaseAdmin: ReturnType<typeof getSupabaseAdmin>) {
-  const { data, error } = await supabaseAdmin
-    .from('modules')
-    .select('id')
-    .order('order_index', { ascending: true })
-    .limit(1)
-    .maybeSingle();
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  if (!data?.id) {
-    throw new Error('No modules found. Did you run the modules migration?');
-  }
-
-  return data.id as string;
-}
-
-function slugify(value: string) {
-  const base = value
-    .toLowerCase()
-    .trim()
-    .replace(/['’]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-  return base || 'lesson';
-}
-
-async function ensureUniqueSlug(supabaseAdmin: ReturnType<typeof getSupabaseAdmin>, baseSlug: string) {
-  let candidate = baseSlug;
-  for (let attempt = 0; attempt < 10; attempt += 1) {
-    const { data, error } = await supabaseAdmin
-      .from('lessons')
-      .select('id')
-      .eq('slug', candidate)
-      .limit(1)
-      .maybeSingle();
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    if (!data) {
-      return candidate;
-    }
-
-    candidate = `${baseSlug}-${randomBytes(3).toString('hex')}`;
-  }
-
-  throw new Error('Unable to generate a unique slug');
-}
 
 function isDevRequest(request: Request) {
   if (process.env.NODE_ENV === 'production') return false;
@@ -95,6 +40,19 @@ function getSupabaseAdmin() {
   });
 }
 
+function slugify(input: string) {
+  const base = input
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/-{2,}/g, '-');
+
+  return base || 'lesson';
+}
+
 export async function GET(request: Request) {
   if (!isDevRequest(request)) {
     return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
@@ -111,9 +69,10 @@ export async function GET(request: Request) {
   const { data, error } = await supabaseAdmin
     .from('lessons')
     .select(
-      'id,title,slug,public_id,module_id,lesson_index,lesson_type,description,skills,video_url,content,order_index,duration_minutes,is_published,created_at,updated_at',
+      'id,title,slug,public_id,module_id,lesson_index,lesson_type,description,skills,video_url,content,order_index,duration_minutes,is_published',
     )
-    .order('order_index', { ascending: true });
+    .order('order_index', { ascending: true })
+    .order('lesson_index', { ascending: true });
 
   if (error) {
     return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
@@ -135,14 +94,15 @@ export async function POST(request: Request) {
   }
 
   const title = typeof (body as any)?.title === 'string' ? String((body as any).title).trim() : '';
-  const slugInput = typeof (body as any)?.slug === 'string' ? String((body as any).slug).trim() : '';
   const moduleId =
     typeof (body as any)?.module_id === 'string' ? String((body as any).module_id).trim() : '';
-  const lessonTypeInput =
-    typeof (body as any)?.lesson_type === 'string' ? String((body as any).lesson_type).trim() : '';
 
   if (!title) {
     return NextResponse.json({ ok: false, error: 'Missing title' }, { status: 400 });
+  }
+
+  if (!moduleId) {
+    return NextResponse.json({ ok: false, error: 'Missing module_id' }, { status: 400 });
   }
 
   let supabaseAdmin: ReturnType<typeof getSupabaseAdmin>;
@@ -153,61 +113,57 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 
-  const { data: lastLesson } = await supabaseAdmin
+  const { data: lastInModule, error: lastInModuleError } = await supabaseAdmin
     .from('lessons')
-    .select('order_index')
-    .order('order_index', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  const nextOrderIndex = typeof lastLesson?.order_index === 'number' ? lastLesson.order_index + 1 : 1;
-
-  let resolvedModuleId = moduleId;
-  if (!resolvedModuleId) {
-    try {
-      resolvedModuleId = await getDefaultModuleId(supabaseAdmin);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      return NextResponse.json({ ok: false, error: message }, { status: 500 });
-    }
-  }
-
-  const { data: lastModuleLesson } = await supabaseAdmin
-    .from('lessons')
-    .select('lesson_index')
-    .eq('module_id', resolvedModuleId)
+    .select('lesson_index,order_index')
+    .eq('module_id', moduleId)
     .order('lesson_index', { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  const nextLessonIndex =
-    typeof lastModuleLesson?.lesson_index === 'number' ? lastModuleLesson.lesson_index + 1 : 1;
-
-  let resolvedSlug = slugInput;
-  if (!resolvedSlug) {
-    try {
-      resolvedSlug = await ensureUniqueSlug(supabaseAdmin, slugify(title));
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      return NextResponse.json({ ok: false, error: message }, { status: 500 });
-    }
+  if (lastInModuleError) {
+    return NextResponse.json({ ok: false, error: lastInModuleError.message }, { status: 500 });
   }
 
-  const payload = {
+  const nextLessonIndex =
+    typeof lastInModule?.lesson_index === 'number' ? lastInModule.lesson_index + 1 : 0;
+  const nextOrderIndex =
+    typeof lastInModule?.order_index === 'number' ? lastInModule.order_index + 1 : 1;
+
+  const payload: Record<string, unknown> = {
     title,
-    slug: resolvedSlug,
-    module_id: resolvedModuleId,
-    lesson_type:
-      lessonTypeInput === 'intermezzo' || lessonTypeInput === 'milestone' ? lessonTypeInput : 'esercizio',
+    slug: `${slugify(title)}-${Date.now().toString(36)}`,
+    module_id: moduleId,
     lesson_index:
-      typeof (body as any)?.lesson_index === 'number' ? (body as any).lesson_index : nextLessonIndex,
-    description: typeof (body as any)?.description === 'string' ? String((body as any).description) : null,
-    skills: typeof (body as any)?.skills === 'string' ? String((body as any).skills) : null,
-    video_url: typeof (body as any)?.video_url === 'string' ? String((body as any).video_url) : null,
-    content: typeof (body as any)?.content === 'string' ? String((body as any).content) : null,
-    duration_minutes: typeof (body as any)?.duration_minutes === 'number' ? (body as any).duration_minutes : null,
-    is_published: typeof (body as any)?.is_published === 'boolean' ? (body as any).is_published : false,
-    order_index: typeof (body as any)?.order_index === 'number' ? (body as any).order_index : nextOrderIndex,
+      typeof (body as any)?.lesson_index === 'number'
+        ? (body as any).lesson_index
+        : nextLessonIndex,
+    lesson_type:
+      (body as any)?.lesson_type === 'intermezzo' || (body as any)?.lesson_type === 'milestone'
+        ? (body as any).lesson_type
+        : 'esercizio',
+    description:
+      typeof (body as any)?.description === 'string' && (body as any).description.trim().length > 0
+        ? String((body as any).description)
+        : null,
+    skills:
+      typeof (body as any)?.skills === 'string' && (body as any).skills.trim().length > 0
+        ? String((body as any).skills)
+        : null,
+    video_url:
+      typeof (body as any)?.video_url === 'string' && (body as any).video_url.trim().length > 0
+        ? String((body as any).video_url)
+        : null,
+    content:
+      typeof (body as any)?.content === 'string' && (body as any).content.trim().length > 0
+        ? String((body as any).content)
+        : null,
+    duration_minutes:
+      typeof (body as any)?.duration_minutes === 'number' ? (body as any).duration_minutes : null,
+    is_published:
+      typeof (body as any)?.is_published === 'boolean' ? (body as any).is_published : false,
+    order_index:
+      typeof (body as any)?.order_index === 'number' ? (body as any).order_index : nextOrderIndex,
   };
 
   const { data, error } = await supabaseAdmin.from('lessons').insert(payload).select('*').single();

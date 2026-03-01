@@ -31,6 +31,10 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: false, error: 'Missing Authorization header' }, { status: 401 });
   }
 
+  const { searchParams } = new URL(request.url);
+  const lessonPublicId = searchParams.get('public_id')?.trim() ?? '';
+  const lessonSlug = searchParams.get('slug')?.trim() ?? '';
+
   let supabaseAdmin: ReturnType<typeof getSupabaseAdmin>;
   try {
     supabaseAdmin = getSupabaseAdmin();
@@ -44,9 +48,37 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
   }
 
+  if (lessonPublicId || lessonSlug) {
+    let lessonQuery = supabaseAdmin
+      .from('lessons')
+      .select(
+        'id,title,slug,public_id,description,skills,lesson_type,module_id,lesson_index,order_index,video_url,content,is_published',
+      )
+      .eq('is_published', true)
+      .limit(1);
+
+    if (lessonPublicId) {
+      lessonQuery = lessonQuery.eq('public_id', lessonPublicId);
+    } else {
+      lessonQuery = lessonQuery.eq('slug', lessonSlug);
+    }
+
+    const { data: lesson, error: lessonError } = await lessonQuery.maybeSingle();
+
+    if (lessonError) {
+      return NextResponse.json({ ok: false, error: lessonError.message }, { status: 500 });
+    }
+
+    if (!lesson) {
+      return NextResponse.json({ ok: false, error: 'Lesson not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ ok: true, lesson });
+  }
+
   const { data, error, count } = await supabaseAdmin
     .from('lessons')
-    .select('id,title,public_id,description,skills,module_id,lesson_index,order_index', { count: 'exact' })
+    .select('id,title,public_id,description,skills,lesson_type,module_id,lesson_index,order_index', { count: 'exact' })
     .eq('is_published', true)
     .order('order_index', { ascending: true });
 

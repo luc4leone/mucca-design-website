@@ -53,16 +53,21 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 
-  const { data, error } = await supabaseAdmin
-    .from('modules')
-    .select('id,title,order_index,access_level,is_published,created_at,updated_at')
-    .order('order_index', { ascending: true });
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('modules')
+      .select('id,title,order_index,access_level,is_published,created_at,updated_at')
+      .order('order_index', { ascending: true });
 
-  if (error) {
-    return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    if (error) {
+      return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true, modules: data ?? [], warning: devKeyWarning() });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
-
-  return NextResponse.json({ ok: true, modules: data ?? [], warning: devKeyWarning() });
 }
 
 export async function POST(request: Request) {

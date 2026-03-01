@@ -31,6 +31,8 @@ type LessonRow = {
 };
 
 export default function DevLessonsClient() {
+  const activeModuleStorageKey = 'dev_lessons_active_module_id';
+
   const [status, setStatus] = useState<string>('');
   const [busy, setBusy] = useState(false);
   const [modules, setModules] = useState<ModuleRow[]>([]);
@@ -42,9 +44,12 @@ export default function DevLessonsClient() {
 
   const [title, setTitle] = useState('');
   const [moduleId, setModuleId] = useState('');
+  const [selectedModuleId, setSelectedModuleId] = useState('');
   const [lessonType, setLessonType] = useState<'esercizio' | 'intermezzo' | 'milestone'>('esercizio');
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState('');
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoUrl, setVideoUrl] = useState('');
   const [content, setContent] = useState('');
   const [isPublished, setIsPublished] = useState(false);
 
@@ -89,6 +94,11 @@ export default function DevLessonsClient() {
     });
     return list;
   }, [lessons, modulesById]);
+
+  const activeModuleLessons = useMemo(() => {
+    if (!selectedModuleId) return [];
+    return sortedLessons.filter((lesson) => lesson.module_id === selectedModuleId);
+  }, [sortedLessons, selectedModuleId]);
 
   async function loadModules() {
     const res = await fetch('/api/dev/modules', {
@@ -135,6 +145,8 @@ export default function DevLessonsClient() {
     setLessonType('esercizio');
     setDescription('');
     setSkills('');
+    setShowVideo(false);
+    setVideoUrl('');
     setContent('');
     setIsPublished(false);
   }
@@ -148,6 +160,8 @@ export default function DevLessonsClient() {
     );
     setDescription(l.description ?? '');
     setSkills((l.skills as string | null) ?? '');
+    setShowVideo(Boolean(l.video_url));
+    setVideoUrl(l.video_url ?? '');
     setContent(l.content ?? '');
     setIsPublished(Boolean(l.is_published));
   }
@@ -161,6 +175,27 @@ export default function DevLessonsClient() {
     if (!modules.length) return;
     setModuleId(modules[0]?.id ?? '');
   }, [modules, moduleId]);
+
+  useEffect(() => {
+    if (!modules.length) return;
+    if (selectedModuleId && modules.some((m) => m.id === selectedModuleId)) return;
+
+    const sortedByOrder = modules.slice().sort((a, b) => a.order_index - b.order_index);
+
+    const savedId = typeof window !== 'undefined' ? window.localStorage.getItem(activeModuleStorageKey) : null;
+    const nextActiveId =
+      savedId && sortedByOrder.some((m) => m.id === savedId) ? savedId : (sortedByOrder[0]?.id ?? '');
+
+    if (nextActiveId) {
+      setSelectedModuleId(nextActiveId);
+    }
+  }, [modules, selectedModuleId]);
+
+  useEffect(() => {
+    if (!selectedModuleId) return;
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(activeModuleStorageKey, selectedModuleId);
+  }, [selectedModuleId]);
 
   useEffect(() => {
     if (!moduleDialogOpen && !lessonDialogOpen) return;
@@ -268,6 +303,9 @@ export default function DevLessonsClient() {
 
   function openNewLessonDialog() {
     resetForm();
+    if (selectedModuleId) {
+      setModuleId(selectedModuleId);
+    }
     setStatus('');
     setLessonDialogOpen(true);
   }
@@ -378,6 +416,10 @@ export default function DevLessonsClient() {
         setModuleId('');
       }
 
+      if (selectedModuleId === id) {
+        setSelectedModuleId('');
+      }
+
       await load();
       setStatus('');
     } finally {
@@ -410,6 +452,7 @@ export default function DevLessonsClient() {
             lesson_type: lessonType,
             description: description.trim() ? description : null,
             skills: skills.trim() ? skills : null,
+            video_url: showVideo && videoUrl.trim() ? videoUrl.trim() : null,
             content: content.trim() ? content : null,
             is_published: isPublished,
           }),
@@ -432,6 +475,7 @@ export default function DevLessonsClient() {
             lesson_type: lessonType,
             description: description.trim() ? description : null,
             skills: skills.trim() ? skills : null,
+            video_url: showVideo && videoUrl.trim() ? videoUrl.trim() : null,
             content: content.trim() ? content : null,
             is_published: isPublished,
           }),
@@ -538,12 +582,19 @@ export default function DevLessonsClient() {
               {sortedModules.map((m, idx) => (
                 <div
                   key={m.id}
+                  onClick={() => setSelectedModuleId(m.id)}
                   style={{
-                    border: editingModuleId === m.id ? '1px solid var(--blue-900)' : '1px solid var(--grey-300)',
+                    border:
+                      selectedModuleId === m.id
+                        ? '4px solid var(--grey-900)'
+                        : editingModuleId === m.id
+                          ? '1px solid var(--blue-900)'
+                          : '1px solid var(--grey-300)',
                     backgroundColor: editingModuleId === m.id ? 'var(--grey-100)' : undefined,
                     padding: '12px',
                     display: 'grid',
                     gap: '8px',
+                    cursor: 'pointer',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
@@ -598,14 +649,14 @@ export default function DevLessonsClient() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px', marginBottom: 'var(--spacing-m)' }}>
-              <div className="title title--md">Lezioni ({lessons.length})</div>
+              <div className="title title--md">Lezioni ({activeModuleLessons.length})</div>
               <button className="link" type="button" onClick={() => openNewLessonDialog()} disabled={busy} style={linkButtonStyle}>
                 Nuova lezione
               </button>
             </div>
 
             <div style={{ display: 'grid', gap: '10px' }}>
-              {sortedLessons.map((l, lessonIdx) => (
+              {activeModuleLessons.map((l, lessonIdx) => (
                 <div
                   key={l.id}
                   style={{
@@ -645,8 +696,8 @@ export default function DevLessonsClient() {
                         className="link"
                         type="button"
                         onClick={() => void reorder(l.id, 'down')}
-                        disabled={busy || lessonIdx === sortedLessons.length - 1}
-                        style={{ ...linkButtonStyle, opacity: busy || lessonIdx === sortedLessons.length - 1 ? 0.4 : 1 }}
+                        disabled={busy || lessonIdx === activeModuleLessons.length - 1}
+                        style={{ ...linkButtonStyle, opacity: busy || lessonIdx === activeModuleLessons.length - 1 ? 0.4 : 1 }}
                       >
                         ↓
                       </button>
@@ -660,6 +711,12 @@ export default function DevLessonsClient() {
                   </div>
                 </div>
               ))}
+
+              {!activeModuleLessons.length ? (
+                <div className="text" style={{ opacity: 0.8 }}>
+                  Nessuna lezione nel modulo attivo.
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -847,8 +904,31 @@ export default function DevLessonsClient() {
                 <textarea value={skills} onChange={(e) => setSkills(e.target.value)} rows={3} style={{ width: '100%', padding: '10px', marginTop: '6px' }} />
               </label>
 
+              <label className="text" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  checked={showVideo}
+                  onChange={(e) => {
+                    const next = e.target.checked;
+                    setShowVideo(next);
+                    if (!next) setVideoUrl('');
+                  }}
+                  type="checkbox"
+                />
+                Mostra video
+              </label>
+
               <label className="text">
-                Contenuto (html)
+                Link video
+                <input
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  disabled={!showVideo}
+                  style={{ width: '100%', padding: '10px', marginTop: '6px' }}
+                />
+              </label>
+
+              <label className="text">
+                Contenuto (md)
                 <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={10} style={{ width: '100%', padding: '10px', marginTop: '6px', fontFamily: 'monospace' }} />
               </label>
 

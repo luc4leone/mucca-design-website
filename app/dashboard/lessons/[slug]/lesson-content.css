@@ -1,0 +1,82 @@
+.lesson-markdown {
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--black);
+}
+
+.lesson-markdown > *:first-child {
+  margin-top: 0;
+}
+
+.lesson-markdown > *:last-child {
+  margin-bottom: 0;
+}
+
+.lesson-markdown p,
+.lesson-markdown ul,
+.lesson-markdown ol,
+.lesson-markdown pre,
+.lesson-markdown blockquote {
+  margin: 0 0 1.1em;
+}
+
+.lesson-markdown h1,
+.lesson-markdown h2,
+.lesson-markdown h3,
+.lesson-markdown h4 {
+  margin: 1.4em 0 0.6em;
+  line-height: 1.25;
+}
+
+.lesson-markdown ul,
+.lesson-markdown ol {
+  padding-left: 1.4em;
+}
+
+.lesson-markdown li + li {
+  margin-top: 0.35em;
+}
+
+.lesson-markdown a {
+  color: var(--blue-900);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.lesson-markdown blockquote {
+  border-left: 4px solid var(--grey-400);
+  padding: 0.2em 0 0.2em 1em;
+  color: var(--grey-800);
+  font-style: italic;
+}
+
+.lesson-markdown blockquote p {
+  margin-bottom: 0;
+}
+
+.lesson-markdown code {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.92em;
+  background: var(--grey-100);
+  padding: 0.1em 0.35em;
+}
+
+.lesson-markdown pre {
+  border: 1px solid var(--grey-300);
+  background: var(--grey-100);
+  padding: 12px;
+  overflow-x: auto;
+}
+
+.lesson-markdown pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.lesson-markdown img {
+  max-width: 100%;
+  height: auto;
+}

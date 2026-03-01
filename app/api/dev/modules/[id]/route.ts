@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
 export const runtime = 'nodejs';
@@ -40,12 +40,12 @@ function getSupabaseAdmin() {
   });
 }
 
-export async function PATCH(request: Request, ctx: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!isDevRequest(request)) {
     return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
   }
 
-  const params = await (ctx as any).params;
+  const params = await ctx.params;
   const id = params?.id;
   if (!id) {
     return NextResponse.json({ ok: false, error: 'Missing id' }, { status: 400 });
@@ -97,12 +97,12 @@ export async function PATCH(request: Request, ctx: { params: { id: string } }) {
   return NextResponse.json({ ok: true, module: data, warning: devKeyWarning() });
 }
 
-export async function DELETE(request: Request, ctx: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!isDevRequest(request)) {
     return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 });
   }
 
-  const params = await (ctx as any).params;
+  const params = await ctx.params;
   const id = params?.id;
   if (!id) {
     return NextResponse.json({ ok: false, error: 'Missing id' }, { status: 400 });

@@ -145,7 +145,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
         <nav className="topbar__nav" style={{ marginTop: 0, gap: '16px' }}>
           <Link href="/dashboard" className="link">
-            Moduli
+            Dashboard
           </Link>
           <a
             className="link"
