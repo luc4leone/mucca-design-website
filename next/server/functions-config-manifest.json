@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/dashboard/lessons": {},
+    "/api/dev/lessons/[id]": {},
+    "/api/dev/lessons/reorder": {},
+    "/api/dev/lessons": {},
+    "/api/dev/modules/[id]": {},
+    "/api/create-checkout-session": {},
+    "/api/dev/lessons/recompact": {},
+    "/api/auth/ensure-user": {},
+    "/api/dev/modules": {},
+    "/api/webhooks/stripe": {}
+  }
+}

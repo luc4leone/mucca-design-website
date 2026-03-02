@@ -1,0 +1,8 @@
+{
+  "/api/dashboard/lessons/route": "app/api/dashboard/lessons/route.js",
+  "/api/dev/lessons/route": "app/api/dev/lessons/route.js",
+  "/api/dev/modules/route": "app/api/dev/modules/route.js",
+  "/dashboard/lessons/[slug]/page": "app/dashboard/lessons/[slug]/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dev/lessons/page": "app/dev/lessons/page.js"
+}

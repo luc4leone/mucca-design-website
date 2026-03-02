@@ -1,0 +1,3 @@
+module.exports=[34800,a=>{"use strict";var b=a.i(87924);function c(){return(0,b.jsxs)("div",{style:{maxWidth:"800px",margin:"0 auto",padding:"0 20px"},children:[(0,b.jsx)("div",{className:"title",style:{marginBottom:"var(--spacing-2xl)"},children:"Abbonamento"}),(0,b.jsx)("div",{className:"text",style:{marginBottom:"var(--spacing-l)"},children:"Da qui potrai gestire il tuo abbonamento. Per ora puoi farlo dalla pagina pricing."}),(0,b.jsx)("a",{className:"button",href:"/pricing",children:"Vai a Pricing"})]})}a.s(["default",()=>c])}];
+
+//# sourceMappingURL=app_dashboard_subscription_page_tsx_8668edaf._.js.map

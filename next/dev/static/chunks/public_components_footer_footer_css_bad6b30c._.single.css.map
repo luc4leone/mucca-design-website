@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/public/components/footer/footer.css"],"sourcesContent":[".footer {\n  margin-top: var(--spacing-5xl);\n}\n\n.footer__inner {\n  max-width: 1280px;\n  margin: 0 auto;\n}\n\n.footer__divider {\n  border-top: 1px solid var(--grey-300);\n  margin-bottom: var(--spacing-l);\n}\n\n.footer__text {\n  font-family: var(--font-family-serif);\n  font-size: var(--font-size-sm);\n  color: var(--grey-600);\n  line-height: 1.4;\n}\n"],"names":[],"mappings":"AAAA;;;;AAIA;;;;;AAKA;;;;;AAKA"}}]
+}

@@ -1,0 +1,194 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [
+      {
+        "source": "/",
+        "destination": "/index.html",
+        "regex": "^/(?:/)?$"
+      },
+      {
+        "source": "/designsystem",
+        "destination": "/designsystem.html",
+        "regex": "^/designsystem(?:/)?$"
+      }
+    ],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/dev/lessons/[id]",
+      "regex": "^/api/dev/lessons/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/dev/lessons/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/dev/modules/[id]",
+      "regex": "^/api/dev/modules/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/dev/modules/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/dashboard/lessons/[slug]",
+      "regex": "^/dashboard/lessons/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/dashboard/lessons/(?<nxtPslug>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/api/auth/ensure-user",
+      "regex": "^/api/auth/ensure\\-user(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/ensure\\-user(?:/)?$"
+    },
+    {
+      "page": "/api/create-checkout-session",
+      "regex": "^/api/create\\-checkout\\-session(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/create\\-checkout\\-session(?:/)?$"
+    },
+    {
+      "page": "/api/dashboard/lessons",
+      "regex": "^/api/dashboard/lessons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/dashboard/lessons(?:/)?$"
+    },
+    {
+      "page": "/api/dev/lessons",
+      "regex": "^/api/dev/lessons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/dev/lessons(?:/)?$"
+    },
+    {
+      "page": "/api/dev/lessons/recompact",
+      "regex": "^/api/dev/lessons/recompact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/dev/lessons/recompact(?:/)?$"
+    },
+    {
+      "page": "/api/dev/lessons/reorder",
+      "regex": "^/api/dev/lessons/reorder(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/dev/lessons/reorder(?:/)?$"
+    },
+    {
+      "page": "/api/dev/modules",
+      "regex": "^/api/dev/modules(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/dev/modules(?:/)?$"
+    },
+    {
+      "page": "/api/webhooks/stripe",
+      "regex": "^/api/webhooks/stripe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/webhooks/stripe(?:/)?$"
+    },
+    {
+      "page": "/auth/callback",
+      "regex": "^/auth/callback(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/callback(?:/)?$"
+    },
+    {
+      "page": "/dashboard",
+      "regex": "^/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard(?:/)?$"
+    },
+    {
+      "page": "/dashboard/lessons",
+      "regex": "^/dashboard/lessons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/lessons(?:/)?$"
+    },
+    {
+      "page": "/dashboard/subscription",
+      "regex": "^/dashboard/subscription(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/subscription(?:/)?$"
+    },
+    {
+      "page": "/dev/lessons",
+      "regex": "^/dev/lessons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dev/lessons(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/pricing",
+      "regex": "^/pricing(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pricing(?:/)?$"
+    },
+    {
+      "page": "/subscription-expired",
+      "regex": "^/subscription\\-expired(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/subscription\\-expired(?:/)?$"
+    },
+    {
+      "page": "/welcome",
+      "regex": "^/welcome(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/welcome(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

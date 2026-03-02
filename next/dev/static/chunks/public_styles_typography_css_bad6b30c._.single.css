@@ -1,0 +1,102 @@
+/* [project]/public/styles/typography.css [app-client] (css) */
+.title {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  line-height: var(--line-height-none);
+  letter-spacing: .2px;
+  margin: 0;
+}
+
+.title--md {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.title--sm {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.title--uppercase {
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.title--sm.title--uppercase {
+  font-size: 19px;
+}
+
+.text {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--grey-900);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+.text--sm {
+  font-size: var(--font-size-sm);
+}
+
+.text--xs {
+  font-size: var(--font-size-xs);
+}
+
+.caption {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-sm);
+  color: var(--grey-600);
+  margin: 0;
+  font-style: italic;
+}
+
+.label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--grey-600);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin: 0;
+}
+
+.text--muted {
+  color: var(--grey-600);
+}
+
+.text--bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.text--medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.text--italic {
+  font-style: italic;
+}
+
+.mb-s {
+  margin-bottom: var(--spacing-s);
+}
+
+.mb-m {
+  margin-bottom: var(--spacing-m);
+}
+
+.mb-l {
+  margin-bottom: var(--spacing-l);
+}
+
+.mb-xl {
+  margin-bottom: var(--spacing-xl);
+}
+
+.mb-xxl {
+  margin-bottom: var(--spacing-2xl);
+}
+
+/*# sourceMappingURL=public_styles_typography_css_bad6b30c._.single.css.map*/

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/public/components/header/header.css"],"sourcesContent":["/**\n * Header Component\n *\n * Componente header principale\n */\n\n.topbar {\n  margin: 0 0 var(--spacing-l);\n  justify-content: space-between;\n  align-items: center;\n  display: flex;\n}\n\n.topbar__logo {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n}\n\n.logo {\n  font-family: var(--font-family-sans);\n  font-weight: var(--font-weight-bold);\n  font-size: var(--font-size-xl);\n  color: var(--grey-900);\n  line-height: 1;\n  text-decoration: none;\n  transition: color 0.2s ease;\n}\n\n.logo:hover {\n  color: var(--blue-900);\n}\n\n.logo__subtitle {\n  font-family: var(--font-family-sans);\n  font-weight: var(--font-weight-normal);\n  font-size: var(--font-size-sm);\n  color: var(--grey-600);\n  line-height: 1;\n}\n\n.topbar__nav {\n  display: flex;\n  justify-content: flex-end;\n  gap: var(--spacing-l);\n  margin-top: var(--spacing-xs);\n}\n"],"names":[],"mappings":"AAMA;;;;;;;AAOA;;;;;;AAMA;;;;;;;;;;AAUA;;;;AAIA;;;;;;;;AAQA"}}]
+}

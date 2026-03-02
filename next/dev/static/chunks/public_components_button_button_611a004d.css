@@ -1,0 +1,57 @@
+/* [project]/public/components/button/button.css [app-client] (css) */
+.button {
+  border: 2px solid var(--grey-700);
+  background-color: var(--grey-300);
+  color: var(--grey-700);
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--font-family-sans);
+  letter-spacing: .2px;
+  border-radius: 0;
+  padding: 12px 24px;
+  display: block;
+}
+
+.button:hover {
+  opacity: .9;
+}
+
+.button--solid-shadow {
+  box-shadow: 2px 2px 0 0 color-mix(in srgb, var(--grey-700) 80%, transparent);
+  transition: box-shadow .1s, transform .1s;
+}
+
+.button--solid-shadow:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.button--fixed-height {
+  align-items: center;
+  height: 40px;
+  padding: 0 24px;
+  display: flex;
+}
+
+.button--hover-darken:hover {
+  background-color: #d4dde8;
+}
+
+.button--with-icon {
+  gap: 8px;
+}
+
+.button--icon-only {
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+}
+
+.button__icon {
+  font-size: 24px;
+}
+
+/*# sourceMappingURL=public_components_button_button_611a004d.css.map*/

@@ -1,0 +1,412 @@
+/* [project]/public/styles/variables.css [app-client] (css) */
+@font-face {
+  font-family: Scorekard;
+  src: url("/assets/fonts/Scorekard/Scorekard-Regular.woff2") format("woff2"), url("/assets/fonts/Scorekard/Scorekard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Scorekard;
+  src: url("/assets/fonts/Scorekard/Scorekard-Semibold.woff") format("woff"), url("/assets/fonts/Scorekard/Scorekard-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Scorekard;
+  src: url("/assets/fonts/Scorekard/Scorekard-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --grey-900: #1e293b;
+  --grey-800: #334155;
+  --grey-700: #475569;
+  --grey-600: #64708b;
+  --grey-500: #94a3b8;
+  --grey-400: #cbd5e1;
+  --grey-300: #e1e7ef;
+  --grey-200: #f1f5f9;
+  --grey-100: #f8fafc;
+  --grey-50: #f7f7f8;
+  --blue-950: #00c;
+  --blue-900: #00f;
+  --pink-300: #f9a8d4;
+  --white: #fcfcfd;
+  --green-700: #15803d;
+  --spacing-xs: 4px;
+  --spacing-s: 8px;
+  --spacing-m: 12px;
+  --spacing-l: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 40px;
+  --spacing-4xl: 64px;
+  --spacing-5xl: 128px;
+  --font-family-sans: "Scorekard", sans-serif;
+  --font-family-serif: "Inter", sans-serif;
+  --font-size-xs: 13px;
+  --font-size-sm: 15px;
+  --font-size-base: 18px;
+  --font-size-lg: 21px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 30px;
+  --font-size-3xl: 48px;
+  --font-size-4xl: 56px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --input-height: 40px;
+  --button-height: 40px;
+  --badge-height: 28px;
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-radius-none: 0;
+  --border-radius-xs: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-base: 6px;
+  --border-radius-lg: 8px;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-modal: 2000;
+  --z-toast: 3000;
+  --z-tooltip: 4000;
+  --shadow-sm: 0 1px 2px #0000000d;
+  --shadow-md: 0 4px 6px #0000001a;
+  --shadow-lg: 0 10px 15px #0000001a;
+  --shadow-xl: 0 20px 25px #00000026;
+  --transition-fast: .15s ease;
+  --transition-base: .2s ease;
+  --transition-slow: .3s ease;
+}
+
+/* [project]/public/styles/base.css [app-client] (css) */
+* {
+  box-sizing: border-box;
+}
+
+label, input, select, button, textarea {
+  margin: 0;
+}
+
+body {
+  background-color: var(--grey-50);
+  font-family: var(--font-family-sans);
+  margin: 20px;
+  padding: 0;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* [project]/public/styles/typography.css [app-client] (css) */
+.title {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  line-height: var(--line-height-none);
+  letter-spacing: .2px;
+  margin: 0;
+}
+
+.title--md {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.title--sm {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.title--uppercase {
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.title--sm.title--uppercase {
+  font-size: 19px;
+}
+
+.text {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--grey-900);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+.text--sm {
+  font-size: var(--font-size-sm);
+}
+
+.text--xs {
+  font-size: var(--font-size-xs);
+}
+
+.caption {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-sm);
+  color: var(--grey-600);
+  margin: 0;
+  font-style: italic;
+}
+
+.label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--grey-600);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin: 0;
+}
+
+.text--muted {
+  color: var(--grey-600);
+}
+
+.text--bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.text--medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.text--italic {
+  font-style: italic;
+}
+
+.mb-s {
+  margin-bottom: var(--spacing-s);
+}
+
+.mb-m {
+  margin-bottom: var(--spacing-m);
+}
+
+.mb-l {
+  margin-bottom: var(--spacing-l);
+}
+
+.mb-xl {
+  margin-bottom: var(--spacing-xl);
+}
+
+.mb-xxl {
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* [project]/public/components/header/header.css [app-client] (css) */
+.topbar {
+  margin: 0 0 var(--spacing-l);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.topbar__logo {
+  flex-direction: column;
+  gap: 2px;
+  display: flex;
+}
+
+.logo {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  color: var(--grey-900);
+  line-height: 1;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.logo:hover {
+  color: var(--blue-900);
+}
+
+.logo__subtitle {
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-sm);
+  color: var(--grey-600);
+  line-height: 1;
+}
+
+.topbar__nav {
+  justify-content: flex-end;
+  gap: var(--spacing-l);
+  margin-top: var(--spacing-xs);
+  display: flex;
+}
+
+/* [project]/public/components/link/link.css [app-client] (css) */
+.link {
+  color: var(--blue-900);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  letter-spacing: .2px;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--blue-950);
+}
+
+.link--small {
+  font-size: var(--font-size-sm);
+}
+
+.link--inter {
+  font-family: var(--font-family-serif);
+}
+
+.link--small .link__icon, .link--small .link__chevron {
+  font-size: var(--font-size-base);
+}
+
+.link--large {
+  font-size: var(--font-size-lg);
+}
+
+.link--large .link__icon, .link--large .link__chevron {
+  font-size: var(--font-size-xl);
+}
+
+.link--underline {
+  text-decoration: underline;
+}
+
+.link--icon-left.link--underline, .link--chevron-right.link--underline {
+  text-decoration: none;
+}
+
+.link--icon-left.link--underline .link__text, .link--chevron-right.link--underline .link__text {
+  text-decoration: underline;
+}
+
+.link__icon, .link__chevron {
+  display: inline-block;
+}
+
+.link--icon-left, .link--chevron-right {
+  align-items: center;
+  gap: var(--spacing-s);
+  white-space: nowrap;
+  display: inline-flex;
+}
+
+.link__icon, .link__chevron {
+  font-size: var(--font-size-lg);
+  color: var(--grey-700);
+}
+
+.link:hover .link__icon, .link:hover .link__chevron {
+  color: var(--grey-900);
+}
+
+.link--split {
+  display: inline-flex;
+  position: relative;
+}
+
+.link__split-label {
+  padding: var(--spacing-s) var(--spacing-l);
+  background-color: var(--grey-200);
+  color: var(--blue-900);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  letter-spacing: .2px;
+  white-space: nowrap;
+  align-items: center;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.link__split-label:hover {
+  color: var(--blue-950);
+}
+
+.link__split-chevron {
+  padding: var(--spacing-s) var(--spacing-m);
+  background-color: var(--grey-300);
+  cursor: pointer;
+  color: var(--grey-700);
+  border: none;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+}
+
+.link__split-chevron:hover {
+  color: var(--grey-900);
+}
+
+.link__split-chevron .material-symbols-outlined {
+  font-size: var(--font-size-lg);
+}
+
+.link__split-dropdown {
+  background-color: var(--grey-200);
+  padding: var(--spacing-s);
+  gap: var(--spacing-s);
+  min-width: 100%;
+  z-index: var(--z-dropdown);
+  flex-direction: column;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.link__split-dropdown.is-open {
+  display: flex;
+}
+
+.link__split-dropdown .link {
+  padding: var(--spacing-s) var(--spacing-m);
+  white-space: nowrap;
+}
+
+.link__split-dropdown .link:hover {
+  background-color: var(--grey-300);
+}
+
+/* [project]/public/components/footer/footer.css [app-client] (css) */
+.footer {
+  margin-top: var(--spacing-5xl);
+}
+
+.footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer__divider {
+  border-top: 1px solid var(--grey-300);
+  margin-bottom: var(--spacing-l);
+}
+
+.footer__text {
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-sm);
+  color: var(--grey-600);
+  line-height: 1.4;
+}
+
+/*# sourceMappingURL=public_c23efef6._.css.map*/
