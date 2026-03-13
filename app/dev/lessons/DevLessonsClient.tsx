@@ -30,6 +30,49 @@ type LessonRow = {
   is_published: boolean;
 };
 
+function normalizeVideoUrl(input: string) {
+  const raw = input.trim();
+  if (!raw) return { value: null as string | null };
+
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return { value: raw };
+  }
+
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    return { value: raw };
+  }
+
+  const host = url.hostname.replace(/^www\./i, '').toLowerCase();
+  const isYouTube = host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtu.be' || host === 'youtube-nocookie.com';
+  if (!isYouTube) {
+    return { value: raw };
+  }
+
+  let videoId = '';
+  if (host === 'youtu.be') {
+    videoId = url.pathname.split('/').filter(Boolean)[0] ?? '';
+  } else if (url.pathname === '/watch') {
+    videoId = url.searchParams.get('v')?.trim() ?? '';
+  } else if (url.pathname.startsWith('/shorts/')) {
+    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
+  } else if (url.pathname.startsWith('/embed/')) {
+    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
+  }
+
+  if (!videoId) {
+    return {
+      value: null as string | null,
+      error:
+        'Link YouTube non valido. Usa un link tipo https://youtu.be/<id> oppure https://www.youtube.com/watch?v=<id>.',
+    };
+  }
+
+  return { value: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}` };
+}
+
 export default function DevLessonsClient() {
   const activeModuleStorageKey = 'dev_lessons_active_module_id';
 
@@ -435,6 +478,12 @@ export default function DevLessonsClient() {
       return;
     }
 
+    const nextVideoUrl = showVideo && videoUrl.trim() ? normalizeVideoUrl(videoUrl) : { value: null as string | null };
+    if (showVideo && videoUrl.trim() && !nextVideoUrl.value) {
+      setStatus(nextVideoUrl.error ?? 'Link video non valido.');
+      return;
+    }
+
     setBusy(true);
     setStatus(formMode === 'create' ? 'Creo...' : 'Salvo...');
 
@@ -452,7 +501,7 @@ export default function DevLessonsClient() {
             lesson_type: lessonType,
             description: description.trim() ? description : null,
             skills: skills.trim() ? skills : null,
-            video_url: showVideo && videoUrl.trim() ? videoUrl.trim() : null,
+            video_url: nextVideoUrl.value,
             content: content.trim() ? content : null,
             is_published: isPublished,
           }),
@@ -475,7 +524,7 @@ export default function DevLessonsClient() {
             lesson_type: lessonType,
             description: description.trim() ? description : null,
             skills: skills.trim() ? skills : null,
-            video_url: showVideo && videoUrl.trim() ? videoUrl.trim() : null,
+            video_url: nextVideoUrl.value,
             content: content.trim() ? content : null,
             is_published: isPublished,
           }),

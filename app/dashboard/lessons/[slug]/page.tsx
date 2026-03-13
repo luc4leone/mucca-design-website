@@ -5,7 +5,6 @@ import './lesson-content.css';
 import { getSupabaseBrowserClient } from '../../../../lib/supabase-browser';
 import Link from 'next/link';
 import { use, useEffect, useMemo, useState } from 'react';
-import { marked } from 'marked';
 
 type LessonDetail = {
   id: string;
@@ -28,6 +27,77 @@ type LessonNavItem = {
   order_index: number;
 };
 
+function parseTimeToSeconds(input: string) {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  if (/^\d+$/.test(trimmed)) return Number(trimmed);
+
+  let total = 0;
+  const matchAll = trimmed.matchAll(/(\d+)(h|m|s)/gi);
+  let matched = false;
+  for (const m of matchAll) {
+    matched = true;
+    const value = Number(m[1]);
+    const unit = String(m[2]).toLowerCase();
+    if (!Number.isFinite(value)) continue;
+    if (unit === 'h') total += value * 3600;
+    if (unit === 'm') total += value * 60;
+    if (unit === 's') total += value;
+  }
+
+  return matched ? total : null;
+}
+
+function getEmbeddableVideoUrl(input: string | null | undefined) {
+  const raw = typeof input === 'string' ? input.trim() : '';
+  if (!raw) return null;
+
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return null;
+  }
+
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+
+  const host = url.hostname.replace(/^www\./i, '').toLowerCase();
+  const isYouTube = host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtu.be' || host === 'youtube-nocookie.com';
+  if (!isYouTube) return raw;
+
+  const startParam = url.searchParams.get('start') || url.searchParams.get('t') || '';
+  const startSeconds = startParam ? parseTimeToSeconds(startParam) : null;
+
+  const list = url.searchParams.get('list')?.trim() ?? '';
+  let videoId = '';
+
+  if (host === 'youtu.be') {
+    videoId = url.pathname.split('/').filter(Boolean)[0] ?? '';
+  } else if (url.pathname === '/watch') {
+    videoId = url.searchParams.get('v')?.trim() ?? '';
+  } else if (url.pathname.startsWith('/shorts/')) {
+    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
+  } else if (url.pathname.startsWith('/live/')) {
+    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
+  } else if (url.pathname.startsWith('/embed/')) {
+    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
+  }
+
+  if (!videoId && list && (url.pathname === '/playlist' || url.pathname === '/watch')) {
+    const embed = new URL('https://www.youtube-nocookie.com/embed/videoseries');
+    embed.searchParams.set('list', list);
+    if (typeof startSeconds === 'number' && startSeconds > 0) embed.searchParams.set('start', String(startSeconds));
+    return embed.toString();
+  }
+
+  if (!videoId) return null;
+
+  const embed = new URL(`https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`);
+  if (list) embed.searchParams.set('list', list);
+  if (typeof startSeconds === 'number' && startSeconds > 0) embed.searchParams.set('start', String(startSeconds));
+  return embed.toString();
+}
+
 export default function DashboardLessonPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
   const slugParam = resolvedParams?.slug ?? '';
@@ -39,11 +109,13 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
     return getSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
   }, [supabaseUrl, supabaseAnonKey]);
 
-  const [status, setStatus] = useState<string>('Caricamento lezione...');
+  const [status, setStatus] = useState<string>('');
   const [lesson, setLesson] = useState<LessonDetail | null>(null);
   const [allLessons, setAllLessons] = useState<LessonNavItem[]>([]);
   const [isCompleted, setIsCompleted] = useState(false);
   const [completionBusy, setCompletionBusy] = useState(false);
+  const [skillsHtml, setSkillsHtml] = useState('');
+  const [contentHtml, setContentHtml] = useState('');
 
   useEffect(() => {
     if (!supabase) {
@@ -53,89 +125,173 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
 
     let cancelled = false;
 
+    const slugOrPublicId = decodeURIComponent(slugParam || '').trim();
+    const lessonCacheKey = slugOrPublicId ? `mucca_lesson_cache:${slugOrPublicId}` : '';
+
+    let hasFreshCache = false;
+    if (lessonCacheKey) {
+      try {
+        const cachedRaw = sessionStorage.getItem(lessonCacheKey);
+        if (cachedRaw) {
+          const cached = JSON.parse(cachedRaw) as {
+            storedAtMs?: number;
+            lesson?: LessonDetail;
+            completed?: boolean;
+          };
+          const storedAtMs = typeof cached?.storedAtMs === 'number' ? cached.storedAtMs : 0;
+          const isFresh = storedAtMs > 0 && Date.now() - storedAtMs < 10 * 60 * 1000;
+          if (isFresh && cached.lesson) {
+            hasFreshCache = true;
+            setStatus('');
+            setLesson(cached.lesson);
+            setIsCompleted(Boolean(cached.completed));
+
+            void (async () => {
+              try {
+                const { marked } = await import('marked');
+                if (cancelled) return;
+                const nextSkills = cached.lesson?.skills ? (marked.parse(cached.lesson.skills) as string) : '';
+                const nextContent = cached.lesson?.content ? (marked.parse(cached.lesson.content) as string) : '';
+                if (!cancelled) {
+                  setSkillsHtml(nextSkills);
+                  setContentHtml(nextContent);
+                }
+              } catch {
+                if (!cancelled) {
+                  setSkillsHtml('');
+                  setContentHtml('');
+                }
+              }
+            })();
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    setStatus('');
+    if (!hasFreshCache) {
+      setLesson(null);
+      setSkillsHtml('');
+      setContentHtml('');
+    }
+
     (async () => {
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError) {
-        if (!cancelled) setStatus(`Errore sessione: ${sessionError.message}`);
-        return;
+      let accessToken = '';
+      try {
+        const cachedToken = sessionStorage.getItem('mucca_access_token') ?? '';
+        const cachedExp = Number(sessionStorage.getItem('mucca_access_token_exp') ?? 0);
+        const nowSec = Math.floor(Date.now() / 1000);
+        if (cachedToken && Number.isFinite(cachedExp) && cachedExp > nowSec + 15) {
+          accessToken = cachedToken;
+        }
+      } catch {
+        // ignore
       }
 
-      if (!sessionData.session) {
-        window.location.href = '/welcome';
-        return;
-      }
-
-      const accessToken = sessionData.session.access_token;
-      const userId = sessionData.session.user.id;
       if (!accessToken) {
-        if (!cancelled) setStatus('Sessione non valida: manca access_token');
-        return;
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) {
+          if (!cancelled) setStatus(`Errore sessione: ${sessionError.message}`);
+          return;
+        }
+
+        if (!sessionData.session) {
+          window.location.href = '/welcome';
+          return;
+        }
+
+        accessToken = sessionData.session.access_token;
+        if (!accessToken) {
+          if (!cancelled) setStatus('Sessione non valida: manca access_token');
+          return;
+        }
+
+        try {
+          const exp = typeof (sessionData.session as any)?.expires_at === 'number' ? (sessionData.session as any).expires_at : 0;
+          sessionStorage.setItem('mucca_access_token', accessToken);
+          if (exp) sessionStorage.setItem('mucca_access_token_exp', String(exp));
+        } catch {
+          // ignore
+        }
       }
 
-      const slugOrPublicId = decodeURIComponent(slugParam || '').trim();
       if (!slugOrPublicId) {
         if (!cancelled) setStatus('Lezione non valida.');
         return;
       }
 
-      const byPublicId = await fetch(`/api/dashboard/lessons?public_id=${encodeURIComponent(slugOrPublicId)}`, {
+      const lessonRes = await fetch(`/api/dashboard/lessons?q=${encodeURIComponent(slugOrPublicId)}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
 
-      let res = byPublicId;
-      if (byPublicId.status === 404) {
-        res = await fetch(`/api/dashboard/lessons?slug=${encodeURIComponent(slugOrPublicId)}`, {
+      const lessonJson = await lessonRes.json().catch(() => null);
+
+      if (!lessonRes.ok || !lessonJson?.ok || !lessonJson?.lesson) {
+        const message = typeof lessonJson?.error === 'string' ? lessonJson.error : 'Lezione non trovata';
+        if (!cancelled) setStatus(`Errore: ${message}`);
+        return;
+      }
+
+      const lessonData = lessonJson.lesson as LessonDetail;
+      const completed = Boolean(lessonJson.completed);
+
+      if (!cancelled) {
+        setLesson(lessonData);
+        setIsCompleted(completed);
+        setStatus('');
+      }
+
+      try {
+        sessionStorage.setItem(
+          lessonCacheKey,
+          JSON.stringify({ storedAtMs: Date.now(), lesson: lessonData, completed }),
+        );
+      } catch {
+        // ignore
+      }
+
+      void (async () => {
+        try {
+          const { marked } = await import('marked');
+          if (cancelled) return;
+          const nextSkills = lessonData.skills ? (marked.parse(lessonData.skills) as string) : '';
+          const nextContent = lessonData.content ? (marked.parse(lessonData.content) as string) : '';
+          if (!cancelled) {
+            setSkillsHtml(nextSkills);
+            setContentHtml(nextContent);
+          }
+        } catch {
+          if (!cancelled) {
+            setSkillsHtml('');
+            setContentHtml('');
+          }
+        }
+      })();
+
+      void (async () => {
+        const listRes = await fetch('/api/dashboard/lessons?summary=0', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-      }
-
-      const json = await res.json().catch(() => null);
-
-      if (!res.ok || !json?.ok || !json?.lesson) {
-        const message = typeof json?.error === 'string' ? json.error : 'Lezione non trovata';
-        if (!cancelled) setStatus(`Errore: ${message}`);
-        return;
-      }
-
-      const lessonData = json.lesson as LessonDetail;
-
-      const listRes = await fetch('/api/dashboard/lessons', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const listJson = await listRes.json().catch(() => null);
-      const lessonsList = listRes.ok && listJson?.ok ? ((listJson.lessons as LessonNavItem[]) ?? []) : [];
-
-      const { data: progressData } = await supabase
-        .from('user_progress')
-        .select('completed')
-        .eq('user_id', userId)
-        .eq('lesson_id', lessonData.id)
-        .maybeSingle();
-
-      if (!cancelled) {
-        setLesson(lessonData);
-        setAllLessons(lessonsList);
-        setIsCompleted(Boolean(progressData?.completed));
-        setStatus('');
-      }
+        const listJson = await listRes.json().catch(() => null);
+        const lessonsList = listRes.ok && listJson?.ok ? ((listJson.lessons as LessonNavItem[]) ?? []) : [];
+        if (!cancelled) {
+          setAllLessons(lessonsList);
+        }
+      })();
     })();
 
     return () => {
       cancelled = true;
     };
   }, [supabase, slugParam]);
-
-  const parsedSkills = lesson?.skills ? (marked.parse(lesson.skills) as string) : '';
-  const parsedContent = lesson?.content ? (marked.parse(lesson.content) as string) : '';
 
   const orderedLessons = useMemo(() => {
     return allLessons.slice().sort((a, b) => {
@@ -154,6 +310,10 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
     currentLessonIndex >= 0 && currentLessonIndex < orderedLessons.length - 1
       ? orderedLessons[currentLessonIndex + 1]
       : null;
+
+  const videoSrc = useMemo(() => {
+    return getEmbeddableVideoUrl(lesson?.video_url ?? null);
+  }, [lesson?.video_url]);
 
   async function toggleCompletion() {
     if (!supabase || !lesson) return;
@@ -251,16 +411,24 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
             </p>
           ) : null}
 
-          {parsedSkills ? (
+          {skillsHtml ? (
             <section style={{ marginBottom: '16px' }}>
               <h2 className="title title--sm" style={{ marginBottom: '8px' }}>
                 Skills
               </h2>
-              <div className="text lesson-markdown" dangerouslySetInnerHTML={{ __html: parsedSkills }} />
+              <div className="text lesson-markdown" dangerouslySetInnerHTML={{ __html: skillsHtml }} />
             </section>
           ) : null}
 
-          {lesson.video_url ? (
+          {lesson.video_url && !videoSrc ? (
+            <div className="text" style={{ marginBottom: '16px' }}>
+              <a className="link" href={lesson.video_url} target="_blank" rel="noreferrer">
+                Apri video
+              </a>
+            </div>
+          ) : null}
+
+          {videoSrc ? (
             <div
               style={{
                 position: 'relative',
@@ -271,7 +439,7 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
               }}
             >
               <iframe
-                src={lesson.video_url}
+                src={videoSrc}
                 title={lesson.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -287,7 +455,7 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
             </div>
           ) : null}
 
-          {parsedContent ? <div className="lesson-markdown" dangerouslySetInnerHTML={{ __html: parsedContent }} /> : null}
+          {contentHtml ? <div className="lesson-markdown" dangerouslySetInnerHTML={{ __html: contentHtml }} /> : null}
 
           <div
             style={{

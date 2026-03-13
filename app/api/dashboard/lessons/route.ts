@@ -3,6 +3,20 @@ import { createClient } from '@supabase/supabase-js';
 
 export const runtime = 'nodejs';
 
+const userIdByTokenCache = new Map<string, { userId: string; expiresAtMs: number }>();
+
+function parseJwtExpMs(token: string) {
+  try {
+    const parts = token.split('.');
+    if (parts.length < 2) return null;
+    const payload = JSON.parse(Buffer.from(parts[1]!, 'base64').toString('utf8')) as { exp?: number };
+    if (!payload?.exp || typeof payload.exp !== 'number') return null;
+    return payload.exp * 1000;
+  } catch {
+    return null;
+  }
+}
+
 function getSupabaseAdmin() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -32,8 +46,10 @@ export async function GET(request: Request) {
   }
 
   const { searchParams } = new URL(request.url);
+  const lessonQueryValue = searchParams.get('q')?.trim() ?? '';
   const lessonPublicId = searchParams.get('public_id')?.trim() ?? '';
   const lessonSlug = searchParams.get('slug')?.trim() ?? '';
+  const includeSummary = !['0', 'false', 'no'].includes((searchParams.get('summary') ?? '').trim().toLowerCase());
 
   let supabaseAdmin: ReturnType<typeof getSupabaseAdmin>;
   try {
@@ -43,37 +59,66 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 
-  const { data: userData, error: userError } = await supabaseAdmin.auth.getUser(token);
-  if (userError || !userData?.user?.id) {
-    return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
+  const now = Date.now();
+  const cached = userIdByTokenCache.get(token);
+  let userId: string | null = cached && cached.expiresAtMs > now ? cached.userId : null;
+
+  if (!userId) {
+    const { data: userData, error: userError } = await supabaseAdmin.auth.getUser(token);
+    if (userError || !userData?.user?.id) {
+      return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    userId = userData.user.id;
+    const expMs = parseJwtExpMs(token);
+    const fallbackTtlMs = 5 * 60 * 1000;
+    const expiresAtMs = typeof expMs === 'number' && expMs > now ? expMs : now + fallbackTtlMs;
+    userIdByTokenCache.set(token, { userId, expiresAtMs });
   }
 
-  if (lessonPublicId || lessonSlug) {
-    let lessonQuery = supabaseAdmin
+  if (lessonQueryValue || lessonPublicId || lessonSlug) {
+    const value = lessonQueryValue || lessonPublicId || lessonSlug;
+
+    const lessonSelect =
+      'id,title,slug,public_id,description,skills,lesson_type,module_id,lesson_index,order_index,video_url,content,is_published';
+
+    const { data: byPublicId, error: byPublicIdError } = await supabaseAdmin
       .from('lessons')
-      .select(
-        'id,title,slug,public_id,description,skills,lesson_type,module_id,lesson_index,order_index,video_url,content,is_published',
-      )
+      .select(lessonSelect)
       .eq('is_published', true)
-      .limit(1);
-
-    if (lessonPublicId) {
-      lessonQuery = lessonQuery.eq('public_id', lessonPublicId);
-    } else {
-      lessonQuery = lessonQuery.eq('slug', lessonSlug);
+      .eq('public_id', value)
+      .limit(1)
+      .maybeSingle();
+    if (byPublicIdError) {
+      return NextResponse.json({ ok: false, error: byPublicIdError.message }, { status: 500 });
     }
 
-    const { data: lesson, error: lessonError } = await lessonQuery.maybeSingle();
-
-    if (lessonError) {
-      return NextResponse.json({ ok: false, error: lessonError.message }, { status: 500 });
+    const { data: bySlug, error: bySlugError } = byPublicId
+      ? { data: null, error: null }
+      : await supabaseAdmin
+          .from('lessons')
+          .select(lessonSelect)
+          .eq('is_published', true)
+          .eq('slug', value)
+          .limit(1)
+          .maybeSingle();
+    if (bySlugError) {
+      return NextResponse.json({ ok: false, error: bySlugError.message }, { status: 500 });
     }
 
+    const lesson = byPublicId ?? bySlug;
     if (!lesson) {
       return NextResponse.json({ ok: false, error: 'Lesson not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ ok: true, lesson });
+    const { data: progressData } = await supabaseAdmin
+      .from('user_progress')
+      .select('completed')
+      .eq('user_id', userId)
+      .eq('lesson_id', lesson.id)
+      .maybeSingle();
+
+    return NextResponse.json({ ok: true, lesson, completed: Boolean(progressData?.completed) });
   }
 
   const { data, error, count } = await supabaseAdmin
@@ -84,6 +129,10 @@ export async function GET(request: Request) {
 
   if (error) {
     return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  }
+
+  if (!includeSummary) {
+    return NextResponse.json({ ok: true, lessons: data ?? [] });
   }
 
   const { count: modulesCount, error: modulesCountError } = await supabaseAdmin

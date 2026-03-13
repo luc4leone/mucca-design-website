@@ -3,7 +3,8 @@
 import { getSupabaseBrowserClient } from '../../lib/supabase-browser';
 import { marked } from 'marked';
 import Link from 'next/link';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type ModuleRow = {
   id: string;
@@ -58,6 +59,8 @@ type LessonsSummary = {
 };
 
 export default function DashboardPage() {
+  const router = useRouter();
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -76,6 +79,108 @@ export default function DashboardPage() {
   const accessByModuleIdRef = useRef<Record<string, boolean>>({});
   const [milestoneByModuleId, setMilestoneByModuleId] = useState<Record<string, ModuleMilestoneRow>>({});
   const [milestoneProgressByModuleId, setMilestoneProgressByModuleId] = useState<Record<string, ModuleMilestoneProgressRow>>({});
+
+  const accessTokenRef = useRef<string>('');
+  const lessonPrefetchInFlightRef = useRef<Record<string, Promise<void> | undefined>>({});
+
+  const seedLessonCache = useCallback(
+    (lesson: Lesson, completed: boolean) => {
+      if (!lesson?.public_id) return;
+      const cacheKey = `mucca_lesson_cache:${lesson.public_id}`;
+      try {
+        const payload = {
+          storedAtMs: Date.now(),
+          lesson: {
+            id: lesson.id,
+            title: lesson.title,
+            slug: lesson.public_id,
+            public_id: lesson.public_id,
+            description: lesson.description,
+            lesson_type: lesson.lesson_type ?? null,
+            skills: lesson.skills ?? null,
+            video_url: null,
+            content: null,
+          },
+          completed,
+        };
+        sessionStorage.setItem(cacheKey, JSON.stringify(payload));
+      } catch {
+        // ignore
+      }
+    },
+    [],
+  );
+
+  const prefetchLesson = useCallback(async (publicId: string) => {
+    if (!publicId) return;
+
+    try {
+      void router.prefetch(`/dashboard/lessons/${encodeURIComponent(publicId)}`);
+    } catch {
+      // ignore
+    }
+
+    let accessToken = accessTokenRef.current;
+
+    if (!accessToken) {
+      try {
+        const cachedToken = sessionStorage.getItem('mucca_access_token') ?? '';
+        const cachedExp = Number(sessionStorage.getItem('mucca_access_token_exp') ?? 0);
+        const nowSec = Math.floor(Date.now() / 1000);
+        if (cachedToken && Number.isFinite(cachedExp) && cachedExp > nowSec + 15) {
+          accessToken = cachedToken;
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    if (!accessToken) return;
+
+    const cacheKey = `mucca_lesson_cache:${publicId}`;
+    try {
+      const cachedRaw = sessionStorage.getItem(cacheKey);
+      if (cachedRaw) {
+        const cached = JSON.parse(cachedRaw) as { storedAtMs?: number };
+        const storedAtMs = typeof cached?.storedAtMs === 'number' ? cached.storedAtMs : 0;
+        const isFresh = storedAtMs > 0 && Date.now() - storedAtMs < 10 * 60 * 1000;
+        if (isFresh) return;
+      }
+    } catch {
+      // ignore
+    }
+
+    const existing = lessonPrefetchInFlightRef.current[publicId];
+    if (existing) return;
+
+    const promise = (async () => {
+      try {
+        const res = await fetch(`/api/dashboard/lessons?q=${encodeURIComponent(publicId)}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const json = await res.json().catch(() => null);
+        if (!res.ok || !json?.ok || !json?.lesson) return;
+
+        try {
+          sessionStorage.setItem(
+            cacheKey,
+            JSON.stringify({ storedAtMs: Date.now(), lesson: json.lesson, completed: Boolean(json.completed) }),
+          );
+        } catch {
+          // ignore
+        }
+      } catch {
+        // ignore
+      } finally {
+        delete lessonPrefetchInFlightRef.current[publicId];
+      }
+    })();
+
+    lessonPrefetchInFlightRef.current[publicId] = promise;
+  }, [router]);
 
   function formatMilestoneStatus(statusValue: ModuleMilestoneProgressRow['status']) {
     if (statusValue === 'passed') return 'superata';
@@ -159,6 +264,15 @@ export default function DashboardPage() {
       if (!accessToken) {
         setStatus('Sessione non valida: manca access_token');
         return;
+      }
+
+      accessTokenRef.current = accessToken;
+      try {
+        const exp = typeof (sessionData.session as any)?.expires_at === 'number' ? (sessionData.session as any).expires_at : 0;
+        sessionStorage.setItem('mucca_access_token', accessToken);
+        if (exp) sessionStorage.setItem('mucca_access_token_exp', String(exp));
+      } catch {
+        // ignore
       }
 
       setStatus('Carico i moduli...');
@@ -324,6 +438,24 @@ export default function DashboardPage() {
     if (!modules.length) return;
     setSelectedModuleId(modules[0]?.id ?? '');
   }, [modules, selectedModuleId]);
+
+  useEffect(() => {
+    if (!selectedModuleId) return;
+    if (!lessons.length) return;
+    if (!accessByModuleIdRef.current[selectedModuleId]) return;
+
+    const moduleLessons = lessons
+      .filter((l) => l.module_id === selectedModuleId)
+      .slice()
+      .sort((a, b) => {
+        if (a.lesson_index !== b.lesson_index) return a.lesson_index - b.lesson_index;
+        return a.order_index - b.order_index;
+      });
+
+    moduleLessons.slice(0, 3).forEach((l) => {
+      void prefetchLesson(l.public_id);
+    });
+  }, [selectedModuleId, lessons, prefetchLesson]);
 
   const progressStats = useMemo(() => {
     const totalModules = lessonsSummary?.total_modules ?? modules.length;
@@ -696,6 +828,21 @@ export default function DashboardPage() {
                         <Link
                           key={l.id}
                           href={`/dashboard/lessons/${encodeURIComponent(l.public_id)}`}
+                          prefetch={true}
+                          onMouseEnter={() => {
+                            void prefetchLesson(l.public_id);
+                          }}
+                          onPointerDown={() => {
+                            void prefetchLesson(l.public_id);
+                            seedLessonCache(l, Boolean(completionByLessonId[l.id]));
+                          }}
+                          onFocus={() => {
+                            void prefetchLesson(l.public_id);
+                          }}
+                          onTouchStart={() => {
+                            void prefetchLesson(l.public_id);
+                            seedLessonCache(l, Boolean(completionByLessonId[l.id]));
+                          }}
                           style={{
                             color: 'inherit',
                             textDecoration: 'none',
