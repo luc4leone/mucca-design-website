@@ -1,18 +1,20 @@
-'use client';
+"use client";
 
-import './lesson-content.css';
+import "./lesson-content.css";
+import styles from "./page.module.css";
 
-import { getSupabaseBrowserClient } from '../../../../lib/supabase-browser';
-import Link from 'next/link';
-import { use, useEffect, useMemo, useState } from 'react';
+import { getSupabaseBrowserClient } from "../../../../lib/supabase-browser";
+import Link from "next/link";
+import { use, useEffect, useMemo, useState } from "react";
 
 type LessonDetail = {
   id: string;
   title: string;
   slug: string;
   public_id: string;
+  module_id: string;
   description: string | null;
-  lesson_type?: 'esercizio' | 'intermezzo' | 'milestone' | null;
+  lesson_type?: "esercizio" | "intermezzo" | "milestone" | null;
   skills?: string | null;
   video_url?: string | null;
   content?: string | null;
@@ -40,16 +42,16 @@ function parseTimeToSeconds(input: string) {
     const value = Number(m[1]);
     const unit = String(m[2]).toLowerCase();
     if (!Number.isFinite(value)) continue;
-    if (unit === 'h') total += value * 3600;
-    if (unit === 'm') total += value * 60;
-    if (unit === 's') total += value;
+    if (unit === "h") total += value * 3600;
+    if (unit === "m") total += value * 60;
+    if (unit === "s") total += value;
   }
 
   return matched ? total : null;
 }
 
 function getEmbeddableVideoUrl(input: string | null | undefined) {
-  const raw = typeof input === 'string' ? input.trim() : '';
+  const raw = typeof input === "string" ? input.trim() : "";
   if (!raw) return null;
 
   let url: URL;
@@ -59,48 +61,65 @@ function getEmbeddableVideoUrl(input: string | null | undefined) {
     return null;
   }
 
-  if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+  if (url.protocol !== "http:" && url.protocol !== "https:") return null;
 
-  const host = url.hostname.replace(/^www\./i, '').toLowerCase();
-  const isYouTube = host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtu.be' || host === 'youtube-nocookie.com';
+  const host = url.hostname.replace(/^www\./i, "").toLowerCase();
+  const isYouTube =
+    host === "youtube.com" ||
+    host === "m.youtube.com" ||
+    host === "youtu.be" ||
+    host === "youtube-nocookie.com";
   if (!isYouTube) return raw;
 
-  const startParam = url.searchParams.get('start') || url.searchParams.get('t') || '';
+  const startParam =
+    url.searchParams.get("start") || url.searchParams.get("t") || "";
   const startSeconds = startParam ? parseTimeToSeconds(startParam) : null;
 
-  const list = url.searchParams.get('list')?.trim() ?? '';
-  let videoId = '';
+  const list = url.searchParams.get("list")?.trim() ?? "";
+  let videoId = "";
 
-  if (host === 'youtu.be') {
-    videoId = url.pathname.split('/').filter(Boolean)[0] ?? '';
-  } else if (url.pathname === '/watch') {
-    videoId = url.searchParams.get('v')?.trim() ?? '';
-  } else if (url.pathname.startsWith('/shorts/')) {
-    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
-  } else if (url.pathname.startsWith('/live/')) {
-    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
-  } else if (url.pathname.startsWith('/embed/')) {
-    videoId = url.pathname.split('/').filter(Boolean)[1] ?? '';
+  if (host === "youtu.be") {
+    videoId = url.pathname.split("/").filter(Boolean)[0] ?? "";
+  } else if (url.pathname === "/watch") {
+    videoId = url.searchParams.get("v")?.trim() ?? "";
+  } else if (url.pathname.startsWith("/shorts/")) {
+    videoId = url.pathname.split("/").filter(Boolean)[1] ?? "";
+  } else if (url.pathname.startsWith("/live/")) {
+    videoId = url.pathname.split("/").filter(Boolean)[1] ?? "";
+  } else if (url.pathname.startsWith("/embed/")) {
+    videoId = url.pathname.split("/").filter(Boolean)[1] ?? "";
   }
 
-  if (!videoId && list && (url.pathname === '/playlist' || url.pathname === '/watch')) {
-    const embed = new URL('https://www.youtube-nocookie.com/embed/videoseries');
-    embed.searchParams.set('list', list);
-    if (typeof startSeconds === 'number' && startSeconds > 0) embed.searchParams.set('start', String(startSeconds));
+  if (
+    !videoId &&
+    list &&
+    (url.pathname === "/playlist" || url.pathname === "/watch")
+  ) {
+    const embed = new URL("https://www.youtube-nocookie.com/embed/videoseries");
+    embed.searchParams.set("list", list);
+    if (typeof startSeconds === "number" && startSeconds > 0)
+      embed.searchParams.set("start", String(startSeconds));
     return embed.toString();
   }
 
   if (!videoId) return null;
 
-  const embed = new URL(`https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`);
-  if (list) embed.searchParams.set('list', list);
-  if (typeof startSeconds === 'number' && startSeconds > 0) embed.searchParams.set('start', String(startSeconds));
+  const embed = new URL(
+    `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`,
+  );
+  if (list) embed.searchParams.set("list", list);
+  if (typeof startSeconds === "number" && startSeconds > 0)
+    embed.searchParams.set("start", String(startSeconds));
   return embed.toString();
 }
 
-export default function DashboardLessonPage({ params }: { params: Promise<{ slug: string }> }) {
+export default function DashboardLessonPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const resolvedParams = use(params);
-  const slugParam = resolvedParams?.slug ?? '';
+  const slugParam = resolvedParams?.slug ?? "";
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -109,24 +128,28 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
     return getSupabaseBrowserClient(supabaseUrl, supabaseAnonKey);
   }, [supabaseUrl, supabaseAnonKey]);
 
-  const [status, setStatus] = useState<string>('');
+  const [status, setStatus] = useState<string>("");
   const [lesson, setLesson] = useState<LessonDetail | null>(null);
   const [allLessons, setAllLessons] = useState<LessonNavItem[]>([]);
   const [isCompleted, setIsCompleted] = useState(false);
   const [completionBusy, setCompletionBusy] = useState(false);
-  const [skillsHtml, setSkillsHtml] = useState('');
-  const [contentHtml, setContentHtml] = useState('');
+  const [skillsHtml, setSkillsHtml] = useState("");
+  const [contentHtml, setContentHtml] = useState("");
 
   useEffect(() => {
     if (!supabase) {
-      setStatus('Configurazione mancante: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY');
+      setStatus(
+        "Configurazione mancante: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      );
       return;
     }
 
     let cancelled = false;
 
-    const slugOrPublicId = decodeURIComponent(slugParam || '').trim();
-    const lessonCacheKey = slugOrPublicId ? `mucca_lesson_cache:${slugOrPublicId}` : '';
+    const slugOrPublicId = decodeURIComponent(slugParam || "").trim();
+    const lessonCacheKey = slugOrPublicId
+      ? `mucca_lesson_cache:${slugOrPublicId}`
+      : "";
 
     let hasFreshCache = false;
     if (lessonCacheKey) {
@@ -138,28 +161,34 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
             lesson?: LessonDetail;
             completed?: boolean;
           };
-          const storedAtMs = typeof cached?.storedAtMs === 'number' ? cached.storedAtMs : 0;
-          const isFresh = storedAtMs > 0 && Date.now() - storedAtMs < 10 * 60 * 1000;
+          const storedAtMs =
+            typeof cached?.storedAtMs === "number" ? cached.storedAtMs : 0;
+          const isFresh =
+            storedAtMs > 0 && Date.now() - storedAtMs < 10 * 60 * 1000;
           if (isFresh && cached.lesson) {
             hasFreshCache = true;
-            setStatus('');
+            setStatus("");
             setLesson(cached.lesson);
             setIsCompleted(Boolean(cached.completed));
 
             void (async () => {
               try {
-                const { marked } = await import('marked');
+                const { marked } = await import("marked");
                 if (cancelled) return;
-                const nextSkills = cached.lesson?.skills ? (marked.parse(cached.lesson.skills) as string) : '';
-                const nextContent = cached.lesson?.content ? (marked.parse(cached.lesson.content) as string) : '';
+                const nextSkills = cached.lesson?.skills
+                  ? (marked.parse(cached.lesson.skills) as string)
+                  : "";
+                const nextContent = cached.lesson?.content
+                  ? (marked.parse(cached.lesson.content) as string)
+                  : "";
                 if (!cancelled) {
                   setSkillsHtml(nextSkills);
                   setContentHtml(nextContent);
                 }
               } catch {
                 if (!cancelled) {
-                  setSkillsHtml('');
-                  setContentHtml('');
+                  setSkillsHtml("");
+                  setContentHtml("");
                 }
               }
             })();
@@ -170,20 +199,26 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
       }
     }
 
-    setStatus('');
+    setStatus("");
     if (!hasFreshCache) {
       setLesson(null);
-      setSkillsHtml('');
-      setContentHtml('');
+      setSkillsHtml("");
+      setContentHtml("");
     }
 
     (async () => {
-      let accessToken = '';
+      let accessToken = "";
       try {
-        const cachedToken = sessionStorage.getItem('mucca_access_token') ?? '';
-        const cachedExp = Number(sessionStorage.getItem('mucca_access_token_exp') ?? 0);
+        const cachedToken = sessionStorage.getItem("mucca_access_token") ?? "";
+        const cachedExp = Number(
+          sessionStorage.getItem("mucca_access_token_exp") ?? 0,
+        );
         const nowSec = Math.floor(Date.now() / 1000);
-        if (cachedToken && Number.isFinite(cachedExp) && cachedExp > nowSec + 15) {
+        if (
+          cachedToken &&
+          Number.isFinite(cachedExp) &&
+          cachedExp > nowSec + 15
+        ) {
           accessToken = cachedToken;
         }
       } catch {
@@ -191,48 +226,59 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
       }
 
       if (!accessToken) {
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        const { data: sessionData, error: sessionError } =
+          await supabase.auth.getSession();
         if (sessionError) {
           if (!cancelled) setStatus(`Errore sessione: ${sessionError.message}`);
           return;
         }
 
         if (!sessionData.session) {
-          window.location.href = '/welcome';
+          window.location.href = "/welcome";
           return;
         }
 
         accessToken = sessionData.session.access_token;
         if (!accessToken) {
-          if (!cancelled) setStatus('Sessione non valida: manca access_token');
+          if (!cancelled) setStatus("Sessione non valida: manca access_token");
           return;
         }
 
         try {
-          const exp = typeof (sessionData.session as any)?.expires_at === 'number' ? (sessionData.session as any).expires_at : 0;
-          sessionStorage.setItem('mucca_access_token', accessToken);
-          if (exp) sessionStorage.setItem('mucca_access_token_exp', String(exp));
+          const exp =
+            typeof (sessionData.session as any)?.expires_at === "number"
+              ? (sessionData.session as any).expires_at
+              : 0;
+          sessionStorage.setItem("mucca_access_token", accessToken);
+          if (exp)
+            sessionStorage.setItem("mucca_access_token_exp", String(exp));
         } catch {
           // ignore
         }
       }
 
       if (!slugOrPublicId) {
-        if (!cancelled) setStatus('Lezione non valida.');
+        if (!cancelled) setStatus("Lezione non valida.");
         return;
       }
 
-      const lessonRes = await fetch(`/api/dashboard/lessons?q=${encodeURIComponent(slugOrPublicId)}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const lessonRes = await fetch(
+        `/api/dashboard/lessons?q=${encodeURIComponent(slugOrPublicId)}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
 
       const lessonJson = await lessonRes.json().catch(() => null);
 
       if (!lessonRes.ok || !lessonJson?.ok || !lessonJson?.lesson) {
-        const message = typeof lessonJson?.error === 'string' ? lessonJson.error : 'Lezione non trovata';
+        const message =
+          typeof lessonJson?.error === "string"
+            ? lessonJson.error
+            : "Lezione non trovata";
         if (!cancelled) setStatus(`Errore: ${message}`);
         return;
       }
@@ -243,13 +289,17 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
       if (!cancelled) {
         setLesson(lessonData);
         setIsCompleted(completed);
-        setStatus('');
+        setStatus("");
       }
 
       try {
         sessionStorage.setItem(
           lessonCacheKey,
-          JSON.stringify({ storedAtMs: Date.now(), lesson: lessonData, completed }),
+          JSON.stringify({
+            storedAtMs: Date.now(),
+            lesson: lessonData,
+            completed,
+          }),
         );
       } catch {
         // ignore
@@ -257,31 +307,38 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
 
       void (async () => {
         try {
-          const { marked } = await import('marked');
+          const { marked } = await import("marked");
           if (cancelled) return;
-          const nextSkills = lessonData.skills ? (marked.parse(lessonData.skills) as string) : '';
-          const nextContent = lessonData.content ? (marked.parse(lessonData.content) as string) : '';
+          const nextSkills = lessonData.skills
+            ? (marked.parse(lessonData.skills) as string)
+            : "";
+          const nextContent = lessonData.content
+            ? (marked.parse(lessonData.content) as string)
+            : "";
           if (!cancelled) {
             setSkillsHtml(nextSkills);
             setContentHtml(nextContent);
           }
         } catch {
           if (!cancelled) {
-            setSkillsHtml('');
-            setContentHtml('');
+            setSkillsHtml("");
+            setContentHtml("");
           }
         }
       })();
 
       void (async () => {
-        const listRes = await fetch('/api/dashboard/lessons?summary=0', {
-          method: 'GET',
+        const listRes = await fetch("/api/dashboard/lessons?summary=0", {
+          method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
         const listJson = await listRes.json().catch(() => null);
-        const lessonsList = listRes.ok && listJson?.ok ? ((listJson.lessons as LessonNavItem[]) ?? []) : [];
+        const lessonsList =
+          listRes.ok && listJson?.ok
+            ? ((listJson.lessons as LessonNavItem[]) ?? [])
+            : [];
         if (!cancelled) {
           setAllLessons(lessonsList);
         }
@@ -300,15 +357,24 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
     });
   }, [allLessons]);
 
+  const orderedLessonsInModule = useMemo(() => {
+    if (!lesson?.module_id) return orderedLessons;
+    return orderedLessons.filter((l) => l.module_id === lesson.module_id);
+  }, [orderedLessons, lesson?.module_id]);
+
   const currentLessonIndex = useMemo(() => {
     if (!lesson) return -1;
-    return orderedLessons.findIndex((l) => l.id === lesson.id);
-  }, [orderedLessons, lesson]);
+    return orderedLessonsInModule.findIndex((l) => l.id === lesson.id);
+  }, [orderedLessonsInModule, lesson]);
 
-  const prevLesson = currentLessonIndex > 0 ? orderedLessons[currentLessonIndex - 1] : null;
+  const prevLesson =
+    currentLessonIndex > 0
+      ? orderedLessonsInModule[currentLessonIndex - 1]
+      : null;
   const nextLesson =
-    currentLessonIndex >= 0 && currentLessonIndex < orderedLessons.length - 1
-      ? orderedLessons[currentLessonIndex + 1]
+    currentLessonIndex >= 0 &&
+    currentLessonIndex < orderedLessonsInModule.length - 1
+      ? orderedLessonsInModule[currentLessonIndex + 1]
       : null;
 
   const videoSrc = useMemo(() => {
@@ -318,16 +384,17 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
   async function toggleCompletion() {
     if (!supabase || !lesson) return;
 
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.getSession();
     if (sessionError || !sessionData.session?.user?.id) {
-      setStatus('Sessione non valida. Ricarica la pagina.');
+      setStatus("Sessione non valida. Ricarica la pagina.");
       return;
     }
 
     setCompletionBusy(true);
     const nextCompleted = !isCompleted;
 
-    const { error } = await supabase.from('user_progress').upsert(
+    const { error } = await supabase.from("user_progress").upsert(
       {
         user_id: sessionData.session.user.id,
         lesson_id: lesson.id,
@@ -335,7 +402,7 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
         completed_at: nextCompleted ? new Date().toISOString() : null,
       },
       {
-        onConflict: 'user_id,lesson_id',
+        onConflict: "user_id,lesson_id",
       },
     );
 
@@ -349,80 +416,253 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
     setCompletionBusy(false);
   }
 
-  const navBlock = (
+  const topNavBlock = (
     <div
-      style={{
-        border: '1px solid var(--grey-300)',
-        backgroundColor: 'var(--grey-100)',
-        padding: '12px',
-        marginBottom: '16px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        gap: '12px',
-        flexWrap: 'wrap',
-      }}
+      className={styles.lessonPage__nav + " " + styles["lessonPage__nav--top"]}
+      data-ui="lessonPage.nav.top"
     >
-      <div className="text">
+      <div
+        className={styles.lessonPage__navCol + " text"}
+        data-ui="lessonPage.nav.prev"
+      >
         {prevLesson ? (
-          <Link href={`/dashboard/lessons/${encodeURIComponent(prevLesson.public_id)}`} className="link">
-            ← {prevLesson.title}
+          <Link
+            href={`/dashboard/lessons/${encodeURIComponent(prevLesson.public_id)}`}
+            className="link"
+            data-ui="lessonPage.nav.prev.link"
+          >
+            ← precedente
           </Link>
         ) : (
-          <span style={{ opacity: 0.6 }}>← Nessuna lezione precedente</span>
+          <a
+            href="#"
+            aria-disabled="true"
+            tabIndex={-1}
+            className={"link " + styles["lessonPage__navLink--disabled"]}
+            data-ui="lessonPage.nav.prev.disabled"
+          >
+            ← Nessuna lezione precedente
+          </a>
         )}
       </div>
-      <div className="text" style={{ textAlign: 'right' }}>
+      <div
+        className={
+          styles.lessonPage__navCol +
+          " " +
+          styles["lessonPage__navCol--center"] +
+          " text"
+        }
+        data-ui="lessonPage.nav.all"
+      >
+        <Link
+          href="/dashboard"
+          className="link"
+          data-ui="lessonPage.nav.all.link"
+        >
+          Tutte le lezioni
+        </Link>
+      </div>
+      <div
+        className={
+          styles.lessonPage__navCol +
+          " " +
+          styles["lessonPage__navCol--right"] +
+          " text"
+        }
+        data-ui="lessonPage.nav.next"
+      >
         {nextLesson ? (
-          <Link href={`/dashboard/lessons/${encodeURIComponent(nextLesson.public_id)}`} className="link">
-            {nextLesson.title} →
+          <Link
+            href={`/dashboard/lessons/${encodeURIComponent(nextLesson.public_id)}`}
+            className="link"
+            data-ui="lessonPage.nav.next.link"
+          >
+            successiva →
           </Link>
         ) : (
-          <span style={{ opacity: 0.6 }}>Nessuna lezione successiva →</span>
+          <span style={{ opacity: 0.6 }} data-ui="lessonPage.nav.next.disabled">
+            Nessuna lezione successiva →
+          </span>
+        )}
+      </div>
+    </div>
+  );
+
+  const bottomNavBlock = (
+    <div
+      className={
+        styles.lessonPage__nav + " " + styles["lessonPage__nav--bottom"]
+      }
+      data-ui="lessonPage.nav.bottom"
+    >
+      <div
+        className={styles.lessonPage__navCol + " text"}
+        data-ui="lessonPage.nav.prev"
+      >
+        {prevLesson ? (
+          <Link
+            href={`/dashboard/lessons/${encodeURIComponent(prevLesson.public_id)}`}
+            className="link"
+            data-ui="lessonPage.nav.prev.link"
+          >
+            ← precedente
+          </Link>
+        ) : (
+          <a
+            href="#"
+            aria-disabled="true"
+            tabIndex={-1}
+            className={"link " + styles["lessonPage__navLink--disabled"]}
+            data-ui="lessonPage.nav.prev.disabled"
+          >
+            ← Nessuna lezione precedente
+          </a>
+        )}
+      </div>
+      <div
+        className={
+          styles.lessonPage__navCol +
+          " " +
+          styles["lessonPage__navCol--center"] +
+          " text"
+        }
+        data-ui="lessonPage.nav.all"
+      >
+        <Link
+          href="/dashboard"
+          className="link"
+          data-ui="lessonPage.nav.all.link"
+        >
+          Tutte le lezioni
+        </Link>
+      </div>
+      <div
+        className={
+          styles.lessonPage__navCol +
+          " " +
+          styles["lessonPage__navCol--right"] +
+          " text"
+        }
+        data-ui="lessonPage.nav.next"
+      >
+        {nextLesson ? (
+          <Link
+            href={`/dashboard/lessons/${encodeURIComponent(nextLesson.public_id)}`}
+            className="link"
+            data-ui="lessonPage.nav.next.link"
+          >
+            successiva →
+          </Link>
+        ) : (
+          <span style={{ opacity: 0.6 }} data-ui="lessonPage.nav.next.disabled">
+            Nessuna lezione successiva →
+          </span>
         )}
       </div>
     </div>
   );
 
   return (
-    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
-      <nav style={{ marginBottom: '16px' }}>
-        <Link href="/dashboard" className="link">
-          ← Torna alla dashboard
-        </Link>
-      </nav>
-
+    <div className={styles.lessonPage}>
       {status ? <div className="text">{status}</div> : null}
 
       {lesson ? (
         <article>
-          {navBlock}
+          {topNavBlock}
 
-          <h1 className="title" style={{ marginBottom: '8px' }}>
-            {lesson.title}
-          </h1>
+          <header
+            className={styles.lessonPage__header}
+            data-ui="lessonPage.header"
+          >
+            <div className={styles.lessonPage__headerRow}>
+              <h1 className={styles.lessonPage__title + " title"}>
+                {lesson.title}
+              </h1>
+              <button
+                type="button"
+                className="button"
+                onClick={() => {
+                  void toggleCompletion();
+                }}
+                disabled={completionBusy}
+                aria-busy={completionBusy}
+                data-ui="lessonPage.completion.toggle"
+              >
+                {completionBusy
+                  ? "Salvo..."
+                  : isCompleted
+                    ? "Segna come non completata"
+                    : "Segna come completata"}
+              </button>
+            </div>
 
-          <div className="text" style={{ opacity: 0.8, marginBottom: '16px' }}>
-            {lesson.lesson_type ?? 'esercizio'}
-          </div>
+            <div
+              className={styles.lessonPage__badges}
+              data-ui="lessonPage.badges"
+            >
+              {isCompleted ? (
+                <span
+                  className={
+                    styles.lessonPage__badge +
+                    " " +
+                    styles["lessonPage__badge--completed"]
+                  }
+                  data-ui="lessonPage.badge.status"
+                >
+                  completata
+                </span>
+              ) : (
+                <span
+                  className={
+                    styles.lessonPage__badge +
+                    " " +
+                    styles["lessonPage__badge--pending"]
+                  }
+                  data-ui="lessonPage.badge.status"
+                >
+                  da completare
+                </span>
+              )}
+
+              <span
+                className={
+                  styles.lessonPage__badge +
+                  " " +
+                  styles["lessonPage__badge--type"]
+                }
+                data-ui="lessonPage.badge.type"
+              >
+                {lesson.lesson_type ?? "esercizio"}
+              </span>
+            </div>
+          </header>
 
           {lesson.description ? (
-            <p className="text" style={{ marginBottom: '16px' }}>
+            <p className="text" style={{ marginBottom: "16px" }}>
               {lesson.description}
             </p>
           ) : null}
 
           {skillsHtml ? (
-            <section style={{ marginBottom: '16px' }}>
-              <h2 className="title title--sm" style={{ marginBottom: '8px' }}>
+            <section style={{ marginBottom: "16px" }}>
+              <h2 className="title title--sm" style={{ marginBottom: "8px" }}>
                 Skills
               </h2>
-              <div className="text lesson-markdown" dangerouslySetInnerHTML={{ __html: skillsHtml }} />
+              <div
+                className="text lesson-markdown"
+                dangerouslySetInnerHTML={{ __html: skillsHtml }}
+              />
             </section>
           ) : null}
 
           {lesson.video_url && !videoSrc ? (
-            <div className="text" style={{ marginBottom: '16px' }}>
-              <a className="link" href={lesson.video_url} target="_blank" rel="noreferrer">
+            <div className="text" style={{ marginBottom: "16px" }}>
+              <a
+                className="link"
+                href={lesson.video_url}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Apri video
               </a>
             </div>
@@ -430,62 +670,28 @@ export default function DashboardLessonPage({ params }: { params: Promise<{ slug
 
           {videoSrc ? (
             <div
-              style={{
-                position: 'relative',
-                width: '100%',
-                paddingTop: '56.25%',
-                marginBottom: '16px',
-                border: '1px solid var(--grey-300)',
-              }}
+              className={styles.lessonPage__video}
+              data-ui="lessonPage.video"
             >
               <iframe
                 src={videoSrc}
                 title={lesson.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  border: 'none',
-                }}
+                className={styles.lessonPage__videoIframe}
+                data-ui="lessonPage.video.iframe"
               />
             </div>
           ) : null}
 
-          {contentHtml ? <div className="lesson-markdown" dangerouslySetInnerHTML={{ __html: contentHtml }} /> : null}
+          {contentHtml ? (
+            <div
+              className="lesson-markdown"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
+          ) : null}
 
-          <div
-            style={{
-              border: '1px solid var(--grey-300)',
-              backgroundColor: 'var(--grey-100)',
-              padding: '12px',
-              marginTop: '16px',
-              marginBottom: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '12px',
-              flexWrap: 'wrap',
-            }}
-          >
-            <div className="text">{isCompleted ? 'Lezione completata ✓' : 'Segna questa lezione come completata'}</div>
-            <button
-              type="button"
-              className="button"
-              onClick={() => {
-                void toggleCompletion();
-              }}
-              disabled={completionBusy}
-              aria-busy={completionBusy}
-            >
-              {completionBusy ? 'Salvo...' : isCompleted ? 'Segna come non completata' : 'Completa lezione'}
-            </button>
-          </div>
-
-          {navBlock}
+          {bottomNavBlock}
         </article>
       ) : null}
     </div>
