@@ -1,10 +1,10 @@
 .badge {
   border: none;
   background-color: var(--grey-300);
-  border-radius: 0;
+  border-radius: 6px;
   color: var(--grey-700);
   padding: 0 12px;
-  font-size: 12px;
+  font-size: 16px;
   font-family: var(--font-family-sans);
   display: inline-flex;
   align-items: center;

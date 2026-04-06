@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/typography.css" />
     <link rel="stylesheet" href="components/header/header.css" />
+    <link rel="stylesheet" href="components/badge/badge.css" />
     <link rel="stylesheet" href="components/link/link.css" />
     <link rel="stylesheet" href="components/footer/footer.css" />
     <link rel="stylesheet" href="components/blockquote/blockquote.css" />
@@ -47,19 +48,14 @@
 
       <section class="hero">
         <div class="hero__inner">
+          <div class="hero__eyebrow">
+            <span class="badge">Corso di UX/UI Design</span>
+          </div>
           <h1 class="hero__title">
-            Un percorso di
-            <span class="hero__word-with-icon"
-              ><img
-                src="/assets/icons/sfide.svg"
-                alt="sfide"
-                class="hero__word-icon"
-              />esercizi</span
-            >
-            per diventare UX/UI Designer.
+            AI mi ha reso un designer migliore. Non è automatico.
           </h1>
           <p class="hero__subtitle">
-            Teoria quando serve. Ricevimento studenti 2 ore ogni giorno.
+            Teoria quando serve. Feedback ogni giorno. Esercizi e progetti reali.
           </p>
           <div class="hero__cta">
             <a href="/pricing" class="link hero__cta-link">
@@ -68,6 +64,68 @@
             <a href="#start-for-free" class="link hero__cta-secondary">
               come funziona
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="chi-text-card" id="manifesto">
+        <div class="chi-text-grid">
+          <div class="chi-text">
+            <p>Da quando c'è AI lavoro in modo diverso. Il mio processo è cambiato.</p>
+            <p>
+              Faccio brainstorming con AI su soluzioni alternative. E prototipo ad
+              alta fedeltà in poche ore. Sempre meno wireframes e Figma.
+            </p>
+            <p>
+              Il risultato: trovo soluzioni migliori di quelle che trovavo prima.
+              AI è diventato il mio partner di progettazione.
+            </p>
+            <p>
+              Ma c'è qualcosa che rende possibile tutto questo: so valutare quello
+              che AI produce. So quando una soluzione è buona, e quando sembra
+              buona ma non regge. Faccio le domande giuste. So riconoscere
+              l'errore nell'output anche quando è presentato in modo convincente.
+            </p>
+          </div>
+
+          <div class="chi-text chi-text--right">
+            <p>
+              Chi non ha costruito quel giudizio si trova in una situazione
+              diversa: output veloce, apparentemente solido — e nessun modo per
+              capire se è veramente una buona soluzione.
+            </p>
+            <p>
+              <strong
+                >In questo corso costruisci quel giudizio. E impari a usare AI nel
+                processo — non come scorciatoia, ma come partner.</strong
+              >
+            </p>
+
+            <div class="chi-signature">
+              <img
+                src="/assets/images/firma.png"
+                alt=""
+                class="chi-signature__mark"
+              />
+              <div class="chi-signature__row">
+                <img
+                  src="/assets/images/luca-selfie.jpg"
+                  alt="Luca Leone"
+                  class="chi-signature__avatar"
+                />
+                <div class="chi-signature__meta">
+                  <p class="chi-signature__line1">
+                    <strong>Luca Leone</strong>,
+                    <a href="mailto:luca@mucca.design" class="link"
+                      >luca@mucca.design</a
+                    >
+                  </p>
+                  <p class="chi-signature__line2">
+                    Interaction Designer, creatore di Mucca Design
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -177,7 +235,7 @@
               </h2>
 
               <img
-                src="/assets/images/selfie.png"
+                src="/assets/images/luca-selfie.jpg"
                 alt="Selfie di Luca Leone"
                 class="section__selfie"
               />
@@ -548,6 +606,33 @@
           </section>
         </section>
 
+        <section class="processo-cambiato full-width" id="processo-cambiato">
+          <div class="processo-cambiato__inner">
+            <h2 class="chi-title processo-cambiato__title">
+              <span class="chi-title__line1">Con AI il processo è cambiato.</span>
+            </h2>
+
+            <div class="processo-cambiato__content text">
+              <p>Il processo è cambiato. Il corso anche.</p>
+              <p>
+                <strong>Prima di AI:</strong> ricerca → sketch / wireframes → mockup in
+                Figma → handoff agli sviluppatori.
+              </p>
+              <p>
+                <strong>Oggi:</strong> idea → sketch → prototipo funzionante →
+                iterazione → prototipo migliore. Meno passaggi, più veloce, più
+                qualità.
+              </p>
+              <p>
+                In questo corso impari il processo com'è adesso: sketch rapidi,
+                prototipazione con AI, zero Figma obbligatorio. I wireframe
+                quando servono davvero, per es per comunicare un flusso a un programmatore — non come passaggio fisso da completare
+                prima di poter andare avanti.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section class="fit full-width" aria-label="Per chi è adatto il corso">
           <div class="fit__inner">
             <div class="fit__cards">
@@ -886,199 +971,55 @@
             </h2>
 
             <div class="program__modules" data-program-modules>
+              <div class="text">
+                <p>
+                  Il corso è strutturato in moduli progressivi. I primi due sono
+                  già disponibili.
+                </p>
+              </div>
+
+              <section class="program__module" aria-label="Modulo 0">
+                <h3 class="program__module-title title title--md">
+                  Modulo 0 — Come funziona questo corso
+                </h3>
+                <p class="text">
+                  Strumenti, metodo, aspettative. Capisci come imparerai — prima
+                  ancora di iniziare.
+                </p>
+              </section>
+
               <section class="program__module" aria-label="Modulo 1">
                 <h3 class="program__module-title title title--md">
-                  1. Ecommerce: pagina prodotto
+                  Modulo 1 — Meow Form
                 </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Esercizio</td>
-                        <td>
-                          <strong>[ESERCIZIO] Introduzione al Corso</strong
-                          ><br />Benvenuto nel corso di UX/UI Design. In questa
-                          lezione introduttiva scoprirai cosa imparerai e come è
-                          strutturato il corso.
-                        </td>
-                        <td>saper cantare</td>
-                      </tr>
-                      <tr>
-                        <td>Esercizio</td>
-                        <td><strong>test</strong><br />descrizione</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>Esercizio</td>
-                        <td>
-                          <strong>Principi di Design</strong><br />I fondamenti
-                          del design: contrasto, gerarchia, allineamento,
-                          ripetizione e prossimità.
-                        </td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <p class="text">
+                  Il primo esercizio reale: ridisegnare un form semplice. Impari
+                  gli elementi base della GUI, gli stati, il wireframing, la
+                  prototipazione. Tutto quello che ti serve per qualsiasi UI più
+                  complessa parte da qui.
+                </p>
               </section>
 
               <section class="program__module" aria-label="Modulo 2">
                 <h3 class="program__module-title title title--md">
-                  2. UI component: Accedi / Registrati
+                  Modulo 2 — Cozy Shoes: sito web ecommerce
                 </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Esercizio</td>
-                        <td>
-                          <strong>User Research</strong><br />Come fare ricerca
-                          utente efficace: interviste, questionari, test di
-                          usabilità.
-                        </td>
-                        <td>ux research</td>
-                      </tr>
-                      <tr>
-                        <td>Esercizio</td>
-                        <td><strong>ennesima lezione</strong></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <p class="text">
+                  Il primo progetto completo. Applicazione del Design (Thinking)
+                  Process. UX Research, raccolta SPEC, ricerca desktop, UX
+                  Interviews, Personas, User Journey, e progettazione
+                  dell'interfaccia attraverso cicli di sketch -> iterazione ->
+                  prototipazione ad alta fedeltà. Il design thinking applicato —
+                  non spiegato.
+                </p>
               </section>
 
-              <section class="program__module" aria-label="Modulo 3">
-                <h3 class="program__module-title title title--md">
-                  3. Ecommerce component: carrello acquisti
-                </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Intermezzo</td>
-                        <td>
-                          <strong>the cart lesson</strong><br />pensa al flusso
-                          al supermercato: da quando entri a quando esci
-                        </td>
-                        <td>
-                          - lavorare in gruppo - pensare in modo critico -
-                          designer == fare scelte - fare scelte == trade-offs
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-
-              <section class="program__module" aria-label="Modulo 4">
-                <h3 class="program__module-title title title--md">
-                  4. UI macchina del caffè
-                </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td colspan="3">In arrivo</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-
-              <section class="program__module" aria-label="Modulo 5">
-                <h3 class="program__module-title title title--md">
-                  5. Web app: Pound 4 Pound
-                </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td colspan="3">In arrivo</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-
-              <section class="program__module" aria-label="Modulo 6">
-                <h3 class="program__module-title title title--md">
-                  6. Web app: Media Contacts
-                </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td colspan="3">In arrivo</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-
-              <section class="program__module" aria-label="Modulo 7">
-                <h3 class="program__module-title title title--md">
-                  7. Web app: Analytics Dashboard
-                </h3>
-                <div class="program__table-wrap">
-                  <table class="program-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Tipo di attività</th>
-                        <th scope="col">Descrizione</th>
-                        <th scope="col">Skill necessarie</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td colspan="3">In arrivo</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
+              <div class="text">
+                <p>
+                  I moduli successivi sono in sviluppo. Gli abbonati li ricevono
+                  man mano che escono.
+                </p>
+              </div>
             </div>
           </div>
         </section>
