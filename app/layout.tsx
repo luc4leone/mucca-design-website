@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "../public/styles/variables.css";
 import "../public/styles/base.css";
 import "../public/styles/typography.css";
 import "../public/components/header/header.css";
 import "../public/components/link/link.css";
 import "../public/components/footer/footer.css";
+import "../public/components/message-widget/message-widget.css";
 
 import Footer from "../components/Footer";
 
@@ -41,6 +43,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         {children}
         <Footer />
+        <Script src="/components/message-widget/message-widget.js" strategy="afterInteractive" />
       </body>
     </html>
   );
