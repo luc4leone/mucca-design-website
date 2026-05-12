@@ -25,6 +25,9 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
+    <link rel="stylesheet" href="components/input/input.css" />
+    <link rel="stylesheet" href="components/button/button.css" />
+    <link rel="stylesheet" href="components/modal/modal.css" />
     <link rel="stylesheet" href="components/message-widget/message-widget.css" />
   </head>
   <body>
@@ -42,90 +45,38 @@
           </div>
         </div>
         <nav class="topbar__nav" style="margin-top: 0; gap: 16px">
-          <a href="/dashboard" class="link">Dashboard</a>
-          <a href="/login" class="link">Accedi</a>
+          <a href="#" class="link" data-modal="discord-modal">Discord</a>
+          <a href="https://www.youtube.com/@luc4leone" class="link">YouTube</a>
+          <a href="https://substack.com/@luc4leone" class="link">Blog</a>
+          <a href="pages/chi-sono.html" class="link">Chi sono</a>
         </nav>
       </header>
 
       <section class="hero">
-        <div class="hero__inner">
-          <div class="hero__eyebrow">
-            <span class="badge">Corso di UX/UI Design</span>
-          </div>
-          <h1 class="hero__title">
-            AI mi ha reso un designer migliore. Non è automatico.
-          </h1>
-          <p class="hero__subtitle">
-            Teoria quando serve. Feedback ogni giorno. Esercizi e progetti reali.
-          </p>
-          <div class="hero__cta">
-            <a href="/pricing" class="link hero__cta-link">
-              Accedi gratis al modulo 1
-            </a>
-            <a href="#start-for-free" class="link hero__cta-secondary">
-              come funziona
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="chi-text-card" id="manifesto">
-        <div class="chi-text-grid">
-          <div class="chi-text">
-            <p>Da quando c'è AI lavoro in modo diverso. Il mio processo è cambiato.</p>
-            <p>
-              Faccio brainstorming con AI su soluzioni alternative. E prototipo ad
-              alta fedeltà in poche ore. Sempre meno wireframes e Figma.
+        <div class="hero__columns">
+          <div class="hero__inner">
+            <div class="hero__eyebrow">
+              <span class="badge">Corso di UX/UI Design</span>
+            </div>
+            <h1 class="hero__title">
+              Diventa UX/UI Designer attraverso un percorso di esercizi pratici e progetti reali.
+            </h1>
+            <p class="hero__subtitle">
+              Ricevimento studenti tutti i giorni: non resti mai solo, non resti indietro.
             </p>
-            <p>
-              Il risultato: trovo soluzioni migliori di quelle che trovavo prima.
-              AI è diventato il mio partner di progettazione.
-            </p>
-            <p>
-              Ma c'è qualcosa che rende possibile tutto questo: so valutare quello
-              che AI produce. So quando una soluzione è buona, e quando sembra
-              buona ma non regge. Faccio le domande giuste. So riconoscere
-              l'errore nell'output anche quando è presentato in modo convincente.
-            </p>
-          </div>
-
-          <div class="chi-text chi-text--right">
-            <p>
-              Chi non ha costruito quel giudizio si trova in una situazione
-              diversa: output veloce, apparentemente solido — e nessun modo per
-              capire se è veramente una buona soluzione.
-            </p>
-            <p>
-              <strong
-                >In questo corso costruisci quel giudizio. E impari a usare AI nel
-                processo — non come scorciatoia, ma come partner.</strong
-              >
-            </p>
-
-            <div class="chi-signature">
-              <img
-                src="/assets/images/firma.png"
-                alt=""
-                class="chi-signature__mark"
-              />
-              <div class="chi-signature__row">
-                <img
-                  src="/assets/images/luca-selfie.jpg"
-                  alt="Luca Leone"
-                  class="chi-signature__avatar"
-                />
-                <div class="chi-signature__meta">
-                  <p class="chi-signature__line1">
-                    <strong>Luca Leone</strong>,
-                    <a href="mailto:luca@mucca.design" class="link"
-                      >luca@mucca.design</a
-                    >
-                  </p>
-                  <p class="chi-signature__line2">
-                    Interaction Designer, creatore di Mucca Design
-                  </p>
-                </div>
+            <div class="hero__bottom">
+              <p class="text">Partenza prossima classe 11 luglio 2026</p>
+              <div class="hero__cta">
+                <a href="#" class="link hero__cta-link" data-modal="prenota-modal">
+                  Prenota il tuo posto
+                </a>
               </div>
+            </div>
+          </div>
+          <div class="hero__video">
+            <div class="video-placeholder">
+              <span class="video-placeholder__icon material-symbols-outlined">play_circle</span>
+              <span class="video-placeholder__label">Video</span>
             </div>
           </div>
         </div>
@@ -356,8 +307,7 @@
                     >.</strong
                   >
                   Le milestone sono progetti (che puoi mettere in portfolio).
-                  Vengono valutati: OK / non OK. Serve OK per sbloccare il
-                  modulo successivo
+                  Vengono valutati: OK / non OK. 
                 </li>
                 <li class="approach-list__item text">
                   <strong
@@ -631,6 +581,68 @@
                 prima di poter andare avanti.
               </p>
             </div>
+
+            <section class="chi-text-card" id="manifesto">
+              <div class="chi-text-grid">
+                <div class="chi-text">
+                  <p>Da quando c'è AI lavoro in modo diverso. Il mio processo è cambiato.</p>
+                  <p>
+                    Faccio brainstorming con AI su soluzioni alternative. E prototipo ad
+                    alta fedeltà in poche ore. Sempre meno wireframes e Figma.
+                  </p>
+                  <p>
+                    Il risultato: trovo soluzioni migliori di quelle che trovavo prima.
+                    AI è diventato il mio partner di progettazione.
+                  </p>
+                  <p>
+                    Ma c'è qualcosa che rende possibile tutto questo: so valutare quello
+                    che AI produce. So quando una soluzione è buona, e quando sembra
+                    buona ma non regge. Faccio le domande giuste. So riconoscere
+                    l'errore nell'output anche quando è presentato in modo convincente.
+                  </p>
+                </div>
+
+                <div class="chi-text chi-text--right">
+                  <p>
+                    Chi non ha costruito quel giudizio si trova in una situazione
+                    diversa: output veloce, apparentemente solido — e nessun modo per
+                    capire se è veramente una buona soluzione.
+                  </p>
+                  <p>
+                    <strong
+                      >In questo corso costruisci quel giudizio. E impari a usare AI nel
+                      processo — non come scorciatoia, ma come partner.</strong
+                    >
+                  </p>
+
+                  <div class="chi-signature">
+                    <img
+                      src="/assets/images/firma.png"
+                      alt=""
+                      class="chi-signature__mark"
+                    />
+                    <div class="chi-signature__row">
+                      <img
+                        src="/assets/images/luca-selfie.jpg"
+                        alt="Luca Leone"
+                        class="chi-signature__avatar"
+                      />
+                      <div class="chi-signature__meta">
+                        <p class="chi-signature__line1">
+                          <strong>Luca Leone</strong>,
+                          <a href="mailto:luca@mucca.design" class="link"
+                            >luca@mucca.design</a
+                          >
+                        </p>
+                        <p class="chi-signature__line2">
+                          Interaction Designer, creatore di Mucca Design
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         </section>
 
@@ -821,7 +833,7 @@
                 </summary>
                 <div class="faq-item__answer text">
                   Sono progetti più complessi che segnano un passaggio di
-                  livello. Servono a evitare l’effetto “ho visto tutto ma non so
+                  livello. Servono a evitare l'effetto “ho visto tutto ma non so
                   applicare”: la qualità si costruisce con consegne e revisione.
                 </div>
               </details>
@@ -878,7 +890,7 @@
                   È un abbonamento: posso disdire quando voglio?
                 </summary>
                 <div class="faq-item__answer text">
-                  Sì. L’abbonamento non si rinnova automaticamente dal ciclo
+                  Sì. L'abbonamento non si rinnova automaticamente dal ciclo
                   successivo.
                   <br />
                   Esempio: ti abboni il 3 febbraio.
@@ -1031,56 +1043,72 @@
         >
           <div class="start-for-free__inner">
             <h2 class="chi-title start-for-free__title" id="start-for-free">
-              <span class="chi-title__line1">Accedi gratis al Modulo 1</span>
+              <span class="chi-title__line1">Ammissione alla prossima classe (partenza 11 Luglio 2026)</span>
             </h2>
 
-            <h3 class="start-for-free__subtitle title title--md">
-              Come funziona?
-            </h3>
+            <div class="start-for-free__duration">
+              <h3 class="start-for-free__subtitle title title--md">
+                Durata del corso
+              </h3>
 
-            <ol class="start-for-free__steps">
-              <li class="start-for-free__step">
-                <div class="start-for-free__step-body">
-                  <h4 class="start-for-free__step-title title title--sm">
-                    Accedi gratis
-                  </h4>
-                  <p class="start-for-free__step-text text">
-                    Nessun vincolo. Nessun pagamento. Nessuna carta. Un limite:
-                    hai accesso solo al Modulo 1.
-                  </p>
-                </div>
-              </li>
+              <p class="text">
+                Il corso dura 4 mesi:
+              </p>
+              <ul class="start-for-free__duration-list text">
+                <li>partenza → 11 luglio 2026</li>
+                <li>fine → 30 novembre 2026</li>
+              </ul>
+              <p class="text">(3 settimane di stop ad Agosto).</p>
+            </div>
 
-              <li class="start-for-free__step">
-                <div class="start-for-free__step-body">
-                  <h4 class="start-for-free__step-title title title--sm">
-                    Fai esercizi + ricevi feedback
-                  </h4>
-                  <p class="start-for-free__step-text text">
-                    Accesso a chat e ricevimento studenti. Capisci se fa per te.
-                  </p>
-                </div>
-              </li>
+            <div class="start-for-free__duration">
+              <h3 class="start-for-free__subtitle title title--md">
+                Orari lezioni e ricevimento
+              </h3>
 
-              <li class="start-for-free__step">
-                <div class="start-for-free__step-body">
-                  <h4 class="start-for-free__step-title title title--sm">
-                    Decidi dopo se continuare
-                  </h4>
-                  <p class="start-for-free__step-text text">
-                    Se vuoi accedere agli altri moduli, attivi l'abbonamento
-                    (196€/mese). Disdici quando vuoi.
-                  </p>
-                </div>
-              </li>
-            </ol>
+              <ul class="start-for-free__duration-list text">
+                <li>Lezioni: tutti i lunedì, mercoledì, venerdì dalle 19:00 alle 21:00.</li>
+                <li>Ricevimento studenti: 2 ore tutti i giorni dal lunedì al venerdì in orari da concordare con la classe.</li>
+              </ul>
+            </div>
 
-            <div class="start-for-free__cta">
-              <a href="/pricing" class="link hero__cta-link">
-                Accedi gratis al Modulo 1
-              </a>
-              <a href="/pricing" class="link start-for-free__link">
-                Vuoi accedere a tutti i moduli subito?
+            <div class="start-for-free__duration">
+              <h3 class="start-for-free__subtitle title title--md">
+                Costo del corso
+              </h3>
+
+              <p class="text">Il corso costa 3000€. È possibile pagare a rate:</p>
+              <ul class="start-for-free__duration-list text">
+                <li>1 bonifico → totale 2800€</li>
+                <li>2 bonifici da 1500€ → totale 3000€</li>
+                <li>4 bonifici da 800€ → totale 3200€</li>
+              </ul>
+            </div>
+
+            <div class="start-for-free__duration">
+              <h3 class="start-for-free__subtitle title title--md">
+                Come funziona il processo di ammissione?
+              </h3>
+
+              <ol class="start-for-free__duration-list text">
+                <li>
+                  <strong>Facciamo video call introduttiva</strong><br>
+                  Clicca sul pulsante "Prenota il tuo posto" per fissare una video call, così ci conosciamo, mi racconti perché sei interessato/a al corso, e mi chiedi tutto quello che vuoi.
+                </li>
+                <li>
+                  <strong>Firmi il contratto</strong><br>
+                  Ogni classe ha un numero massimo di studenti ammessi, 24. Se vuoi bloccare un posto, firmi il contratto.
+                </li>
+                <li>
+                  <strong>Paghi</strong><br>
+                  Due settimane prima dell'inizio del corso effettui il pagamento nella modalità che hai scelto (1 unica soluzione o a rate).
+                </li>
+              </ol>
+            </div>
+
+<div class="start-for-free__cta">
+              <a href="#" class="link hero__cta-link" data-modal="prenota-modal">
+                Prenota il tuo posto
               </a>
             </div>
           </div>
@@ -1286,6 +1314,63 @@
       });
     </script>
     <script src="components/link/link.js"></script>
+    <div class="modal-overlay" id="discord-modal">
+      <div class="modal modal--compact">
+        <div class="modal__header">
+          <span class="title title--md">Benvenuto in chat</span>
+          <button class="modal__close" aria-label="Chiudi">&times;</button>
+        </div>
+        <div class="modal__content">
+          <p class="text">Link di invito:
+            <a href="https://discord.gg/vnqxP2snT" class="link" target="_blank" rel="noopener noreferrer">discord.gg/vnqxP2snT</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay" id="prenota-modal">
+      <div class="modal modal--compact">
+        <div class="modal__header">
+          <span class="title title--md">Prenota il tuo posto</span>
+          <button class="modal__close" aria-label="Chiudi">&times;</button>
+        </div>
+        <div class="modal__content">
+          <p class="text">Lasciami la tua email, ti contatterò per organizzare una video call.</p>
+          <div class="prenota-form" id="prenota-form">
+            <input type="email" class="input" id="prenota-email" placeholder="la tua email" required />
+            <button type="button" class="button" id="prenota-submit">Organizziamo video call</button>
+            <p class="text prenota-error" id="prenota-error"></p>
+          </div>
+          <p class="text prenota-confirm" id="prenota-confirm">Grazie! Ti contatterò presto.</p>
+        </div>
+      </div>
+    </div>
+    <script src="components/modal/modal.js"></script>
+    <script>
+      (function () {
+        document.getElementById('prenota-submit').addEventListener('click', function () {
+          var email = document.getElementById('prenota-email').value.trim();
+          var errorEl = document.getElementById('prenota-error');
+          var submitBtn = this;
+          if (!email) return;
+          submitBtn.disabled = true;
+          errorEl.textContent = '';
+          fetch('/api/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, body: 'Prenotazione video call' }),
+          })
+            .then(function (res) {
+              if (!res.ok) throw new Error();
+              document.getElementById('prenota-form').classList.add('prenota-form--hidden');
+              document.getElementById('prenota-confirm').classList.add('is-visible');
+            })
+            .catch(function () {
+              errorEl.textContent = 'Si è verificato un errore. Riprova.';
+              submitBtn.disabled = false;
+            });
+        });
+      })();
+    </script>
     <script src="components/message-widget/message-widget.js"></script>
   </body>
 </html>

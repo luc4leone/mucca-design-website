@@ -28,6 +28,7 @@
         margin: 0 auto;
       }
     </style>
+    <link rel="stylesheet" href="../components/modal/modal.css" />
     <link rel="stylesheet" href="../components/message-widget/message-widget.css" />
   </head>
   <body>
@@ -38,9 +39,10 @@
           <div class="logo__subtitle">di Luca Leone</div>
         </div>
         <nav class="topbar__nav">
+          <a href="#" class="link" data-modal="discord-modal">Discord</a>
+          <a href="https://www.youtube.com/@luc4leone" class="link">YouTube</a>
+          <a href="https://substack.com/@luc4leone" class="link">Blog</a>
           <a href="../pages/chi-sono.html" class="link">Chi sono</a>
-          <a href="../pricing" class="link">Iscriviti</a>
-          <a href="../login" class="link">Accedi</a>
         </nav>
       </header>
 
@@ -62,6 +64,22 @@
         </div>
       </footer>
     </div>
+    <div class="modal-overlay" id="discord-modal">
+      <div class="modal" style="max-width: 400px; height: auto;">
+        <div class="modal__header">
+          <span class="title title--md">Benvenuto in chat</span>
+          <button class="modal__close" aria-label="Chiudi">&times;</button>
+        </div>
+        <div class="modal__content">
+          <p class="text">
+            <a href="https://discord.gg/vnqxP2snT" class="link" target="_blank" rel="noopener noreferrer">
+              discord.gg/vnqxP2snT
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script src="../components/modal/modal.js"></script>
     <script src="../components/message-widget/message-widget.js"></script>
   </body>
 </html>
