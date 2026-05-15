@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mucca Design</title>
+    <link rel="preload" href="/assets/fonts/Scorekard/Scorekard-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
@@ -1086,7 +1087,7 @@
       })();
     </script>
 
-    <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+    <script src="assets/js/rough-notation.iife.js" defer></script>
     <script>
       window.addEventListener("load", () => {
         if (!window.RoughNotation) return;
@@ -1186,7 +1187,7 @@
         }
       });
     </script>
-    <script src="components/link/link.js"></script>
+    <script src="components/link/link.js" defer></script>
     <div class="modal-overlay" id="discord-modal">
       <div class="modal modal--compact">
         <div class="modal__header">
@@ -1217,7 +1218,7 @@
         </div>
       </div>
     </div>
-    <script src="components/modal/modal.js"></script>
+    <script src="components/modal/modal.js" defer></script>
     <script>
       (function () {
         function resetPrenota() {
@@ -1256,7 +1257,7 @@
         });
       })();
     </script>
-    <script src="components/video-facade/video-facade.js"></script>
-    <script src="components/message-widget/message-widget.js"></script>
+    <script src="components/video-facade/video-facade.js" defer></script>
+    <script src="components/message-widget/message-widget.js" defer></script>
   </body>
 </html>
