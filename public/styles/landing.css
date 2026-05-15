@@ -97,8 +97,8 @@ html {
 
 .hero__subtitle {
   font-family: var(--font-family-sans);
-  font-weight: var(--font-weight-medium);
-  color: var(--grey-800);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
   line-height: var(--line-height-tight);
   margin: var(--spacing-l) 0 0 0;
   font-size: var(--font-size-32);
@@ -422,7 +422,7 @@ html {
 }
 
 .chi-title__line2 {
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   font-family: var(--font-family-serif);
   display: block;
   font-size: var(--font-size-32);
@@ -477,9 +477,6 @@ html {
   overflow: hidden;
 }
 
-.processo-cambiato__content > p:first-child {
-  font-size: var(--font-size-32);
-}
 
 .chi-text-grid {
   display: grid;
