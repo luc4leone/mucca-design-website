@@ -442,7 +442,7 @@ html {
 }
 
 .chi-text-card {
-  --chi-card-padding: calc(var(--spacing-2xl) * 2);
+  --chi-card-padding: var(--spacing-2xl);
   background-color: var(--white);
   border: 1px solid var(--grey-300);
   border-radius: 12px;
@@ -453,6 +453,16 @@ html {
 
 #manifesto.chi-text-card {
   margin: var(--spacing-3xl) 0;
+}
+
+@media (min-width: 768px) {
+  .chi-text-card {
+    --chi-card-padding: calc(var(--spacing-2xl) * 2);
+  }
+}
+
+.processo-cambiato__inner {
+  overflow: hidden;
 }
 
 .chi-text-grid {
