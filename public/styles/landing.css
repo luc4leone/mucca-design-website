@@ -892,7 +892,7 @@ html {
 
 .program__inner {
   width: 100%;
-  max-width: 980px;
+  max-width: 780px;
   margin: 0 auto;
 }
 
@@ -949,12 +949,6 @@ html {
   border-bottom: none;
 }
 
-@media (max-width: 860px) {
-  .program__inner {
-    padding: 0 var(--spacing-2xl);
-  }
-}
-
 .start-for-free {
   width: 100%;
   grid-column: 1 / -1;
@@ -977,7 +971,6 @@ html {
 }
 
 .start-for-free__duration {
-  padding: 0 100px;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-m);
