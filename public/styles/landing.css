@@ -76,7 +76,7 @@ html {
   line-height: var(--line-height-none);
   letter-spacing: 0.2px;
   margin: 0;
-  font-size: 40px;
+  font-size: var(--font-size-40);
   text-wrap: balance;
 }
 
@@ -131,7 +131,11 @@ html {
 
 @media (min-width: 768px) {
   .hero__title {
-    font-size: 48px;
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero__subtitle {
+    font-size: var(--font-size-xl);
   }
 }
 
@@ -141,11 +145,11 @@ html {
   }
 
   .hero__title {
-    font-size: 56px;
+    font-size: var(--font-size-4xl);
   }
 
   .hero__subtitle {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-32);
   }
 }
 
@@ -414,11 +418,12 @@ html {
   line-height: var(--line-height-none);
   letter-spacing: 0.2px;
   margin: var(--spacing-4xl) 0 var(--spacing-3xl);
+  font-size: var(--font-size-40);
 }
 
 .chi-title__line1 {
   display: block;
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-40);
   max-width: 980px;
   margin-left: auto;
   margin-right: auto;
@@ -428,13 +433,35 @@ html {
   font-weight: var(--font-weight-medium);
   font-family: var(--font-family-serif);
   display: block;
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-lg);
   max-width: 920px;
   margin-top: var(--spacing-m);
   margin-left: auto;
   margin-right: auto;
   text-wrap: balance;
   line-height: var(--line-height-tight);
+}
+
+@media (min-width: 768px) {
+  .chi-title,
+  .chi-title__line1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .chi-title__line2 {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .chi-title,
+  .chi-title__line1 {
+    font-size: var(--font-size-4xl);
+  }
+
+  .chi-title__line2 {
+    font-size: var(--font-size-32);
+  }
 }
 
 .chi-title__line2 strong {
@@ -448,11 +475,12 @@ html {
   border-radius: 12px;
   padding: var(--chi-card-padding);
   box-shadow: var(--shadow-lg);
-  transform: rotate(-1deg);
+  transform: rotate(-0.6deg);
 }
 
 #manifesto.chi-text-card {
-  margin: var(--spacing-3xl) 0;
+  max-width: 94%;
+  margin: var(--spacing-3xl) auto;
 }
 
 @media (min-width: 768px) {
@@ -463,6 +491,22 @@ html {
 
 .processo-cambiato__inner {
   overflow: hidden;
+}
+
+.processo-cambiato__content > p:first-child {
+  font-size: var(--font-size-lg);
+}
+
+@media (min-width: 768px) {
+  .processo-cambiato__content > p:first-child {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .processo-cambiato__content > p:first-child {
+    font-size: var(--font-size-32);
+  }
 }
 
 .chi-text-grid {
@@ -477,6 +521,7 @@ html {
   font-weight: var(--font-weight-normal);
   color: var(--grey-900);
   line-height: var(--line-height-relaxed);
+  min-width: 0;
 }
 
 .chi-text > p {
