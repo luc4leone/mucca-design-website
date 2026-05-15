@@ -639,11 +639,19 @@ html {
   justify-content: center;
   width: 36px;
   height: 36px;
+  padding: 0;
   border-radius: 999px;
   border: 1px solid var(--grey-300);
   background: var(--white);
   color: var(--grey-800);
   cursor: pointer;
+  flex-shrink: 0;
+}
+
+.chi-gallery__nav svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .chi-gallery__nav:disabled {
