@@ -15,24 +15,12 @@
  */
 .title {
   font-family: var(--font-family-sans);
-  font-size: var(--font-size-lg); /* 21px */
+  font-size: var(--font-size-32); /* 32px */
   font-weight: var(--font-weight-bold); /* 700 */
   color: var(--grey-900);
   line-height: var(--line-height-none); /* 1 */
   letter-spacing: 0.2px;
   margin: 0;
-}
-
-@media (min-width: 768px) {
-  .title:not(.title--md) {
-    font-size: var(--font-size-xl); /* 24px */
-  }
-}
-
-@media (min-width: 1024px) {
-  .title:not(.title--md) {
-    font-size: var(--font-size-32); /* 32px */
-  }
 }
 
 /**
