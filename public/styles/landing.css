@@ -64,6 +64,10 @@ html {
   width: 100%;
 }
 
+.hero__video .video-aspect-ratio {
+  border-radius: 12px;
+}
+
 .hero__eyebrow {
   display: flex;
   margin-bottom: var(--spacing-l);
