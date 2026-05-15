@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.video-aspect-ratio--16-9 {
+  padding-bottom: 56.25%;
+}
+
 .video-aspect-ratio--4-3 {
   padding-bottom: 75%;
 }

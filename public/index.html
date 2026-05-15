@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="components/input/input.css" />
     <link rel="stylesheet" href="components/button/button.css" />
     <link rel="stylesheet" href="components/modal/modal.css" />
+    <link rel="stylesheet" href="components/video-facade/video-facade.css" />
     <link rel="stylesheet" href="components/message-widget/message-widget.css" />
   </head>
   <body>
@@ -75,7 +76,9 @@
           </div>
           <div class="hero__video">
             <div class="video-aspect-ratio video-aspect-ratio--4-3">
-              <iframe src="https://www.loom.com/embed/3311000acfb0420eb46fa49e10014c5d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+              <div class="video-facade" data-src="https://www.loom.com/embed/3311000acfb0420eb46fa49e10014c5d?autoplay=1">
+                <span class="video-facade__play material-symbols-outlined">play_circle</span>
+              </div>
             </div>
           </div>
         </div>
@@ -101,30 +104,11 @@
               </div>
 
               <div class="video-container">
-                <div style="padding: 56.25% 0 0 0; position: relative">
-                  <iframe
-                    src="https://player.vimeo.com/video/1154591143?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                    frameborder="0"
-                    allow="
-                      autoplay;
-                      fullscreen;
-                      picture-in-picture;
-                      clipboard-write;
-                      encrypted-media;
-                      web-share;
-                    "
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    style="
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 100%;
-                    "
-                    title='Esercizio "condividi" con Roberto e Andrea'
-                  ></iframe>
+                <div class="video-aspect-ratio video-aspect-ratio--16-9">
+                  <div class="video-facade" data-src="https://player.vimeo.com/video/1154591143?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1">
+                    <span class="video-facade__play material-symbols-outlined">play_circle</span>
+                  </div>
                 </div>
-                <script src="https://player.vimeo.com/api/player.js"></script>
                 <p class="section__caption caption">
                   Quando Andrea e Roberto hanno fatto l'esercizio "Condividi
                   lista".
@@ -186,9 +170,12 @@
               </h2>
 
               <img
-                src="/assets/images/luca-selfie.jpg"
+                src="/assets/images/luca-selfie.webp"
                 alt="Selfie di Luca Leone"
                 class="section__selfie"
+                width="640"
+                height="646"
+                loading="lazy"
               />
 
               <div class="section__text text">
@@ -223,30 +210,11 @@
                 <h3 class="section__title title title--md">
                   "Di solito prendo appunti...a un certo punto ho smesso"
                 </h3>
-                <div style="padding: 57.66% 0 0 0; position: relative">
-                  <iframe
-                    src="https://player.vimeo.com/video/1154594012?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                    frameborder="0"
-                    allow="
-                      autoplay;
-                      fullscreen;
-                      picture-in-picture;
-                      clipboard-write;
-                      encrypted-media;
-                      web-share;
-                    "
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    style="
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 100%;
-                    "
-                    title="Ilaria sul mio metodo"
-                  ></iframe>
+                <div class="video-aspect-ratio">
+                  <div class="video-facade" data-src="https://player.vimeo.com/video/1154594012?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1">
+                    <span class="video-facade__play material-symbols-outlined">play_circle</span>
+                  </div>
                 </div>
-                <script src="https://player.vimeo.com/api/player.js"></script>
 
                 <p class="section__caption caption">
                   Ilaria Bottinelli - estratto di un intervento di Ilaria
@@ -272,9 +240,12 @@
                 </p>
                 <div class="fit-review__author-row">
                   <img
-                    src="/assets/images/andrea_de_nuccio.jpg"
+                    src="/assets/images/andrea_de_nuccio.webp"
                     alt="Andrea Denuccio"
                     class="fit-review__avatar"
+                    width="184"
+                    height="184"
+                    loading="lazy"
                   />
                   <p class="recensione__author">
                     Andrea Denuccio - classe 2 Corso UX/UI Design Boolean
@@ -346,9 +317,12 @@
                 </p>
                 <div class="fit-review__author-row">
                   <img
-                    src="/assets/images/stefano_falvella.jpg"
+                    src="/assets/images/stefano_falvella.webp"
                     alt="Stefano Falvella"
                     class="fit-review__avatar"
+                    width="184"
+                    height="184"
+                    loading="lazy"
                   />
                   <p class="recensione__author">
                     Stefano Falvella - classe 2 Corso UX/UI Design Boolean
@@ -382,9 +356,12 @@
                     data-caption="Davide Vignozzi - Prototipo progetto Media Contacts - Master Mucca Design UX/UI"
                   >
                     <img
-                      src="/assets/images/gallery-progetti-studenti/mediacontacts-davide.jpg"
+                      src="/assets/images/gallery-progetti-studenti/mediacontacts-davide.webp"
                       alt="Progetto studente: MediaContacts"
                       class="chi-gallery__image"
+                      width="1360"
+                      height="738"
+                      loading="lazy"
                     />
                   </div>
                   <div
@@ -599,15 +576,21 @@
 
                   <div class="chi-signature">
                     <img
-                      src="/assets/images/firma.png"
+                      src="/assets/images/firma.webp"
                       alt=""
                       class="chi-signature__mark"
+                      width="1240"
+                      height="320"
+                      loading="lazy"
                     />
                     <div class="chi-signature__row">
                       <img
-                        src="/assets/images/luca-selfie.jpg"
+                        src="/assets/images/luca-selfie.webp"
                         alt="Luca Leone"
                         class="chi-signature__avatar"
+                        width="184"
+                        height="186"
+                        loading="lazy"
                       />
                       <div class="chi-signature__meta">
                         <p class="chi-signature__line1">
@@ -687,9 +670,12 @@
                   </p>
                   <div class="fit-review__author-row">
                     <img
-                      src="/assets/images/davide_cester.jpg"
+                      src="/assets/images/davide_cester.webp"
                       alt="Davide Cester"
                       class="fit-review__avatar"
+                      width="184"
+                      height="184"
+                      loading="lazy"
                     />
                     <p class="recensione__author">
                       Davide Cester - classe 2 Corso UX/UI Design Boolean
@@ -1284,6 +1270,7 @@
         });
       })();
     </script>
+    <script src="components/video-facade/video-facade.js"></script>
     <script src="components/message-widget/message-widget.js"></script>
   </body>
 </html>

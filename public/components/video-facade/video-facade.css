@@ -1,0 +1,23 @@
+.video-facade {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--grey-900);
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.video-facade:hover {
+  background-color: var(--grey-700);
+}
+
+.video-facade__play {
+  font-size: 72px;
+  color: var(--white);
+  opacity: 0.9;
+  pointer-events: none;
+}
